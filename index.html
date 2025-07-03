@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interior Design Estimator</title>
     <script src="conversation-flow.js"></script>
+    <script src="pricing-config.js"></script>
     <style>
         * {
             margin: 0;
@@ -655,8 +656,7 @@
             doFlash();
         }
 
-
-        /* ------- NUMBER FUNCTIONS ------------*/
+        /* ------- NUMBER INPUT FUNCTIONS ------------*/
 
         // added funtion
         function handleNumberSubmit(inputElement, validation) {
@@ -802,6 +802,35 @@
             setTimeout(() => flashInputOptions(), 50);
         }
 
+
+        /* ------- LINE ITEM PRICING CALCs ------------*/
+
+        function calculateLineItemPrice(lineItem) {
+            // Calculates actual price for a line item based on user selection and square footage
+            // Returns formatted price string or range
+            
+            if (!window.PRICING || !lineItem) return 'TBD';
+            
+            const pricing = window.PRICING[lineItem.name.split(':')[0]]; // Get base name without selection
+            if (!pricing) return 'TBD';
+            
+            const userChoice = lineItem.userChoice;
+            const itemPricing = pricing[userChoice] || pricing['default'];
+            if (!itemPricing) return 'TBD';
+            
+            const sqft = parseInt(conversationState.sessionData.square_footage || 0);
+            
+            if (lineItem.calculation === 'perSqFt' && sqft > 0) {
+                const price = itemPricing.perSqFt * sqft;
+                return price;
+            } else if (lineItem.calculation === 'flat') {
+                return itemPricing.flat;
+            }
+            
+            return 'TBD';
+        }
+
+
         // Update cost estimate
         function updateCostEstimate() {
             const costItems = document.getElementById('costItems');
@@ -819,7 +848,8 @@
             
             // Add dynamic cost items (placeholder pricing for now)
             conversationState.costItems.forEach(item => {
-                addCostItem(item.name, 'TBD'); // Will connect to pricing later
+                const calculatedPrice = calculateLineItemPrice(item);
+                addCostItem(item.name, calculatedPrice);
             });
             
             // Calculate totals (placeholder)
@@ -835,6 +865,15 @@
             const costItems = document.getElementById('costItems');
             const costItemDiv = document.createElement('div');
             costItemDiv.className = 'cost-item';
+
+
+            let displayPrice;
+            if (typeof price === 'number') {
+                displayPrice = '$' + price.toLocalString();
+            } else {
+                displayPrice = price;
+            }
+
             
             costItemDiv.innerHTML = `
                 <span class="cost-item-name">${name}</span>
