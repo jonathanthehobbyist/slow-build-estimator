@@ -813,7 +813,7 @@
 
             // Get the base item name (before the colon)
             const baseName = lineItem.name.split(':')[0].trim();
-            const pricing = window.PRICING[basename];
+            const pricing = window.PRICING[baseName];
             if (!pricing) return 'TBD';
             
             /*const pricing = window.PRICING[lineItem.name.split(':')[0]]; // Get base name without selection
