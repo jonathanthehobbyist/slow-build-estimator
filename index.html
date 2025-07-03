@@ -246,11 +246,6 @@
                 
                 <div class="conversation-flow" id="conversationFlow">
                     <!-- Messages will be dynamically added here -->
-                    <div class="message system">
-                        <div class="message-bubble">
-                            
-                        </div>
-                    </div>
                 </div>
 
                 <div class="input-options" id="inputOptions">
@@ -395,6 +390,9 @@
           continueButton.onclick = () => selectOption('continue');
           
           inputOptions.appendChild(continueButton);
+
+          // Flash to indicate continue button is available
+          setTimeout(() => flashInputOptions(), 50);
         }
 
         function progressConversation(lastSelection) { 
@@ -598,9 +596,49 @@
             inputContainer.appendChild(inputRow);
             inputContainer.appendChild(errorMessage);
             inputOptions.appendChild(inputContainer);
+
+            // Flash to indicate new input is available
+            setTimeout(() => flashInputOptions(), 50);
+            setTimeout(() => numberInput.focus(), 100);
             
             setTimeout(() => numberInput.focus(), 100);
         }
+
+        /* ------- STYLE FUNCTIONS ------------*/
+
+        function flashInputOptions() {
+            // Highlights the input options area with 2 flashes when new options load
+            // Provides visual feedback that new choices are available
+            const inputOptions = document.getElementById('inputOptions');
+            if (!inputOptions) return;
+            
+            const originalBackground = inputOptions.style.backgroundColor;
+            const flashColor = '#e3f2fd'; // Light blue system color
+            
+            let flashCount = 0;
+            const maxFlashes = 2;
+            
+            function doFlash() {
+                if (flashCount >= maxFlashes * 2) {
+                    // Reset to original background
+                    inputOptions.style.backgroundColor = originalBackground;
+                    return;
+                }
+                
+                // Alternate between flash color and original
+                if (flashCount % 2 === 0) {
+                    inputOptions.style.backgroundColor = flashColor;
+                } else {
+                    inputOptions.style.backgroundColor = originalBackground;
+                }
+                
+                flashCount++;
+                setTimeout(doFlash, 200); // 200ms per flash phase
+            }
+            
+            doFlash();
+        }
+
 
         /* ------- NUMBER FUNCTIONS ------------*/
 
@@ -743,6 +781,9 @@
                 button.onclick = () => selectOption(option.value);
                 inputOptions.appendChild(button);
             });
+
+            // Flash to indicate new options are available
+            setTimeout(() => flashInputOptions(), 50);
         }
 
         // Update cost estimate
