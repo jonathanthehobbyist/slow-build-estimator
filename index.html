@@ -254,11 +254,7 @@
                 </div>
 
                 <div class="input-options" id="inputOptions">
-                    <button class="option-button" onclick="selectOption('living-room')">Living Room</button>
-                    <button class="option-button" onclick="selectOption('bedroom')">Bedroom</button>
-                    <button class="option-button" onclick="selectOption('kitchen')">Kitchen</button>
-                    <button class="option-button" onclick="selectOption('bathroom')">Bathroom</button>
-                    <button class="option-button" onclick="selectOption('office')">Home Office</button>
+                 <!-- Options loaded dynamically -->
                 </div>
             </div>
 
@@ -295,6 +291,16 @@
             sessionData: {},
             costItems: []
         };
+
+        function showLoadingState() {
+            const inputOptions = document.getElementById('inputOptions');
+            inputOptions.innerHTML = '<div style="text-align: center; color: #666;">Loading options...</div>';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            showLoadingState();
+            setTimeout(initializeConversation, 100);
+        });
 
         // Add message to conversation
         function addMessage(content, type = 'system', imageUrl = null) {
@@ -783,11 +789,21 @@
 
         // Initialize conversation
         function initializeConversation() {
-            if (window.CONVERSATION_FLOW && window.CONVERSATION_FLOW.initial) {
+
+            // Don't show anything until convresation flow is loaded
+
+            if (!window.CONVERSATION_FLOW || !window.CONVERSATION_FLOW.initial) {
+
+                // Config not loaded yet, try again in a Moment
+                setTimeout(initializeConversation, 100);
+                return;
+            }
+
                 const initialStep = window.CONVERSATION_FLOW.initial;
                 
                 // Clear default message and show initial question
                 document.getElementById('conversationFlow').innerHTML = '';
+                document.getElementById('inputOptions').innerHTML = '';
 
                 // Use the same statement logic as progressConversation
                 if (initialStep.statementTiming === 'before') {
@@ -805,7 +821,6 @@
                     }
                     setTimeout(() => showInputs(initialStep), 100);
                 }
-            }
 
 
                 /*
