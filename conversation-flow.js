@@ -1,7 +1,7 @@
 // config/conversation-flow.js
 // Converted from your current decision-tree.js and step-engine.js
 
-export const CONVERSATION_FLOW = {
+const CONVERSATION_FLOW = {
   
   // ==================== INITIAL QUESTIONS ====================
   initial: {
@@ -203,7 +203,7 @@ export const CONVERSATION_FLOW = {
 };
 
 // ==================== ALWAYS INCLUDED ITEMS ====================
-export const ALWAYS_INCLUDED = [
+const ALWAYS_INCLUDED = [
   { 
     name: "Design Consultation", 
     price: 0, // Changed from 500 to make it free
@@ -213,7 +213,7 @@ export const ALWAYS_INCLUDED = [
 ];
 
 // ==================== ROOM ROUTING ====================
-export const ROOM_FLOWS = {
+const ROOM_FLOWS = {
   "Kitchen": "kitchen_flooring",
   "Living Room": "living_room_flooring", 
   "Bedroom": "bedroom_flooring",
@@ -221,7 +221,7 @@ export const ROOM_FLOWS = {
 };
 
 // ==================== SIMPLIFIED ENGINE HELPER ====================
-export class ConversationFlowHelper {
+class ConversationFlowHelper {
   
   static getCurrentStepConfig(stepName) {
     return CONVERSATION_FLOW[stepName];
@@ -285,6 +285,12 @@ export class ConversationFlowHelper {
     return false;
   }
 }
+
+// Make available globally
+window.CONVERSATION_FLOW = CONVERSATION_FLOW;
+window.ConversationFlowHelper = ConversationFlowHelper;
+window.ALWAYS_INCLUDED = ALWAYS_INCLUDED;
+window.ROOM_FLOWS = ROOM_FLOWS;
 
 // ==================== USAGE EXAMPLE ====================
 /*
