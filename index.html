@@ -429,9 +429,14 @@
             inputContainer.style.display = 'flex';
             inputContainer.style.gap = '0.5rem';
             inputContainer.style.alignItems = 'center';
+
+            const inputRow = document.createElement('div');
+            inputRow.style.display = 'flex';
+            inputRow.style.gap = '0.5rem';
+            inputRow.style.alignItems = 'center';
             
             const numberInput = document.createElement('input');
-            numberInput.type = 'number';
+            numberInput.type = 'text';
             numberInput.placeholder = validation ? `${validation.min} - ${validation.max} sq ft` : 'Enter square footage';
             numberInput.style.padding = '0.5rem';
             numberInput.style.border = '2px solid #2196f3';
