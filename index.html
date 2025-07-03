@@ -619,6 +619,9 @@
             
             const originalBackground = inputOptions.style.backgroundColor;
             const flashColor = '#e3f2fd'; // Light blue system color
+
+            // Add CSS transition for smooth animation
+            inputOptions.style.transition = 'background-color 300ms ease-in-out';
             
             let flashCount = 0;
             const maxFlashes = 2;
