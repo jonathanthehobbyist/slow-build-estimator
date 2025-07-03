@@ -363,7 +363,7 @@
           inputOptions.appendChild(continueButton);
         }
 
-        function progressConversation(lastSelection) {
+        function progressConversation(lastSelection) { 
             // Get line items for the current step
             if (window.ConversationFlowHelper) {
                 const lineItems = window.ConversationFlowHelper.getLineItemsForStep(
@@ -440,6 +440,7 @@
                     }
                     setTimeout(() => showInputs(stepConfig), window.CONVERSATION_TIMING.statementDelay);
                 }
+            }
 
                 // removed
                 /* addMessage(stepConfig.question);
@@ -464,6 +465,7 @@
             
             updateCostEstimate();
         }
+            
 
         function showInputs(stepConfig) {
           if (stepConfig.inputType === 'choice') {
