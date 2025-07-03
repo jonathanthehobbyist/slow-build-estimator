@@ -838,11 +838,14 @@
             
             // Clear existing items (except always included)
             costItems.innerHTML = '';
+
+            let runningTotal = 0;
             
             // Add always included items
             if (window.ALWAYS_INCLUDED) {
                 window.ALWAYS_INCLUDED.forEach(item => {
                     addCostItem(item.name, item.price);
+                    runningTotal += item.price || 0;
                 });
             }
             
@@ -850,14 +853,27 @@
             conversationState.costItems.forEach(item => {
                 const calculatedPrice = calculateLineItemPrice(item);
                 addCostItem(item.name, calculatedPrice);
+
+                // Add to running total if it's a number
+                if (typeof calculatedPrice === 'number') {
+                    runningTotal += calculatedPrice;
+                }
+
             });
+
+            // Calculate range (10% below and 20% above for est. range)
+            const minTotal = Math.round(runningTotal * 0.9);
+            const maxTotal = Math.round(runningTotal * 1.2);
             
             // Calculate totals (placeholder)
-            let baseTotal = window.ALWAYS_INCLUDED ? 
+            /*let baseTotal = window.ALWAYS_INCLUDED ? 
                 window.ALWAYS_INCLUDED.reduce((sum, item) => sum + item.price, 0) : 0;
             let rangeMultiplier = conversationState.costItems.length * 500; // Placeholder
-            
-            totalRange.textContent = `${baseTotal.toLocaleString()} - ${(baseTotal + rangeMultiplier).toLocaleString()}`;
+            */
+
+            //totalRange.textContent = `${baseTotal.toLocaleString()} - ${(baseTotal + rangeMultiplier).toLocaleString()}`;
+
+            totalRange.textContent = `$${minTotal.toLocaleString()} - $${maxTotal.toLocaleString()}`;
         }
 
         // Add cost item to display
