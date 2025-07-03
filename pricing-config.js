@@ -53,7 +53,7 @@ const PRICING = {
   },
   "Dumpster": {
     "Full Renovation": { flat: 1000},
-    "Partial Renonvation": { flat: 500}
+    "Partial Renovation": { flat: 500}
   },
 
 };
