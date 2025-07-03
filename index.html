@@ -299,6 +299,9 @@
 
         // Add message to conversation
         function addMessage(content, type = 'system', imageUrl = null) {
+
+            console.log('addMessage called:', content, type);
+            
             const conversationFlow = document.getElementById('conversationFlow');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${type}`;
@@ -830,6 +833,8 @@
 
         // Initialize conversation
         function initializeConversation() {
+
+            onsole.log('initializeConversation called!', new Date().getTime());
 
             // Don't show anything until convresation flow is loaded
 
