@@ -339,7 +339,6 @@
             }, 500);
         }
 
-        // Progress the conversation flow
         function progressConversation(lastSelection) {
             // Get line items for the current step
             if (window.ConversationFlowHelper) {
@@ -364,10 +363,6 @@
                 );
             }
             
-            // Debug logging
-            console.log('Next step:', nextStep);
-            console.log('Available steps:', Object.keys(window.CONVERSATION_FLOW || {}));
-            
             if (nextStep === 'complete') {
                 addMessage("Thank you! Your estimate is complete. You can review the details on the right.");
                 document.getElementById('inputOptions').innerHTML = '';
@@ -378,8 +373,7 @@
             // Check if next step exists
             if (!nextStep || !window.CONVERSATION_FLOW[nextStep]) {
                 console.error('Invalid next step:', nextStep);
-                addMessage("Sorry, there was an issue with the conversation flow. Let me restart.");
-                // Reset to initial step
+                addMessage("Sorry, there was an issue. Let me restart.");
                 conversationState.currentStep = 'initial';
                 initializeConversation();
                 return;
@@ -391,18 +385,71 @@
             // Get next step configuration
             const stepConfig = window.CONVERSATION_FLOW[nextStep];
             if (stepConfig) {
-                // Add system message with next question
                 addMessage(stepConfig.question);
                 
-                // Update input options
-                updateInputOptions(stepConfig.options.map(option => ({
-                    text: option,
-                    value: option
-                })));
+                // Handle different input types
+                if (stepConfig.inputType === 'choice') {
+                    updateInputOptions(stepConfig.options.map(option => ({
+                        text: option,
+                        value: option
+                    })));
+                } else if (stepConfig.inputType === 'number') {
+                    updateNumberInput(stepConfig.validation);
+                } else if (stepConfig.inputType === 'gallery') {
+                    updateGalleryInput(stepConfig.options);
+                }
             }
             
-            // Update cost estimate
             updateCostEstimate();
+        }
+
+        function updateGalleryInput(options) {
+            console.log('Gallery input not implemented yet, falling back to choice');
+            updateInputOptions(options.map(option => ({
+                text: option.name || option,
+                value: option.name || option
+            })));
+        }
+
+        function updateNumberInput(validation) {
+            const inputOptions = document.getElementById('inputOptions');
+            inputOptions.innerHTML = '';
+            
+            const inputContainer = document.createElement('div');
+            inputContainer.style.display = 'flex';
+            inputContainer.style.gap = '0.5rem';
+            inputContainer.style.alignItems = 'center';
+            
+            const numberInput = document.createElement('input');
+            numberInput.type = 'number';
+            numberInput.placeholder = validation ? `${validation.min} - ${validation.max}` : 'Enter number';
+            numberInput.style.padding = '0.5rem';
+            numberInput.style.border = '2px solid #2196f3';
+            numberInput.style.borderRadius = '8px';
+            numberInput.style.fontSize = '1rem';
+            
+            if (validation) {
+                numberInput.min = validation.min;
+                numberInput.max = validation.max;
+            }
+            
+            const submitButton = document.createElement('button');
+            submitButton.className = 'option-button';
+            submitButton.textContent = 'Continue';
+            submitButton.onclick = () => {
+                const value = numberInput.value;
+                if (value && (!validation || (value >= validation.min && value <= validation.max))) {
+                    selectOption(value);
+                } else {
+                    alert(`Please enter a number between ${validation.min} and ${validation.max}`);
+                }
+            };
+            
+            inputContainer.appendChild(numberInput);
+            inputContainer.appendChild(submitButton);
+            inputOptions.appendChild(inputContainer);
+            
+            setTimeout(() => numberInput.focus(), 100);
         }
 
         // Update input options
