@@ -248,7 +248,7 @@
                     <!-- Messages will be dynamically added here -->
                     <div class="message system">
                         <div class="message-bubble">
-                            Welcome! I'll help you estimate the cost for your interior design project. Let's start by understanding what type of space you're working with.
+                            
                         </div>
                     </div>
                 </div>
@@ -347,7 +347,7 @@
 
             // Prevents unintentional double-clicks
 
-            const buttons = docuemnt.querySelectorAll('.option-button');
+            const buttons = document.querySelectorAll('.option-button');
             buttons.forEach(btn => {
                 btn.disabled = true;
                 btn.style.opacity = '0.6';
@@ -638,7 +638,7 @@
                     submitButton.style.opacity = '1';
                     submitButton.textContent = 'Continue';
                 }
-                
+
                 return;
             }
             
