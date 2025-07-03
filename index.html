@@ -412,6 +412,11 @@
         }
 
         function updateNumberInput(validation) {
+
+            // Creates a number input field with validation rules and error handling
+            // Displays input field, submit button, and error message container
+
+
             const inputOptions = document.getElementById('inputOptions');
             inputOptions.innerHTML = '';
             
@@ -422,34 +427,174 @@
             
             const numberInput = document.createElement('input');
             numberInput.type = 'number';
-            numberInput.placeholder = validation ? `${validation.min} - ${validation.max}` : 'Enter number';
+            numberInput.placeholder = validation ? `${validation.min} - ${validation.max} sq ft` : 'Enter square footage';
             numberInput.style.padding = '0.5rem';
             numberInput.style.border = '2px solid #2196f3';
             numberInput.style.borderRadius = '8px';
             numberInput.style.fontSize = '1rem';
+            numberInput.style.flex = '1';
             
-            if (validation) {
+            /* if (validation) {
                 numberInput.min = validation.min;
                 numberInput.max = validation.max;
-            }
+            }*/
+
+            // asked me to remove ^^
             
             const submitButton = document.createElement('button');
             submitButton.className = 'option-button';
             submitButton.textContent = 'Continue';
-            submitButton.onclick = () => {
+            submitButton.onclick = () => handleNumberSubmit(numberInput, validation);
+
+
+            /*submitButton.onclick = () => {
                 const value = numberInput.value;
                 if (value && (!validation || (value >= validation.min && value <= validation.max))) {
                     selectOption(value);
                 } else {
                     alert(`Please enter a number between ${validation.min} and ${validation.max}`);
                 }
-            };
+            };*/
+
+            // asked me to remove ^^
+
+            //error message
+            const errorMessage = document.createElement('div');
+            errorMessage.id = 'numberInputError';
+            errorMessage.style.color = '#e74c3c';
+            errorMessage.style.fontSize = '0.9rem';
+            errorMessage.style.display = 'none';
+
+            //realtime validation
+            numberInput.addEventListener('input', () => clearNumberError());
+            numberInput.addEventListener('keypress', (e) => handleNumberKeypress(e, numberInput, validation));
             
-            inputContainer.appendChild(numberInput);
+            /*inputContainer.appendChild(numberInput);
             inputContainer.appendChild(submitButton);
+            inputOptions.appendChild(inputContainer);*/
+
+            // asked me to remove ^^
+
+            inputRow.appendChild(numberInput);
+            inputRow.appendChild(submitButton);
+            inputContainer.appendChild(inputRow);
+            inputContainer.appendChild(errorMessage);
             inputOptions.appendChild(inputContainer);
             
             setTimeout(() => numberInput.focus(), 100);
+        }
+
+        /* ------- NUMBER FUNCTIONS ------------*/
+
+        // added funtion
+        function handleNumberSubmit(inputElement, validation) {
+
+            // Validates user input and submits if valid, shows error if invalid
+            // Checks for empty values, non-numeric characters, and range validation
+
+            const value = inputElement.value.trim();
+            
+            // Check if empty
+            if (!value) {
+                showNumberError('Please enter a value');
+                return;
+            }
+            
+            // Check if contains only digits
+            if (!isValidNumber(value)) {
+                showNumberError('Please enter only numbers');
+                return;
+            }
+            
+            const numValue = parseInt(value);
+            
+            // Check validation range
+            if (validation && (numValue < validation.min || numValue > validation.max)) {
+                showNumberError(`Please enter a number between ${validation.min} and ${validation.max}`);
+                return;
+            }
+            
+            // All good, proceed
+            selectOption(value);
+        }
+
+        function isValidNumber(value) {
+
+            // Returns true if input contains only digits, commas, and spaces
+            // Allows formatted numbers like "1,200" or "1 200" but rejects letters
+
+            // Check if string contains only digits (and optionally spaces/commas)
+            const digitPattern = /^[\d,\s]+$/;
+            if (!digitPattern.test(value)) {
+                return false;
+            }
+            
+            // Remove commas and spaces, then check if it's a valid number
+            const cleanValue = value.replace(/[,\s]/g, '');
+            return !isNaN(cleanValue) && cleanValue !== '';
+        }  
+        
+        function showNumberError(message) {
+
+            // Displays error message and adds red border to input field
+            // Makes validation feedback visible to user with styling changes
+
+            const errorElement = document.getElementById('numberInputError');
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+                
+                // Add red border to input
+                const input = errorElement.parentElement.querySelector('input');
+                if (input) {
+                    input.style.borderColor = '#e74c3c';
+                }
+            }
+        }      
+
+        function clearNumberError() {
+
+            // Hides error message and resets input field border to normal
+            // Called when user starts typing to clear previous error state
+
+            const errorElement = document.getElementById('numberInputError');
+            if (errorElement) {
+                errorElement.style.display = 'none';
+                
+                // Reset border color
+                const input = errorElement.parentElement.querySelector('input');
+                if (input) {
+                    input.style.borderColor = '#2196f3';
+                }
+            }
+        }
+
+        function handleNumberKeypress(event, inputElement, validation) {
+
+            // Prevents non-numeric characters from being typed in real-time
+            // Allows Enter to submit, digits/commas/spaces, but blocks letters instantly
+
+            // Allow Enter key to submit
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                handleNumberSubmit(inputElement, validation);
+                return;
+            }
+            
+            // Allow backspace, delete, tab, escape, and arrow keys
+            if ([8, 9, 27, 37, 38, 39, 40, 46].includes(event.keyCode)) {
+                return;
+            }
+            
+            // Allow commas and spaces for formatting
+            if (event.key === ',' || event.key === ' ') {
+                return;
+            }
+            
+            // Only allow digits
+            if (!/[0-9]/.test(event.key)) {
+                event.preventDefault();
+            }
         }
 
         // Update input options
