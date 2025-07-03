@@ -327,6 +327,11 @@
             buttons.forEach(btn => btn.classList.remove('selected'));
             event.target.classList.add('selected');
             
+            // Debug logging
+            console.log('Selected:', option);
+            console.log('Current step:', conversationState.currentStep);
+            console.log('Session data:', conversationState.sessionData);
+            
             // Progress conversation
             setTimeout(() => {
                 progressConversation(option);
@@ -358,10 +363,24 @@
                 );
             }
             
+            // Debug logging
+            console.log('Next step:', nextStep);
+            console.log('Available steps:', Object.keys(window.CONVERSATION_FLOW || {}));
+            
             if (nextStep === 'complete') {
                 addMessage("Thank you! Your estimate is complete. You can review the details on the right.");
                 document.getElementById('inputOptions').innerHTML = '';
                 updateCostEstimate();
+                return;
+            }
+            
+            // Check if next step exists
+            if (!nextStep || !window.CONVERSATION_FLOW[nextStep]) {
+                console.error('Invalid next step:', nextStep);
+                addMessage("Sorry, there was an issue with the conversation flow. Let me restart.");
+                // Reset to initial step
+                conversationState.currentStep = 'initial';
+                initializeConversation();
                 return;
             }
             
