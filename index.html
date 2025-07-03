@@ -339,6 +339,30 @@
             }, 500);
         }
 
+        // Conversation, question & statement handlers
+
+        function displayStatement(statementText, callback) {
+          if (statementText) {
+            addMessage(statementText, 'system');
+            setTimeout(callback, window.CONVERSATION_TIMING.statementDelay);
+          } else {
+            callback(); // No statement, proceed immediately
+          }
+        }
+
+        function updateContinueInput() {
+          const inputOptions = document.getElementById('inputOptions');
+          inputOptions.innerHTML = '';
+          
+          const continueButton = document.createElement('button');
+          continueButton.className = 'option-button';
+          continueButton.textContent = 'Continue';
+          continueButton.style.backgroundColor = '#4CAF50';
+          continueButton.onclick = () => selectOption('continue');
+          
+          inputOptions.appendChild(continueButton);
+        }
+
         function progressConversation(lastSelection) {
             // Get line items for the current step
             if (window.ConversationFlowHelper) {
@@ -385,7 +409,40 @@
             // Get next step configuration
             const stepConfig = window.CONVERSATION_FLOW[nextStep];
             if (stepConfig) {
-                addMessage(stepConfig.question);
+
+                // handle statement display and timing
+                if (stepConfig.statementTiming === 'before') {
+                    // statement first
+                    displayStatement(stepConfig.statement, () => {
+                        if (stepConfig.question) {
+                            addMessage(stepConfig.question);
+                        }
+                        setTimeout(() => showInputs(stepConfig), window.CONVERSATION_TIMING.statementDelay);
+                    });
+                } else if (stepConfig.statementTiming === 'after') {
+                    // Question first, then statement
+                    if (stepConfig.question) {
+                        addMessage(stepConfig.question);
+                    }
+                    setTimeout(() => {
+                        showInputs(stepConfig);
+                        displayStatement(stepConfig.statement, () => {});
+                    }, window.CONVERSATION_TIMING.statementDelay);
+                } else if (stepConfig.inputType === 'continue') {
+                    // Information-only step
+                    displayStatement(stepConfig.statement, () => {
+                        setTimeout(() => updateContinueInput(), window.CONVERSATION_TIMING.continueButtonDelay);
+                    });
+                } else {
+                    // No statement, just question
+                    if (stepConfig.question) {
+                        addMessage(stepConfig.question);
+                    }
+                    setTimeout(() => showInputs(stepConfig), window.CONVERSATION_TIMING.statementDelay);
+                }
+
+                // removed
+                /* addMessage(stepConfig.question);
 
                     // DEBUG: Log the step config
                     console.log('Step config:', stepConfig);
@@ -403,9 +460,24 @@
                 } else if (stepConfig.inputType === 'gallery') {
                     updateGalleryInput(stepConfig.options);
                 }
-            }
+            } */
             
             updateCostEstimate();
+        }
+
+        function showInputs(stepConfig) {
+          if (stepConfig.inputType === 'choice') {
+            updateInputOptions(stepConfig.options.map(option => ({
+              text: option,
+              value: option
+            })));
+          } else if (stepConfig.inputType === 'number') {
+            updateNumberInput(stepConfig.validation);
+          } else if (stepConfig.inputType === 'gallery') {
+            updateGalleryInput(stepConfig.options);
+          } else if (stepConfig.inputType === 'continue') {
+            updateContinueInput();
+          }
         }
 
         function updateGalleryInput(options) {

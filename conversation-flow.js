@@ -1,11 +1,22 @@
 // config/conversation-flow.js
 // Converted from your current decision-tree.js and step-engine.js
 
+// Timing configuration
+const CONVERSATION_TIMING = {
+  statementDelay: 1000, // Milliseconds between statement and question (or vice versa)
+  continueButtonDelay: 500 // Delay before showing continue button on info-only steps
+};
+
+// Make it available globally
+window.CONVERSATION_TIMING = CONVERSATION_TIMING;
+
 const CONVERSATION_FLOW = {
   
   // ==================== INITIAL QUESTIONS ====================
   initial: {
-    question: "Hi, this app will walk you through getting an estimate for an interior design project. Which room would you like to work on?",
+    question: "Which room would you like to work on?",
+    statement: "Hi, this app will walk you through getting an estimate for an interior design project.",
+    statementTiming: "before",
     inputType: "choice",
     options: ["Kitchen", "Living Room", "Bedroom", "Bathroom"],
     lineItems: [], // Just sets room context
