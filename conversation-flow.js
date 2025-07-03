@@ -106,8 +106,8 @@ const CONVERSATION_FLOW = {
       }
     ],
     lineItems: [
-      { name: "Countertops", calculation: "perSqFt", category: "materials" },
-      { name: "Countertop Installation", calculation: "perSqFt", category: "labor", autoInclude: true }
+      { name: "Countertops", calculation: "flat", category: "materials" },
+      { name: "Countertop Installation", calculation: "flat", category: "labor", autoInclude: true }
     ],
     next: "kitchen_appliances"
   },

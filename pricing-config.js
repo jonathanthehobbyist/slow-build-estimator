@@ -26,18 +26,25 @@ const PRICING = {
     "Stock cabinets": { flat: 3000 },
     "Semi-custom cabinets": { flat: 6000 },
     "Full custom cabinets": { flat: 12000 }
-    
   },
   "Cabinet Hardware": {
     "default": { flat: 1500 },
     "High-end": { flat: 4000 }, 
   },
+  "Cabinet Organizers": {
+    "Trash can pull-out": { flat: 500 },
+    "Cutting board pull-out": { flat: 500 },
+    "Spice rack pull-out": { flat: 500 },
+    "Tracy roll-out": { flat: 500 },
+    "Mixer lifts": { flat: 500 },
+    "Lazy Susan": { flat: 1000 }
+  },
   
   "Countertops": {
-    "Laminate": { perSqFt: 15 },
-    "Quartz": { perSqFt: 60 },
-    "Granite": { perSqFt: 45 },
-    "Butcher Block": { perSqFt: 25 }
+    "Laminate": { flat: 10000 },
+    "Quartz": { flat: 15000 },
+    "Granite": { flat: 15000 },
+    "Butcher Block": { flat: 15000 }
   },
   
   "Countertop Installation": {
