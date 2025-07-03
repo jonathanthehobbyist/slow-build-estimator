@@ -292,10 +292,12 @@
             inputOptions.innerHTML = '<div style="text-align: center; color: #666;">Loading options...</div>';
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        // Might be extra, remove later
+
+        /* document.addEventListener('DOMContentLoaded', function() {
             showLoadingState();
             setTimeout(initializeConversation, 100);
-        });
+        }); */
 
         // Add message to conversation
         function addMessage(content, type = 'system', imageUrl = null) {
