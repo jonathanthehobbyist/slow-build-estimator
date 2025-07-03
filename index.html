@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interior Design Estimator</title>
-    <script type="module" src="conversation-flow.js"></script>
-    <!-- Test -->
-
-            <style>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -293,11 +290,9 @@
     <script>
         // Simple state management
         let conversationState = {
-            currentStep: 'room-type',
-            selections: {},
-            costItems: [
-                { name: 'Initial Consultation', price: 150, fixed: true }
-            ]
+            currentStep: 'initial',
+            sessionData: {},
+            costItems: []
         };
 
         // Add message to conversation
@@ -322,17 +317,17 @@
         // Handle option selection
         function selectOption(option) {
             // Add user message
-            addMessage(option.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()), 'user');
+            addMessage(option, 'user');
             
-            // Store selection
-            conversationState.selections[conversationState.currentStep] = option;
+            // Store selection in sessionData
+            conversationState.sessionData[conversationState.currentStep] = option;
             
             // Update buttons
             const buttons = document.querySelectorAll('.option-button');
             buttons.forEach(btn => btn.classList.remove('selected'));
             event.target.classList.add('selected');
             
-            // Progress conversation (placeholder for now)
+            // Progress conversation
             setTimeout(() => {
                 progressConversation(option);
             }, 500);
@@ -340,23 +335,53 @@
 
         // Progress the conversation flow
         function progressConversation(lastSelection) {
-            // This is where your conversation logic will go
-            // For now, just a simple example
-            
-            if (conversationState.currentStep === 'room-type') {
-                addMessage(`Great choice! Now let's talk about the size of your ${lastSelection.replace('-', ' ')}. What's the approximate square footage?`);
+            // Get line items for the current step
+            if (window.ConversationFlowHelper) {
+                const lineItems = window.ConversationFlowHelper.getLineItemsForStep(
+                    conversationState.currentStep, 
+                    lastSelection
+                );
                 
-                // Update input options
-                updateInputOptions([
-                    { text: 'Small (< 150 sq ft)', value: 'small' },
-                    { text: 'Medium (150-300 sq ft)', value: 'medium' },
-                    { text: 'Large (> 300 sq ft)', value: 'large' }
-                ]);
-                
-                conversationState.currentStep = 'room-size';
+                // Add line items to cost estimate
+                lineItems.forEach(item => {
+                    conversationState.costItems.push(item);
+                });
             }
             
-            // Add cost items based on selections
+            // Get next step
+            let nextStep;
+            if (window.ConversationFlowHelper) {
+                nextStep = window.ConversationFlowHelper.getNextStep(
+                    conversationState.currentStep, 
+                    lastSelection, 
+                    conversationState.sessionData
+                );
+            }
+            
+            if (nextStep === 'complete') {
+                addMessage("Thank you! Your estimate is complete. You can review the details on the right.");
+                document.getElementById('inputOptions').innerHTML = '';
+                updateCostEstimate();
+                return;
+            }
+            
+            // Update current step
+            conversationState.currentStep = nextStep;
+            
+            // Get next step configuration
+            const stepConfig = window.CONVERSATION_FLOW[nextStep];
+            if (stepConfig) {
+                // Add system message with next question
+                addMessage(stepConfig.question);
+                
+                // Update input options
+                updateInputOptions(stepConfig.options.map(option => ({
+                    text: option,
+                    value: option
+                })));
+            }
+            
+            // Update cost estimate
             updateCostEstimate();
         }
 
@@ -379,21 +404,67 @@
             const costItems = document.getElementById('costItems');
             const totalRange = document.getElementById('totalRange');
             
-            // Calculate totals (placeholder logic)
-            let minTotal = 0;
-            let maxTotal = 0;
+            // Clear existing items (except always included)
+            costItems.innerHTML = '';
             
+            // Add always included items
+            if (window.ALWAYS_INCLUDED) {
+                window.ALWAYS_INCLUDED.forEach(item => {
+                    addCostItem(item.name, item.price);
+                });
+            }
+            
+            // Add dynamic cost items (placeholder pricing for now)
             conversationState.costItems.forEach(item => {
-                minTotal += item.price;
-                maxTotal += item.price * 1.5; // Example range calculation
+                addCostItem(item.name, 'TBD'); // Will connect to pricing later
             });
             
-            totalRange.textContent = `$${minTotal.toLocaleString()} - $${maxTotal.toLocaleString()}`;
+            // Calculate totals (placeholder)
+            let baseTotal = window.ALWAYS_INCLUDED ? 
+                window.ALWAYS_INCLUDED.reduce((sum, item) => sum + item.price, 0) : 0;
+            let rangeMultiplier = conversationState.costItems.length * 500; // Placeholder
+            
+            totalRange.textContent = `${baseTotal.toLocaleString()} - ${(baseTotal + rangeMultiplier).toLocaleString()}`;
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        // Add cost item to display
+        function addCostItem(name, price) {
+            const costItems = document.getElementById('costItems');
+            const costItemDiv = document.createElement('div');
+            costItemDiv.className = 'cost-item';
+            
+            costItemDiv.innerHTML = `
+                <span class="cost-item-name">${name}</span>
+                <span class="cost-item-price">${typeof price === 'number' ? '$' + price : price}</span>
+            `;
+            
+            costItems.appendChild(costItemDiv);
+        }
+
+        // Initialize conversation
+        function initializeConversation() {
+            if (window.CONVERSATION_FLOW && window.CONVERSATION_FLOW.initial) {
+                const initialStep = window.CONVERSATION_FLOW.initial;
+                
+                // Clear default message and show initial question
+                document.getElementById('conversationFlow').innerHTML = '';
+                addMessage(initialStep.question);
+                
+                // Set up initial options
+                updateInputOptions(initialStep.options.map(option => ({
+                    text: option,
+                    value: option
+                })));
+            }
+            
+            // Initialize cost display
             updateCostEstimate();
+        }
+
+        // Initialize when page loads and conversation flow is available
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait a bit for conversation-flow.js to load
+            setTimeout(initializeConversation, 100);
         });
     </script>
 </body>
