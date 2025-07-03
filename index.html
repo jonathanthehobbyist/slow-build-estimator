@@ -386,6 +386,11 @@
             const stepConfig = window.CONVERSATION_FLOW[nextStep];
             if (stepConfig) {
                 addMessage(stepConfig.question);
+
+                    // DEBUG: Log the step config
+                    console.log('Step config:', stepConfig);
+                    console.log('Input type:', stepConfig.inputType);
+                    console.log('Has options:', !!stepConfig.options);
                 
                 // Handle different input types
                 if (stepConfig.inputType === 'choice') {
