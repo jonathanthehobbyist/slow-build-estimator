@@ -47,8 +47,15 @@ const PRICING = {
   },
   
   "Demolition": {
-    "default": { perSqFt: 5 }
-  }
+    "Full Renovation": { flat: 2500 },
+    "Partial Renovation": { flat: 2500 },
+    "default": { flat: 2500 } //Fallback
+  },
+  "Dumpster": {
+    "Full Renovation": { flat: 1000},
+    "Partial Renonvation": { flat: 500}
+  },
+
 };
 
 // Make available globally

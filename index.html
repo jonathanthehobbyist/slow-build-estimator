@@ -810,19 +810,28 @@
             // Returns formatted price string or range
             
             if (!window.PRICING || !lineItem) return 'TBD';
-            
-            const pricing = window.PRICING[lineItem.name.split(':')[0]]; // Get base name without selection
+
+            // Get the base item name (before the colon)
+            const baseName = lineItem.name.split(':')[0].trim();
+            const pricing = window.PRICING[basename];
             if (!pricing) return 'TBD';
             
-            const userChoice = lineItem.userChoice;
-            const itemPricing = pricing[userChoice] || pricing['default'];
+            /*const pricing = window.PRICING[lineItem.name.split(':')[0]]; // Get base name without selection
+            if (!pricing) return 'TBD';*/
+
+
+            
+            //const userChoice = lineItem.userChoice;
+            const projectType = conversationState.sessionData.project_type;
+            const itemPricing = pricing[projectType] || pricing['default'];
+            //const itemPricing = pricing[userChoice] || pricing['default'];
             if (!itemPricing) return 'TBD';
             
             const sqft = parseInt(conversationState.sessionData.square_footage || 0);
             
             if (lineItem.calculation === 'perSqFt' && sqft > 0) {
-                const price = itemPricing.perSqFt * sqft;
-                return price;
+                //const price = itemPricing.perSqFt * sqft;
+                return itemPricing.perSqFt * sqft;
             } else if (lineItem.calculation === 'flat') {
                 return itemPricing.flat;
             }

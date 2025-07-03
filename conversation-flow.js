@@ -39,7 +39,15 @@ const CONVERSATION_FLOW = {
       {
         condition: "Full Renovation",
         items: [
-          { name: "Demolition", calculation: "perSqFt", category: "labor" }
+          { name: "Demolition", calculation: "flat", category: "labor" },
+          { name: "Dumpster", calculation: "flat", category: "materials" }
+        ]
+      },
+      {
+        condition: "Partial Renovation",
+        items: [
+          { name: "Demolition", calculation: "flat", category: "labor" },
+          { name: "Dumpster", calculation: "flat", category: "materials" }
         ]
       }
     ],
