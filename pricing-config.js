@@ -22,10 +22,15 @@ const PRICING = {
   
   // Kitchen items - flat pricing
   "Cabinets": {
+    "Cabinet refacing": { flat: 1500 },
     "Stock cabinets": { flat: 3000 },
     "Semi-custom cabinets": { flat: 6000 },
-    "Full custom cabinets": { flat: 12000 },
-    "Cabinet refacing": { flat: 1500 }
+    "Full custom cabinets": { flat: 12000 }
+    
+  },
+  "Cabinet Hardware": {
+    "default": { flat: 1500 },
+    "High-end": { flat: 4000 }, 
   },
   
   "Countertops": {
