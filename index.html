@@ -407,11 +407,19 @@
                     conversationState.currentStep, 
                     lastSelection
                 );
+
+                // DEBUG: Check if line items are being generated
+                console.log('Current step:', conversationState.currentStep);
+                console.log('Last selection:', lastSelection);
+                console.log('Generated line items:', lineItems);
+                console.log('Line items length:', lineItems.length);
                 
                 // Add line items to cost estimate
                 lineItems.forEach(item => {
+                    console.log('Adding line item:', item);
                     conversationState.costItems.push(item);
                 });
+                console.log('Total cost items now:', conversationState.costItems);
             }
             
             // Get next step
