@@ -744,6 +744,27 @@
                 
                 // Clear default message and show initial question
                 document.getElementById('conversationFlow').innerHTML = '';
+
+                // Use the same statement logic as progressConversation
+                if (initialStep.statementTiming === 'before') {
+                    // Statement first, then question
+                    displayStatement(initialStep.statement, () => {
+                        if (initialStep.question) {
+                            addMessage(initialStep.question);
+                        }
+                        setTimeout(() => showInputs(initialStep), window.CONVERSATION_TIMING.statementDelay);
+                    });
+                } else {
+                    // Default behavior (just question)
+                    if (initialStep.question) {
+                        addMessage(initialStep.question);
+                    }
+                    setTimeout(() => showInputs(initialStep), 100);
+                }
+            }
+
+
+                /*
                 addMessage(initialStep.question);
                 
                 // Set up initial options
@@ -751,7 +772,7 @@
                     text: option,
                     value: option
                 })));
-            }
+            }*/
             
             // Initialize cost display
             updateCostEstimate();
