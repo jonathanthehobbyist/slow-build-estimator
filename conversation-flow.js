@@ -119,7 +119,7 @@ kitchen_cabinet_fixtures: {
     }
   ],
   next: "kitchen_cabinet_hardware"
-}
+},
 
   kitchen_cabinet_hardware: {
     question: "Please select a type of cabinet hardware to use:",
