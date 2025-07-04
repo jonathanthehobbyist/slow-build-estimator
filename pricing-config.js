@@ -52,10 +52,8 @@ const PRICING = {
   },
   
   "Appliances": {
-    "Basic package": { flat: 2500 },
-    "Mid-range package": { flat: 5000 },
-    "High-end package": { flat: 8000 },
-    "Premium package": { flat: 15000 }
+    "Premium: LG and GE": { flat: 25000 },
+    "Luxury: Thermador and Subzero": { flat: 50000 }
   },
   
   "Demolition": {

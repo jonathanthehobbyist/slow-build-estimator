@@ -113,9 +113,11 @@ const CONVERSATION_FLOW = {
   },
 
   kitchen_appliances: {
-    question: "Choose your appliance package:",
+    question: "Let's choose your appliance package:",
+    statement: "Interesting fact: on average, appliances make up 30% of the cost of a full kitchen remodel",
+    statementTiming: "before",
     inputType: "choice",
-    options: ["Basic package", "Mid-range package", "High-end package", "Premium package", "No appliances"],
+    options: ["Premium: LG and GE", "Luxury: Thermador and Subzero", "No appliances"],
     lineItems: [
       {
         condition: "not No appliances",
