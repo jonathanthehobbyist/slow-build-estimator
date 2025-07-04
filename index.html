@@ -746,6 +746,10 @@
         }
 
         function showGalleryConfirmButton(selectedOption) {
+
+            console.log('showGalleryConfirmButton called with:', selectedOption);
+            console.log('Type of selectedOption:', typeof selectedOption);
+
             // Shows confirm button for gallery selection
             // Allows user to confirm choice before proceeding
 
@@ -769,6 +773,7 @@
 
             const selectionText = document.createElement('div');
             selectionText.textContent = `You selected ${selectOption}`;
+            console.log('selectionText content:', selectionText.textContent);
             selectionText.style.marginBottom = '1rem';
             selectionText.style.fontWeight = '600';
             selectionText.style.color = '#2c3e50';
