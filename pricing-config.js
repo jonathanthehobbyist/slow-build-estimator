@@ -22,14 +22,14 @@ const PRICING = {
   
   // Kitchen items - flat pricing
   "Cabinets": {
-    "Cabinet refacing": { flat: 1500 },
-    "Stock cabinets": { flat: 3000 },
-    "Semi-custom cabinets": { flat: 6000 },
-    "Full custom cabinets": { flat: 12000 }
+    "Cabinet refacing": { flat: 30000 },
+    "Stock cabinets": { flat: 20000 },
+    "Semi-custom cabinets": { flat: 25000 },
+    "Full custom cabinets": { flat: 50000 }
   },
   "Cabinet Hardware": {
-    "default": { flat: 1500 },
-    "High-end": { flat: 4000 }, 
+    "High quality": { flat: 1500 },
+    "Luxury: Buster & Punch": { flat: 4000 }, 
   },
   "Cabinet Organizers": {
     "Trash can pull-out": { flat: 500 },

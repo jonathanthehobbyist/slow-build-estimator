@@ -73,6 +73,16 @@ const CONVERSATION_FLOW = {
     lineItems: [
       { name: "Cabinets", calculation: "flat", category: "materials" }
     ],
+    next: "kitchen_cabinet_hardware"
+  },
+
+  kitchen_cabinet_hardware: {
+    question: "Cabinet hardware gets daily use and keeps your cabinets looking pristine",
+    inputType: "choice",
+    options: ["High quality", "Luxury: Buster & Punch"],
+    lineItems: [
+      { name: "Cabinet hardware", calculation: "flat", category: "materials" }
+    ],
     next: "kitchen_countertops"
   },
 
