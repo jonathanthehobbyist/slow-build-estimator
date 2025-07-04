@@ -126,6 +126,26 @@
         }
 
         /* Multi-select button states */
+
+.multi-select-button {
+    background-color: white !important;
+    color: #2196f3 !important;
+    border: 2px solid #2196f3 !important;
+    transition: all 0.3s ease;
+}
+
+.multi-select-button.selected {
+    background-color: #2196f3 !important;
+    color: white !important;
+}
+
+.multi-select-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
 .multi-select-button {
     transition: all 0.3s ease;
 }
@@ -1114,9 +1134,6 @@
                 const button = document.createElement('button');
                 button.className = 'option-button multi-select-button';
                 button.textContent = option;
-                /* button.style.backgroundColor = 'white';
-                button.style.color = '#2196f3';
-                button.style.border = '2px solid #2196f3';*/
                 button.onclick = () => toggleMultiSelect(option, button);
                 container.appendChild(button);
             });
@@ -1126,10 +1143,6 @@
             continueButton.id = 'multiSelectContinue';
             continueButton.className = 'option-button';
             continueButton.textContent = 'Continue';
-            /* continueButton.style.backgroundColor = '#ccc';
-            continueButton.style.color = '#666';
-            continueButton.style.marginTop = '1rem';
-            continueButton.style.width = '100%'; */
             continueButton.disabled = true;
             continueButton.onlick = () => confirmMultiSelect();
 
