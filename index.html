@@ -101,10 +101,28 @@
             color: white;
         }
 
+        .message-user .message-image {
+            margin-right: auto;
+        }
+
+        .message-system .message-image {
+            margin-right: auto;
+        }
+
+        .user-image {
+            max-width: 150px;
+            max-height: 100px;
+        }
+
         .message-image {
-            max-width: 200px;
-            border-radius: 8px;
+            max-width: 120px;
+            max-height: 80px;
+            border-radius: 6px;
             margin: 0.5rem 0;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            display: block;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .input-options {
@@ -366,14 +384,16 @@
             let messageHTML = `<div class="message-bubble">${content}</div>`;
             
             if (imageUrl) {
-                messageHTML += `<img src="${imageUrl}" alt="Design reference" class="message-image">`;
+                messageHTML += `<img src="${imageUrl}" alt="${content}" class="message-image ${type}-image">`;
             }
             
             messageDiv.innerHTML = messageHTML;
             conversationFlow.appendChild(messageDiv);
             
             // Scroll to bottom
-            conversationFlow.scrollTop = conversationFlow.scrollHeight;
+            setTimeout(() => { 
+                conversationFlow.scrollTop = conversationFlow.scrollHeight;
+            }, 100);
         }
 
         // Handle option selection
@@ -724,8 +744,19 @@
             console.log('selectGalleryOption called with:', optionName);
             console.log('Type of optionName:', typeof optionName);
 
-            // Store temporarily
-            window.tempGallerySelection = optionName;
+            // Find the full option object with img URL form config
+            const currentStep = window.CONVERSATION_FLOW[conversationState.currentStep];
+            const fullOption = currentStep.options.find(opt => opt.name === optionName);
+
+            //store name and image systematically
+            window.tempGallerySelection = {
+                name: optionName,
+                image: fullOption ? fullOption.image : null,
+                thumbnail: fullOption ? fullOption.thumbnail : null,
+                description: fullOption ? fullOption.description : null
+            };
+
+            console.log('Stored full option:', window.tempGallerySelection);
 
             // Remove previous selections
             document.querySelectorAll('.gallery-card').forEach(card => {
@@ -819,8 +850,10 @@
             // Finallizes gallery selection and proceeds with conversation
             // Cleans up Gallery overlay and restores normal input area
 
-            const selectedOption = window.tempGallerySelection;
-            if (!selectedOption) return;
+            const selectedOptionData = window.tempGallerySelection;
+            if (!selectedOptionData || !selectedOptionData.name) return;
+
+            console.log('Confirming selection:', selectedOptionData);
 
             // Remove gallery overlay
             const galleryOverlay = document.getElementById('galleryOverlay');
@@ -836,11 +869,27 @@
             const inputOptions = document.getElementById('inputOptions');
             inputOptions.style.display = 'flex';
 
+            // Add user message with image from stored data
+            const imageUrl = selectedOptionData.thumbnail || selectOptionData.image;
+            addMessage(selectedOptionData.name, 'user', imageUrl);
+
+            // Store selection in session data (just the name for flow logic)
+            conversationState.sessionData[conversationState.currentStep] = selectedOptionData.name;
+
+            // Store complete option data for future use
+            conversationState.sessionData[conversationState.currentStep + '_fullData'] = selectedOptionData;
+
             // Clear temp selection
             delete window.tempGallerySelection;
 
             // Proceed with the selection
-            selectOption(selectedOption);
+            //selectOption(selectedOption);
+
+            // Continue conversation
+            setTimeout(() => {
+                progressConversation(selectedOptionData.name);
+            }, 500);
+
         }
 
         function updateNumberInput(validation) {
