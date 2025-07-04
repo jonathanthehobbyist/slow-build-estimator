@@ -772,8 +772,13 @@
             confirmContainer.style.borderColor = '2px solid #2196f3';
 
             const selectionText = document.createElement('div');
+
+            // DEBUG: Test different ways of setting the text
+            const testText = 'You selected: ' + selectedOption;
+            console.log('testText variable:', testText);
+
             selectionText.textContent = 'You selected:' + selectOption;
-            console.log('selectionText content:', selectionText.textContent);
+            console.log('selectionText.textContent after setting:', selectionText.textContent);
             selectionText.style.marginBottom = '1rem';
             selectionText.style.fontWeight = '600';
             selectionText.style.color = '#2c3e50';
