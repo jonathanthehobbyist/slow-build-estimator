@@ -77,11 +77,13 @@ const CONVERSATION_FLOW = {
   },
 
   kitchen_cabinet_hardware: {
-    question: "Cabinet hardware gets daily use and keeps your cabinets looking pristine",
+    question: "Please select a type of cabinet hardware to use:",
+    statement: "Cabinet hardware gets daily use and keeps your cabinets looking pristine",
+    statementTiming: "before",
     inputType: "choice",
     options: ["High quality", "Luxury: Buster & Punch"],
     lineItems: [
-      { name: "Cabinet hardware", calculation: "flat", category: "materials" }
+      { name: "Cabinet Hardware", calculation: "flat", category: "materials" }
     ],
     next: "kitchen_countertops"
   },
