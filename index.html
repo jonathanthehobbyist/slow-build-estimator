@@ -1069,9 +1069,28 @@
 
             const inputOptions = document.getElementById('inputOptions');
             console.log('inputOptions element:', inputOptions);
+            console.log('inputOptions style object:', inputOptions.style);
 
             if (!inputOptions) {
                 console.error('inputOptions element not found!');
+                return;
+            }
+
+            // Clear the content
+            try {
+                inputOptions.innerHTML = '';
+                console.log('innerHTML cleared successfully');
+            } catch (error) {
+                console.error('Error clearing innerHTML:', error);
+                return;
+            }
+
+            // Try to access the style property that's failing
+            try {
+                inputOptions.style.display = 'flex';
+                console.log('Style.display set successfully');
+            } catch (error) {
+                console.error('Error setting style.display:', error);
                 return;
             }
 
