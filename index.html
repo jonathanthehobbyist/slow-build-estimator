@@ -1169,7 +1169,12 @@
             console.log('=== calculateLineItemPrice DEBUG ===');
             console.log('Full lineItem:', lineItem);
             
-            if (!window.PRICING || !lineItem) return 'TBD';
+            //if (!window.PRICING || !lineItem) return 'TBD';
+
+            if (!window.PRICING || !lineItem) {
+                console.log('Missing PRICING or lineItem');
+                return 'TBD';
+            }
 
             // Get the base item name (before the colon)
             const baseName = lineItem.name.split(':')[0].trim();
@@ -1177,10 +1182,29 @@
             console.log('Available PRICING keys:', Object.keys(window.PRICING));
 
             const pricing = window.PRICING[baseName];
-            if (!pricing) return 'TBD';
+            //if (!pricing) return 'TBD';
+
+            if (!pricing) {
+                console.log('No pricing found for baseName:', baseName);
+                return 'TBD';
+            }
             
             /*const pricing = window.PRICING[lineItem.name.split(':')[0]]; // Get base name without selection
             if (!pricing) return 'TBD';*/
+
+            // ENHANCED DEBUG - Let's see what's actually in the pricing object
+            console.log('Type of pricing object:', typeof pricing);
+            console.log('Pricing object contents:', pricing);
+            console.log('Keys in pricing object:', Object.keys(pricing));
+
+            const userChoice = lineItem.userChoice;
+            console.log('User choice:', userChoice);
+            console.log('Looking for key:', userChoice);
+            console.log('Direct lookup result:', pricing[userChoice]);
+            
+            // Test if the key exists with different methods
+            console.log('hasOwnProperty test:', pricing.hasOwnProperty(userChoice));
+            console.log('in operator test:', userChoice in pricing);
 
 
             
@@ -1189,7 +1213,13 @@
             const itemPricing = pricing[projectType] || pricing['default'];
             console.log('Item pricing found:', itemPricing);
             //const itemPricing = pricing[userChoice] || pricing['default'];
-            if (!itemPricing) return 'TBD';
+            
+            // if (!itemPricing) return 'TBD';
+
+                if (!itemPricing) {
+                console.log('No item pricing found for choice:', userChoice);
+                return 'TBD';
+            }
             
             const sqft = parseInt(conversationState.sessionData.square_footage || 0);
             console.log('Square footage:', sqft);
