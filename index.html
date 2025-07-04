@@ -1065,11 +1065,25 @@
             // Creates multi-select pill button with confirm workflow
             // Allows multiple selections before proceeding
 
+            console.log('updateMultiSelectInput called with:', options);
+
             const inputOptions = document.getElementById('inputOptions');
+            console.log('inputOptions element:', inputOptions);
+
+            if (!inputOptions) {
+                console.error('inputOptions element not found!');
+                return;
+            }
+
             inputOptions.innerHTML = '';
 
             // Initialize selection tracking
             window.tempMultiSelections = [];
+
+            if (!inputOptions) {
+                console.error('inputOptions element not found!');
+                return;
+            }
 
             const container = document.getElementById('div');
             container.style.display = 'flex';
@@ -1337,7 +1351,7 @@
             title.className = 'card-title';
 
             const description = document.createElement('div');
-            description.textContent = option.description;
+            description.textContent = option.description || '';
             description.className = 'card-description';
 
             content.appendChild(title);
