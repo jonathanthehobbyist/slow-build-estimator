@@ -65,6 +65,11 @@
             max-height: calc(85vh - 140px);
         }
 
+        /* Gallery mode - full height when input options are hidden */
+        .conversation-flow.gallery-mode {
+            max-height: calc(85vh - 60px); /* Only account for header */
+        }
+
         .message {
             display: flex;
             flex-direction: column;
@@ -654,6 +659,10 @@
             inputOptions.innerHTML = '';
             inputOptions.style.display = 'none';
 
+            // Enable gallery mode for full height
+            const conversationFlow = document.getElementById('inputOptions');
+            conversationFlow.classList.add('gallery-mode');
+
             const conversationFlow = document.getElementById('conversationFlow');
 
             const galleryOverlay = document.createElement('div');
@@ -817,6 +826,10 @@
             if (galleryOverlay) {
                 galleryOverlay.remove();
             }
+
+            // Restore normal conversation-flow height
+            const conversationFlow = document.getElementById('conversationFlow');
+            conversationFlow.classList.remove('gallery-mode');
 
             // Restore input options area
             const inputOptions = document.getElementById('inputOptions');
