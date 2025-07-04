@@ -1208,12 +1208,15 @@
 
 
             
-            //const userChoice = lineItem.userChoice;
-            const projectType = conversationState.sessionData.project_type;
-            const itemPricing = pricing[projectType] || pricing['default'];
+            const userChoice = lineItem.userChoice;
+            //const projectType = conversationState.sessionData.project_type;
+
+            //const itemPricing = pricing[projectType] || pricing['default'];
+            const itemPricing = pricing[userChoice] || pricing['default'];
+
             console.log('Item pricing found:', itemPricing);
-            //const itemPricing = pricing[userChoice] || pricing['default'];
             
+
             // if (!itemPricing) return 'TBD';
 
                 if (!itemPricing) {
@@ -1226,11 +1229,12 @@
             console.log('Calculation type:', lineItem.calculation);
             
             if (lineItem.calculation === 'perSqFt' && sqft > 0) {
-                const price = itemPricing.perSqFt * sqft;
-                console.log('Calculated perSqFt price:', price);
-                return price;
+                //const price = itemPricing.perSqFt * sqft;
+                return itemPricing.perSqFt * sqft;
+                //console.log('Calculated perSqFt price:', price);
+                // return price;
             } else if (lineItem.calculation === 'flat') {
-                console.log('Returning flat price:', itemPricing.flat);
+                //console.log('Returning flat price:', itemPricing.flat);
                 return itemPricing.flat;
             }
             
