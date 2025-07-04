@@ -745,10 +745,10 @@
             showGalleryConfirmButton(optionName);
         }
 
-        function showGalleryConfirmButton(selectedOption) {
+        function showGalleryConfirmButton(chosenOption) {
 
-            console.log('showGalleryConfirmButton called with:', selectedOption);
-            console.log('Type of selectedOption:', typeof selectedOption);
+            console.log('showGalleryConfirmButton called with:', chosenOption);
+            console.log('Type of chosenOption:', typeof chosenOption);
 
             // Shows confirm button for gallery selection
             // Allows user to confirm choice before proceeding
@@ -774,10 +774,10 @@
             const selectionText = document.createElement('div');
 
             // DEBUG: Test different ways of setting the text
-            const testText = 'You selected: ' + selectedOption;
+            const testText = 'You selected: ' + chosenOption;
             console.log('testText variable:', testText);
 
-            selectionText.textContent = 'You selected:' + selectOption;
+            selectionText.textContent = 'You selected:' + chosenOption;
             console.log('selectionText.textContent after setting:', selectionText.textContent);
             selectionText.style.marginBottom = '1rem';
             selectionText.style.fontWeight = '600';
