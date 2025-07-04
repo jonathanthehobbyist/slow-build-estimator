@@ -1164,11 +1164,18 @@
         function calculateLineItemPrice(lineItem) {
             // Calculates actual price for a line item based on user selection and square footage
             // Returns formatted price string or range
+
+            // Enhanced debugging for flooring pricing issues
+            console.log('=== calculateLineItemPrice DEBUG ===');
+            console.log('Full lineItem:', lineItem);
             
             if (!window.PRICING || !lineItem) return 'TBD';
 
             // Get the base item name (before the colon)
             const baseName = lineItem.name.split(':')[0].trim();
+            console.log('baseName extracted:', baseName);
+            console.log('Available PRICING keys:', Object.keys(window.PRICING));
+
             const pricing = window.PRICING[baseName];
             if (!pricing) return 'TBD';
             
@@ -1180,15 +1187,20 @@
             //const userChoice = lineItem.userChoice;
             const projectType = conversationState.sessionData.project_type;
             const itemPricing = pricing[projectType] || pricing['default'];
+            console.log('Item pricing found:', itemPricing);
             //const itemPricing = pricing[userChoice] || pricing['default'];
             if (!itemPricing) return 'TBD';
             
             const sqft = parseInt(conversationState.sessionData.square_footage || 0);
+            console.log('Square footage:', sqft);
+            console.log('Calculation type:', lineItem.calculation);
             
             if (lineItem.calculation === 'perSqFt' && sqft > 0) {
-                //const price = itemPricing.perSqFt * sqft;
-                return itemPricing.perSqFt * sqft;
+                const price = itemPricing.perSqFt * sqft;
+                console.log('Calculated perSqFt price:', price);
+                return price;
             } else if (lineItem.calculation === 'flat') {
+                console.log('Returning flat price:', itemPricing.flat);
                 return itemPricing.flat;
             }
             
