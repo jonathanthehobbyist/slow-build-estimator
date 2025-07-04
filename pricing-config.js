@@ -12,12 +12,12 @@ const PRICING = {
   
   // Labor pricing per square foot
   "Flooring Installation": {
-    "Laminate": { perSqFt: 2 },
-    "Vinyl": { perSqFt: 2 },
-    "Hardwood": { perSqFt: 4 },
-    "Tile": { perSqFt: 3 },
-    "Natural Stone": { perSqFt: 5 },
-    "Carpet": { perSqFt: 1 }
+    "Laminate": { perSqFt: 10 },
+    "Vinyl": { perSqFt: 5 },
+    "Hardwood": { perSqFt: 20 },
+    "Tile": { perSqFt: 20 },
+    "Natural Stone": { perSqFt: 20 },
+    "Carpet": { perSqFt: 10 }
   },
   
   // Kitchen items - flat pricing
@@ -48,7 +48,7 @@ const PRICING = {
   },
   
   "Countertop Installation": {
-    "default": { perSqFt: 10 } // Auto-included installation
+    "default": { flat: 2000 } // Auto-included installation
   },
   
   "Appliances": {
