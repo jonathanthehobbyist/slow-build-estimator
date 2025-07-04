@@ -652,10 +652,21 @@
 
             const inputOptions = document.getElementById('inputOptions');
             inputOptions.innerHTML = '';
+            inputOptions.style.display = 'none';
+
+            const conversationFlow = document.getElementById('conversationFlow');
+
+            const galleryOverlay = document.createElement('div');
+            galleryOverlay.id = 'galleryOverlay';
+            galleryOverlay.style.width = '100%';
+            galleryOverlay.style.padding = '1rem';
+            galleryOverlay.style.backgroundColor = '#f8f9ff';
+            galleryOverlay.style.borderRadius = '8px';
+            galleryOverlay.style.marginTop = '1rem';
 
             // Ensure the container can expand
-            inputOptions.style.display = 'block'; // Override any flex settings
-            inputOptions.style.width = '100%';
+            //inputOptions.style.display = 'block'; // Override any flex settings
+            //inputOptions.style.width = '100%';
 
             const galleryContainer = document.createElement('div');
             galleryContainer.style.display = 'grid';
@@ -669,8 +680,25 @@
                 galleryContainer.appendChild(card);
             });
 
-            inputOptions.appendChild(galleryContainer);
-            setTimeout(() => flashInputOptions(), 50);
+            // Add instructions
+            const instructions = document.createElement('div');
+            instructions.textContent = 'Select a material option below';
+            instructions.style.marginBottom = '1rem';
+            instructions.style.fontWeight = '600';
+            instructions.style.color = '#2c3e50';
+
+            galleryOverlay.appendChild(instructions);
+            galleryOverlay.appendChild(galleryContainer);
+            conversationFlow.appendChild(galleryOverlay);
+
+            //scroll to gallery
+            setTimeout(() => {
+                galleryOverlay.scrollIntoView({ behavior: smooth });
+                flashInputOptions(); // Flash the input area
+            }, 100);
+
+            //inputOptions.appendChild(galleryContainer);
+            //setTimeout(() => flashInputOptions(), 50);
 
             /*updateInputOptions(options.map(option => ({
                 text: option.name || option,
@@ -682,12 +710,16 @@
             //handles selection of gallery element with visual feedback
             //highlights selected card and proceeds with conversation
 
+            // Store temporarily
+            window.tempGallerySelection = optionName;
+
             // Remove previous selections
             document.querySelectorAll('.gallery-card').forEach(card => {
                 card.classList.remove('selected');
                 card.style.borderColor = 'e5e5e5';
                 card.style.transform = 'translateY(0)';
                 card.style.boxShadow = 'none';
+                card.style.backgroundColor = 'white';
             });
 
             //highlight selected card
@@ -698,15 +730,89 @@
             cardElement.style.boxShadow = '0 4px 12px rgba(33, 150, 243, 0.2)';
 
             //disable all cards to prevent double-click
-            document.querySelectorAll('.gallery-card').forEach(card => {
+            /* document.querySelectorAll('.gallery-card').forEach(card => {
                 card.style.pointerEvents = 'none';
                 if (!card.classList.contains('selected')) {
                     card.style.opacity = '0.6';
                 }
-            });
+            });*/
 
             //proceed with selection
-            selectOption(optionName);
+            showGalleryConfirmButton(optionName);
+        }
+
+        function showGalleryConfirmButton() {
+            // Shows confirm button for gallery selection
+            // Allows user to confirm choice before proceeding
+
+            // Remove existin confirm button if any
+            const existingButton = document.getElementById('galleryConfirmButton');
+            if (existingButton) {
+                existingButton.remove();
+            }
+
+            const galleryOverlay = document.getElementById('galleryOverlay');
+            if (!galleryOverlay) return;
+
+            const confirmContainer = document.createElement('div');
+            confirmContainer.id = 'galleryConfirmButton';
+            confirmContainer.style.marginTop = '1.5rem';
+            confirmContainer.style.textAlign = 'center';
+            confirmContainer.style.padding = '1rem';
+            confirmContainer.style.backgroundColor = 'white';
+            confirmContainer.style.borderRadius = '8px';
+            confirmContainer.style.borderColor = '2px solid #2196f3';
+
+            const selectionText = document.createElement('div');
+            selectionText.textContent = `You selected ${selectOption}`;
+            selectionText.style.marginBottom = '1rem';
+            selectionText.style.fontWeight = '600';
+            selectionText.style.color = '#2c3e50';
+
+            const confirmButton = document.createElement('button');
+            confirmButton.className = 'option-button';
+            confirmButton.textContent = 'Confirm Selection';
+            confirmButton.style.backgroundColor = '#4caf50';
+            confirmButton.style.color = 'white';
+            confirmButton.style.border = 'none';
+            confirmButton.style.padding = '0.75rem 2rem';
+            confirmButton.style.fontSize = '1rem';
+            confirmButton.style.fontWeight = '600';
+
+            confirmButton.onclick = () => confirmGallerySelection();
+
+            confirmContainer.appendChild(selectionText);
+            confirmContainer.appendChild(confirmButton);
+            galleryOverlay.appendChild(confirmContainer);
+
+            // Scroll to confirm button
+            setTimeout(() => {
+                confirmButton.scrollIntoView({ behavior: 'smooth', block: 'center'});
+            }, 100);
+        }
+
+        function confirmGallerySelection() {
+            // Finallizes gallery selection and proceeds with conversation
+            // Cleans up Gallery overlay and restores normal input area
+
+            const selectedOption = window.tempGallerySelection;
+            if (!selectedOption) return;
+
+            // Remove gallery overlay
+            const galleryOverlay = document.getElementById('galleryOverlay');
+            if (galleryOverlay) {
+                galleryOverlay.remove();
+            }
+
+            // Restore input options area
+            const inputOptions = document.getElementById('inputOptions');
+            inputOptions.style.display = 'flex';
+
+            // Clear temp selection
+            delete window.tempGallerySelection;
+
+            // Proceed with the selection
+            selectOption(selectedOption);
         }
 
         function updateNumberInput(validation) {
