@@ -135,6 +135,100 @@
     color: white !important;
 }
 
+/* Multi-select gallery card base styles */
+.multi-select-gallery-card {
+    cursor: pointer;
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.multi-select-gallery-card:hover {
+    border-color: #2196f3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Multi-select gallery card selected state */
+.multi-select-gallery-card.selected {
+    border-color: #2196f3 !important;
+    background-color: #f0f7ff !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2) !important;
+}
+
+/* Multi-select gallery card image */
+.multi-select-gallery-card .card-image {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Multi-select gallery card content */
+.multi-select-gallery-card .card-content {
+    padding: 0.75rem;
+}
+
+.multi-select-gallery-card .card-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    color: #2c3e50;
+}
+
+.multi-select-gallery-card .card-description {
+    font-size: 0.8rem;
+    color: #666;
+    line-height: 1.3;
+}
+
+/* Selection checkmark for multi-select */
+.multi-select-gallery-card .selection-checkmark {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Multi-select gallery container */
+.multi-select-gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+/* Multi-select gallery overlay */
+.multi-select-gallery-overlay {
+    width: 100%;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.multi-select-gallery-instructions {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
 /* Continue button styles */
 .continue-button {
     padding: 0.75rem 2rem;
@@ -670,6 +764,10 @@
             updateGalleryInput(stepConfig.options);
           } else if (stepConfig.inputType === 'continue') {
             updateContinueInput();
+          } else if ('multiSelect') {
+            updateMultiSelectInput(stepConfig.options);
+          } else if ('multiSelectGallery') {
+            updateMultiSelectGallery(stepConfig.options);
           }
         }
 
@@ -1026,24 +1124,15 @@
 
             const galleryOverlay = document.createElement('div');
             galleryOverlay.id = 'multiSelectGalleryOverlay';
-            galleryOverlay.style.width = '100%';
-            galleryOverlay.style.padding = '1rem';
-            galleryOverlay.style.backgroundColor = '#f8f9ff';
-            galleryOverlay.style.borderRadius = '8px';
-            galleryOverlay.style.marginTop = '1rem';
+            galleryOverlay.className = 'multi-select-gallery-overlay';
+           
 
             const instructions = document.createElement('div');
             instructions.textContent = 'Choose all that apply';
-            instructions.style.marginBottom = '1rem';
-            instructions.style.fontWeight = '600';
-            instructions.style.color = '#2c3e50';
+            instructions.className = 'multi-select-gallery-instructions';
 
             const galleryContainer = document.createElement('div');
-            galleryContainer.style.display = 'grid';
-            galleryContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(200px, 1fr))';
-            galleryContainer.style.gap = '1rem';
-            galleryContainer.style.width = '100%';
-            galleryContainer.style.marginBottom = '1.5rem';
+            galleryContainer.className = 'multi-select-gallery-container'
 
             options.forEach(option => {
                 galleryContainer.appendChild(card);
@@ -1156,6 +1245,113 @@
             if (checkmark) {
                 checkmark.remove();
             }
+        }
+
+        function confirmMultiSelect() {
+            // Finalizes the multi-select pill button functions
+            // Proceeds with conversation using selected options
+
+            if (!window.tempMultiSelections || window.tempMultiSelections.length === 0) return;
+
+            console.log('Multi-select confirmed:', window.tempMultiSelections);
+
+            // Add user message showing selections
+            const selectionText = window.tempMultiSelections.join(', ');
+            addMessage(selectionText, 'user');
+
+            // Store selections in session data
+            conversationState.sessionData[conversationState.currentStep] = window.tempMultiSelections;
+
+            delete window.tempMultiSelections;
+
+            // Continue conversation
+            setTimeout(() => {
+                progressConversation(selectionText);
+            }, 500);
+        }
+
+        function confirmMultiSelectGallery() {
+            // Finalizes multi-select gallery selections with images
+            // Shows selected images in conversation and procceds
+
+            if (!window.tempMultiSelections || window.tempMultiSelections.length === 0 ) return;
+
+            console.log('Multi-select gallery confirmed:', window.tempMultiSelections);
+
+            // Remove Overlay gallery
+            const galleryOverlay = document.getElementById('multiSelectGalleryOverlay');
+            if (galleryOverlay) {
+                galleryOverlay.remove();
+            }
+
+            // Restore normal conversation flow height
+            const conversationFlow = document.getElementById('conversationFlow');
+            conversationFlow.classList.remove('gallery-mode');
+
+            // Restore input options area
+            const inputOptions = document.getElementById('inputOptions');
+            inputOptions.style.display = 'flex';
+
+            // Add user message for each selection with images
+            window.tempMultiSelections.forEach(selection => {
+                const imageUrl = selection.thumbnail || selection.image;
+                const name = selection.name || selection;
+                addMessage(name, 'user', imageUrl);
+            });
+
+            // Store selections in session data (just names for flow logic)
+            const selectionNames = window.tempMultiSelections.map(item => item.name || item);
+            conversationState.sessionData[conversationState.currentStep] = selectionNames;
+
+            // Store complete selection data
+            conversationState.sessionData[conversationState.currentStep + '_fullData'] = window.tempMultiSelections;
+
+            // Clear temp selections
+            delete window.tempMultiSelections;
+
+            // Continue conversation
+            const selectionText = selectionNames.join(', ');
+            setTimeout(() => {
+                progressConversation(selectionText);
+            }, 500);
+
+        }
+
+        function createMultiSelectGalleryCard(option) {
+            // Creates gallery card for multi-select using CSS classes
+            // Returns clickable card that can be selected/deselected
+
+            const.card = document.createElement('div');
+            card.className 'multi-select-gallery-card';
+
+            const image = document.createElement('img');
+            image.src = option.thumbnail || option.image;
+            image.alt = option.name;
+            image.className = 'card-image';
+
+            const content = document.createElement('div');
+            content.className = 'card-content';
+
+            const title = document.createElement('div');
+            title.textContent = option.name;
+            title.className = 'card-title';
+
+            const description = document.createElement('div');
+            description.textContent = option.description;
+            description.className = 'card-description';
+
+            content.appendChild(title);
+            if (option.description) {
+                content.appendChild(description);
+            }
+
+            card.appendChild(image);
+            card.appendChild(content);
+
+            // click handler for multi-select
+            card.onclick = () => toggleMultiSelectGallery(option, card);
+
+            return card;
         }
 
         function updateNumberInput(validation) {
