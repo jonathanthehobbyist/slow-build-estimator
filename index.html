@@ -125,6 +125,77 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
+        /* Multi-select button states */
+.multi-select-button {
+    transition: all 0.3s ease;
+}
+
+.multi-select-button.selected {
+    background-color: #2196f3 !important;
+    color: white !important;
+}
+
+/* Continue button styles */
+.continue-button {
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.continue-button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.continue-button:enabled {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.continue-button:enabled:hover {
+    background-color: #45a049;
+    transform: translateY(-1px);
+}
+
+/* Gallery card selection state */
+.gallery-card {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.gallery-card.selected {
+    border-color: #2196f3 !important;
+    background-color: #f0f7ff !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2) !important;
+}
+
+/* Selection checkmark */
+.selection-checkmark {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
         .input-options {
             padding: 1rem;
             border-top: 1px solid #e5e5e5;
@@ -185,7 +256,7 @@
             display: flex;
             justify-content: between;
             align-items: center;
-            padding: 0.75rem 0;
+            padding: 0.25rem 0;
             border-bottom: 1px solid #f0f0f0;
         }
 
@@ -195,11 +266,11 @@
 
         .cost-item-name {
             flex: 1;
-            font-weight: 500;
+            font-weight: 400;
         }
 
         .cost-item-price {
-            font-weight: 600;
+            font-weight: 400;
             color: #2c3e50;
         }
 
@@ -890,6 +961,201 @@
                 progressConversation(selectedOptionData.name);
             }, 500);
 
+        }
+
+        function updateMultiSelectInput(options) {
+            // Creates multi-select pill button with confirm workflow
+            // Allows multiple selections before proceeding
+
+            const inputOptions = document.getElementById('inputOptions');
+            inputOptions.innerHTML = '';
+
+            // Initialize selection tracking
+            window.tempMultiSelections = [];
+
+            const container = document.getElementById('div');
+            container.style.display = 'flex';
+            container.style.flexWrap = 'wrap';
+            container.style.gap = '0.5rem';
+            container.style.marginBottom = '1rem';
+
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-button multi-select-button';
+                button.textContent = option;
+                /* button.style.backgroundColor = 'white';
+                button.style.color = '#2196f3';
+                button.style.border = '2px solid #2196f3';*/
+                button.onclick = () => toggleMultiSelect(option, button);
+                container.appendChild(button);
+            });
+
+            // Add continue button (initially disabled)
+            const continueButton = document.createElement('button');
+            continueButton.id = 'multiSelectContinue';
+            continueButton.className = 'option-button';
+            continueButton.textContent = 'Continue';
+            /* continueButton.style.backgroundColor = '#ccc';
+            continueButton.style.color = '#666';
+            continueButton.style.marginTop = '1rem';
+            continueButton.style.width = '100%'; */
+            continueButton.disabled = true;
+            continueButton.onlick = () => confirmMultiSelect();
+
+            inputOptions.appendChild(container);
+            inputOptions.appendChild(continueButton);
+
+            setTimeout(() => flashInputOptions(), 50);
+
+        }
+
+        function updateMultiSelectGallery(options) {
+            // creates multi select gallery with image cards and confirm workflow
+            // Allows multiple image selections before proceeding
+
+            const inputOptions = document.getElementById('inputOptions');
+            inputOptions.innerHTML = '';
+            inputOptions.style.display = 'none';
+
+            // Initialize selection tracking
+            window.tempMultiSelections = [];
+
+            // Enable gallery mode for full height
+            const conversationFlow = document.getElementById('conversationFlow');
+            conversationFlow.classList.add('gallery-mode');
+
+            const galleryOverlay = document.createElement('div');
+            galleryOverlay.id = 'multiSelectGalleryOverlay';
+            galleryOverlay.style.width = '100%';
+            galleryOverlay.style.padding = '1rem';
+            galleryOverlay.style.backgroundColor = '#f8f9ff';
+            galleryOverlay.style.borderRadius = '8px';
+            galleryOverlay.style.marginTop = '1rem';
+
+            const instructions = document.createElement('div');
+            instructions.textContent = 'Choose all that apply';
+            instructions.style.marginBottom = '1rem';
+            instructions.style.fontWeight = '600';
+            instructions.style.color = '#2c3e50';
+
+            const galleryContainer = document.createElement('div');
+            galleryContainer.style.display = 'grid';
+            galleryContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(200px, 1fr))';
+            galleryContainer.style.gap = '1rem';
+            galleryContainer.style.width = '100%';
+            galleryContainer.style.marginBottom = '1.5rem';
+
+            options.forEach(option => {
+                galleryContainer.appendChild(card);
+            });
+
+            // Add continue button
+            const continueButton = document.createElement('button');
+            continueButton.id = 'multiSelectGalleryContinue';
+            continueButton.className = 'option-buttonl continue-button';
+            continueButton.textContent = 'Continue';
+            // continueButton style
+            continueButton.disabled = true;
+            continueButton.onclick = () => confirmMultiSelectGallery();
+
+            galleryOverlay.appendChild(instructions);
+            galleryOverlay.appendChild(galleryContainer);
+            galleryOverlay.appendChild(continueButton);
+            conversationFlow.appendChild(galleryOverlay);
+
+            setTimeout(() => {
+                galleryOverlay.scrollIntoView({ behavior: 'smooth' });
+                flashInputOptions();
+            }, 100);
+        }
+
+        function toggleMultiSelect(option, buttonElement) {
+            // Toggles selected state for multi-select pill buttons
+            // Updates visual state and enables / disables continue button
+
+            const index = window.tempMultiSelections.indexOf(option);
+
+            if (index === -1) {
+                // Add selection
+                window.tempMultiSelections.push(option);
+                buttonElement.classList.add('selected');
+
+            } else {
+                // Remove selection
+                window.tempMultiSelections.splice(index, 1);
+                buttonElement.classList.remove('selected');
+            }
+
+            updateMultiSelectContinueButton();
+
+        }
+
+        function toggleMultiSelectGallery(option, cardElement) {
+            // Toggles selection state for multi-select gallery cards
+            // Updates visual state and enables/disables continue button
+
+            const index = window.tempMultiSelections.findIndex(item => item.name === option.name);
+
+            if (index === -1) {
+                // Add selection
+                window.tempMultiSelections.push(option);
+                cardElement.classList.add('selected');
+
+                // Add checkmark
+                addSelectionCheckmark(cardElement);
+
+            } else {
+
+                // Remove selection
+                window.tempMultiSelections.splice(index, 1);
+                cardElement.classList.remove('selected');
+                /*cardElement.style.borderColor = '#e5e5e5';
+                cardElement.style.backgroundColor = 'white';
+                cardElement.style.transform = 'translateY(0)';
+                cardElement.style.boxShadow = 'none';*/
+
+                // remove checkmark
+                removeSelectionCheckmark(cardElement);
+            }
+
+            updateMultiSelectContinueButton();
+        }
+
+        function updateMultiSelectContinueButton() {
+            // Enables/disables continue button based on selections
+            // Updates button styling and interaction state
+
+            const continueButton = document.getElementById('multiSelectContinue') || document.getElementById('multiSelectGalleryContinue');
+
+            if (continueButton) {
+                if (window.tempMultiSelections.length > 0) {
+                    continueButton.disabled = false;
+                    continueButton.textContent = `Continue (${window.tempMultiSelections.length} selected)`;
+
+                } else {
+                    continueButton.disabled = true;
+                    continueButton.textContent = 'Continue';
+
+                }
+            }
+        }
+
+        function addSelectionCheckmark(cardElement) {
+            // Adds visual checkmark to selected gallery cards
+            const checkmark = document.createElement('div');
+            checkmark.className = 'selection-checkmark';
+            checkmark.innerHTML = '✓';
+
+            cardElement.appendChild(checkmark);
+
+        }
+
+        function removeSelectionCheckmark(cardElement) {
+            // Removes visual checkmark from deselected gallery cards
+            const checkmark = cardElement.querySelector('.selection-checkmark');
+            if (checkmark) {
+                checkmark.remove();
+            }
         }
 
         function updateNumberInput(validation) {

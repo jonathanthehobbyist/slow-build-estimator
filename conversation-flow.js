@@ -73,8 +73,53 @@ const CONVERSATION_FLOW = {
     lineItems: [
       { name: "Cabinets", calculation: "flat", category: "materials" }
     ],
-    next: "kitchen_cabinet_hardware"
+    next: "kitchen_cabinet_fixtures"
   },
+
+  // Example configuration for multi-select
+/*kitchen_features: {
+  question: "Select all features you'd like to include:",
+  inputType: "multiSelect", // New input type
+  options: ["Kitchen island", "Pantry upgrade", "Wine storage", "Built-in appliances"],
+  lineItems: [
+    {
+      condition: "selected", // Special condition for multi-select
+      items: [
+        { name: "Additional Features", calculation: "flat", category: "materials" }
+      ]
+    }
+  ],
+  next: "complete"
+},*/
+
+// Example for multi-select gallery
+kitchen_cabinet_fixtures: {
+  question: "Select all fixtures you need:",
+  inputType: "multiSelectGallery", // New input type
+  options: [
+    { 
+      name: "Vanity", 
+      image: "https://images.unsplash.com/photo-1...",
+      thumbnail: "https://images.unsplash.com/photo-1...",
+      description: "Modern bathroom vanity"
+    },
+    { 
+      name: "Mirror", 
+      image: "https://images.unsplash.com/photo-2...",
+      thumbnail: "https://images.unsplash.com/photo-2...",
+      description: "LED-lit mirror"
+    }
+  ],
+  lineItems: [
+    {
+      condition: "selected",
+      items: [
+        { name: "Fixtures", calculation: "flat", category: "materials" }
+      ]
+    }
+  ],
+  next: "kitchen_cabinet_hardware"
+}
 
   kitchen_cabinet_hardware: {
     question: "Please select a type of cabinet hardware to use:",
