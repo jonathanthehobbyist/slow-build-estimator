@@ -653,11 +653,16 @@
             const inputOptions = document.getElementById('inputOptions');
             inputOptions.innerHTML = '';
 
+            // Ensure the container can expand
+            inputOptions.style.display = 'block'; // Override any flex settings
+            inputOptions.style.width = '100%';
+
             const galleryContainer = document.createElement('div');
             galleryContainer.style.display = 'grid';
             galleryContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(180px, 1fr))';
             galleryContainer.style.gap = '1rem';
             galleryContainer.style.padding = '0 .5rem 0';
+            galleryContainer.style.width = '100%';
 
             options.forEach(option => {
                 const card = createGalleryCard(option);
