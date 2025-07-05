@@ -767,11 +767,15 @@
             
             // Update current step
             conversationState.currentStep = nextStep;
+
+            // Determine if question also has a response
+            const hasResponse = currentStepConfig && currentStepConfig.responseLogic;
+            const nextQuestionDelay = hasResponse ? 1500 : 100; //Wait longer if we show a response
             
             // Get next step configuration
             const stepConfig = window.CONVERSATION_FLOW[nextStep];
             if (stepConfig) {
-
+                setTimeout(() => {
                 // handle statement display and timing
                 if (stepConfig.statementTiming === 'before') {
                     // statement first
@@ -802,6 +806,7 @@
                     }
                     setTimeout(() => showInputs(stepConfig), window.CONVERSATION_TIMING.statementDelay);
                 }
+              }, nextQuestionDelay);   
             }
 
                 // removed
