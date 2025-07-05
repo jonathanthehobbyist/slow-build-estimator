@@ -910,10 +910,21 @@
 
             const galleryContainer = document.createElement('div');
             galleryContainer.style.display = 'grid';
-            galleryContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(180px, 1fr))';
+            //galleryContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(180px, 1fr))';
             galleryContainer.style.gap = '1rem';
             galleryContainer.style.padding = '0 .5rem 0';
             galleryContainer.style.width = '100%';
+
+            //check for single column layout
+            const currentStep = window.CONVERSATION_FLOW[conversationState.currentStep];
+            if (currentStep && currentStep.layout === 'single-column') {
+                console.log('🎨 Using single-column layout');
+                galleryContainer.className = 'gallery-container-single';
+                // CSS classes handle grid layout
+            } else {
+                console.log('🎨 Using default multi-column layout');
+                galleryContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(180px, 1fr))';
+            }
 
             options.forEach(option => {
                 const card = createGalleryCard(option);
