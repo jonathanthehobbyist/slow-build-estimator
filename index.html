@@ -727,6 +727,17 @@
                 });
                 console.log('Total cost items now:', conversationState.costItems);
             }
+
+            const currentStepConfig = window.CONVERSATION_FLOW[conversationState.currentStep];
+            if(currentStepConfig && currentStepConfig.responseLogic) {
+                const responseMessage = currentStepConfig.responseLogic(lastSelection, conversationState.sessionData);
+                if(responseMessage) {
+                    setTimeout(() => {
+                        addMessage(responseMessage, 'system');
+                    }, 800) // delay to feel more natural
+
+                }
+            }
             
             // Get next step
             let nextStep;

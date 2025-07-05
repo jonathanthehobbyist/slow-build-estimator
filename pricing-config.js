@@ -52,8 +52,8 @@ const PRICING = {
   },
   
   "Appliances": {
-    "Premium: LG and GE": { flat: 25000 },
-    "Luxury: Thermador and Subzero": { flat: 50000 }
+    "LG and GE": { flat: 25000 },
+    "Thermador and Subzero": { flat: 50000 }
   },
   
   "Demolition": {

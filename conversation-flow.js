@@ -177,20 +177,33 @@ kitchen_cabinet_fixtures: {
     layout: "single-column",  // ← Add this property
     options: [
       { 
-        name: "Premium: LG and GE", 
+        name: "LG and GE", 
         image: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
         thumbnail: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
         description: "High-quality appliances from trusted brands"
       },
       { 
-        name: "Thermador", 
+        name: "Thermador and Subzero", 
         image: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
         thumbnail: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
         description: "High-quality appliances from trusted brands"
       }
     ],
+    responseLogic: (userChoice, sessionData) => {
+    const sqft = sessionData.square_footage;
+    const projectType = sessionData.project_type;
+    
+    if (userChoice.includes("Thermador")) {
+      return `Excellent! Thermador and Sub-Zero are the gold standard for professional kitchens. For your ${sqft} sq ft ${projectType.toLowerCase()}, these appliances will create a truly chef-worthy space.`;
+    } else if (userChoice.includes("LG")) {
+      return `Great choice! LG and GE offer excellent reliability and modern features at a more affordable price point. Perfect for your ${sqft} sq ft kitchen - you'll get professional performance at a great value.`;
+    } else if (userChoice.includes("GE")) {
+      return `Smart decision! Keeping your existing appliances is a great way to control costs in your ${projectType.toLowerCase()}. You can always upgrade them later.`;
+    }
+      return "Great selection!";
+    },
     lineItems: [
-        { name: "Countertops", calculation: "flat", category: "materials" }
+        { name: "Appliances", calculation: "flat", category: "materials" }
     ],
     next: "kitchen_cabinet_organizers"
   },
