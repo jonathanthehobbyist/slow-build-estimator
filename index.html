@@ -1228,16 +1228,23 @@
             // Add continue button
             const continueButton = document.createElement('button');
             continueButton.id = 'multiSelectGalleryContinue';
-            continueButton.className = 'option-buttonl continue-button';
+            continueButton.className = 'option-button continue-button';
             continueButton.textContent = 'Continue';
             // continueButton style
             continueButton.disabled = true;
-            continueButton.onclick = () => confirmMultiSelectGallery();
+            //continueButton.onclick = () => confirmMultiSelectGallery();
+
+            continueButton.onclick = () => {
+                console.log('Continue button clicked!');  // ← Add this
+                confirmMultiSelectGallery();
+            };
 
             galleryOverlay.appendChild(instructions);
             galleryOverlay.appendChild(galleryContainer);
             galleryOverlay.appendChild(continueButton);
             conversationFlow.appendChild(galleryOverlay);
+
+
 
             setTimeout(() => {
                 galleryOverlay.scrollIntoView({ behavior: 'smooth' });
