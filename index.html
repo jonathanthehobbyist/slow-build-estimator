@@ -1277,6 +1277,8 @@
             // Toggles selection state for multi-select gallery cards
             // Updates visual state and enables/disables continue button
 
+            console.log('toggleMultiSelectGallery called with:', option.name);
+
             const index = window.tempMultiSelections.findIndex(item => item.name === option.name);
 
             if (index === -1) {
@@ -1300,7 +1302,7 @@
                 // remove checkmark
                 removeSelectionCheckmark(cardElement);
             }
-
+            console.log('About to call updateMultiSelectContinueButton');  // ← Add this
             updateMultiSelectContinueButton();
         }
 

@@ -427,6 +427,15 @@ class ConversationFlowHelper {
   
   static shouldAddLineItem(lineItemDef, userInput) {
     if (!lineItemDef.condition) return true;
+
+    // Multi-select logic
+    if(lineItemDef.condition === 'selected') {
+      if(Array.isArray(userInput)) {
+        return userInput > 0; // any items selected
+      }
+      return userInput && userInput !== ""; // Single item selected
+    }
+
     
     // Simple condition checking
     if (lineItemDef.condition === userInput) return true;
