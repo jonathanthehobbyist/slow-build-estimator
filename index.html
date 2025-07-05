@@ -1390,6 +1390,10 @@
             const selectionNames = window.tempMultiSelections.map(item => item.name || item);
             conversationState.sessionData[conversationState.currentStep] = selectionNames;
 
+            // Add this debug:
+            console.log('Stored session data:', conversationState.sessionData);
+            console.log('Current cost items:', conversationState.costItems);
+
             // Store complete selection data
             conversationState.sessionData[conversationState.currentStep + '_fullData'] = window.tempMultiSelections;
 
