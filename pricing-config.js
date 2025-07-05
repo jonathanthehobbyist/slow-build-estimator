@@ -35,7 +35,7 @@ const PRICING = {
     "Trash can pull-out": { flat: 500 },
     "Cutting board pull-out": { flat: 500 },
     "Spice rack pull-out": { flat: 500 },
-    "Tracy roll-out": { flat: 500 },
+    "Tray roll-out": { flat: 500 },
     "Mixer lifts": { flat: 500 },
     "Lazy Susan": { flat: 1000 }
   },
@@ -65,6 +65,32 @@ const PRICING = {
     "Full Renovation": { flat: 1000},
     "Partial Renovation": { flat: 500}
   },
+
+  "Fixtures": {
+  "Basic": { flat: 2000 },
+  "Standard": { flat: 4000 },
+  "Premium": { flat: 8000 },
+  "Luxury": { flat: 15000 }
+},
+
+"Vanity": {
+  "Stock vanity": { flat: 1500 },
+  "Custom vanity": { flat: 4000 },
+  "Double vanity": { flat: 6000 },
+  "Floating vanity": { flat: 2500 }
+},
+
+"Additional Features": {
+  "Kitchen island": { flat: 8000 },
+  "Pantry upgrade": { flat: 3000 },
+  "Wine storage": { flat: 2500 },
+  "Built-in shelving": { flat: 2000 },
+  "Fireplace upgrade": { flat: 5000 },
+  "Entertainment center": { flat: 3000 },
+  "Walk-in closet": { flat: 4000 },
+  "Built-in wardrobes": { flat: 3500 },
+  "Reading nook": { flat: 1500 }
+},
 
 };
 
