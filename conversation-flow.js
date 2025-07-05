@@ -188,7 +188,7 @@ kitchen_cabinet_fixtures: {
         thumbnail: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
         description: "High-quality appliances from trusted brands"
       }
-    ]
+    ],
     lineItems: [
       {
         { name: "Countertops", calculation: "flat", category: "materials" }
