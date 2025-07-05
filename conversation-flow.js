@@ -405,13 +405,22 @@ class ConversationFlowHelper {
     const lineItems = [];
 
     stepConfig.lineItems?.forEach(lineItemDef => {
+      console.log('🔍 Processing lineItemDef:', lineItemDef);
+      console.log('🔍 lineItemDef.condition:', lineItemDef.condition);
       if (this.shouldAddLineItem(lineItemDef, userInput)) {
+        console.log('🔍 shouldAddLineItem returned TRUE');
         if (lineItemDef.items) {
+          console.log('🔍 Has items array, length:', lineItemDef.items.length);
           if(Array.isArray(userInput)) {
+            console.log('🔍 Taking multi-select path');
+            console.log('🔍 userInput array:', userInput);
             // Multi select: only create line items for selected items
             userInput.forEach(selectedItem => {
+              console.log('🔍 Looking for selectedItem:', selectedItem);
               const matchingItem = lineItemDef.items.find(item => item.name === selectedItem);
+              console.log('🔍 matchingItem found:', matchingItem);
               if (matchingItem) {
+                console.log('🔍 Adding line item for:', selectedItem);
                 lineItems.push({
                   name: matchingItem.name, //just the item name
                   calculation: matchingItem.calculation,
@@ -422,6 +431,8 @@ class ConversationFlowHelper {
               }
           });
         } else {
+           console.log('🔍 shouldAddLineItem returned FALSE');
+           console.log('🔍 Checking why: condition =', lineItemDef.condition, 'userInput =', userInput);
           // single select: original logic
           lineItemDef.items.forEach(item => {
                 lineItems.push({
