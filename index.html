@@ -1376,7 +1376,15 @@
             // Finalizes multi-select gallery selections with images
             // Shows selected images in conversation and procceds
 
-            if (!window.tempMultiSelections || window.tempMultiSelections.length === 0 ) return;
+            console.log('🚀 confirmMultiSelectGallery called!');  // ← Add this
+            console.log('🚀 tempMultiSelections:', window.tempMultiSelections);  // ← Add this
+
+            //if (!window.tempMultiSelections || window.tempMultiSelections.length === 0 ) return;
+
+            if (!window.tempMultiSelections || window.tempMultiSelections.length === 0 ) {
+                console.log('🚨 No selections, returning early');  // ← Add this
+                return;
+              }
 
             console.log('Multi-select gallery confirmed:', window.tempMultiSelections);
 
@@ -1417,6 +1425,7 @@
 
             // Continue conversation
             
+            console.log('🚀 About to call progressConversation with:', selectionNames);  // ← Add this
             setTimeout(() => {
                 progressConversation(selectionNames); // passing an array
             }, 500);
