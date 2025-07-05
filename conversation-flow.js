@@ -398,11 +398,56 @@ class ConversationFlowHelper {
     console.log('userInput:', userInput);
     console.log('userInput type:', typeof userInput);
     console.log('userInput is array:', Array.isArray(userInput));
-    
+
     const stepConfig = CONVERSATION_FLOW[stepName];
     const lineItems = [];
-    
+
     stepConfig.lineItems?.forEach(lineItemDef => {
+      if (this.shouldAddLineItem(lineItemDef, userInput)) {
+        if (lineItemDef.items) {
+          if(Array.isArray(userInput)) {
+            // Multi select: only create line items for selected items
+            userInput.forEach(selectedItem => {
+              const matchingItem = lineItemDef.items.find(item => item.name === selectedItem);
+              if (matchingItem) {
+                lineItems.push({
+                  name: matchingItem.name, //just the item name
+                  calculation: matchingItem.calculation,
+                  category: matchingItem.category,
+                  userChoice: selectedItem, // individual selection
+                  stepName: stepName
+                });
+              }
+          });
+        } else {
+          // single select: original logic
+          lineItemDef.items.forEach(item => {
+                lineItems.push({
+                  name: `${item.name}: ${userInput}`,
+                  calculation: item.calculation,
+                  category: item.category,
+                  userChoice: userInput,
+                  stepName: stepName,
+                });
+              });
+            }
+          } else {
+            // single item (no items array)
+            lineItems.push({
+                name: `${lineItemDef.name}: ${userInput}`,
+                calculation: lineItemDef.calculation,
+                category: lineItemDef.category,
+                userChoice: userInput,
+                stepName: stepName,
+                autoInclude: lineItemDef.autoInclude || false
+            });
+          }    
+        }
+      });
+    
+    return lineItems;
+  }   
+   /* stepConfig.lineItems?.forEach(lineItemDef => {
       if (this.shouldAddLineItem(lineItemDef, userInput)) {
         if (lineItemDef.items) {
           // Multiple items with conditions
@@ -430,7 +475,7 @@ class ConversationFlowHelper {
     });
     
     return lineItems;
-  }
+  }*/
   
   static shouldAddLineItem(lineItemDef, userInput) {
     if (!lineItemDef.condition) return true;
