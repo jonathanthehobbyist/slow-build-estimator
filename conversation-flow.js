@@ -173,12 +173,25 @@ kitchen_cabinet_fixtures: {
     question: "Let's choose your appliance package:",
     statement: "Interesting fact: on average, appliances make up 30% of the cost of a full kitchen remodel",
     statementTiming: "before",
-    inputType: "choice",
-    options: ["Premium: LG and GE", "Luxury: Thermador and Subzero", "No appliances"],
+    inputType: "gallery",
+    layout: "single-column",  // ← Add this property
+    options: [
+      { 
+        name: "Premium: LG and GE", 
+        image: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
+        thumbnail: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
+        description: "High-quality appliances from trusted brands"
+      },
+      { 
+        name: "Premium: LG and GE", 
+        image: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
+        thumbnail: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
+        description: "High-quality appliances from trusted brands"
+      }
+    ]
     lineItems: [
       {
-        condition: "not No appliances",
-        items: [{ name: "Appliances", calculation: "flat", category: "materials" }]
+        { name: "Countertops", calculation: "flat", category: "materials" }
       }
     ],
     next: "kitchen_cabinet_organizers"

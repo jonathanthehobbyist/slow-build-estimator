@@ -279,6 +279,21 @@
     transform: translateY(-1px);
 }
 
+/* Single-column gallery container */
+.gallery-container-single {
+    display: grid;
+    grid-template-columns: 1fr !important;  /* Force single column */
+    gap: 1rem;
+    width: 100%;
+    max-width: 400px;  /* Limit width for better appearance */
+    margin: 0 auto;    /* Center the column */
+}
+
+/* Larger images for single-column */
+.gallery-container-single .gallery-card .card-image {
+    height: 180px;  /* Taller than the 120px default */
+}
+
 /* Gallery card selection state */
 .gallery-card {
     transition: all 0.3s ease;
