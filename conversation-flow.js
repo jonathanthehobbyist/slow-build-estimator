@@ -190,9 +190,7 @@ kitchen_cabinet_fixtures: {
       }
     ],
     lineItems: [
-      {
         { name: "Countertops", calculation: "flat", category: "materials" }
-      }
     ],
     next: "kitchen_cabinet_organizers"
   },
