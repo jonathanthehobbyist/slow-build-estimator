@@ -661,6 +661,11 @@
         }
 
         function progressConversation(lastSelection) { 
+            console.log('🚀 progressConversation called with:', lastSelection);  // ← Add this
+            console.log('🚀 typeof lastSelection:', typeof lastSelection);  // ← Add this
+            console.log('🚀 Array.isArray(lastSelection):', Array.isArray(lastSelection));  // ← Add this
+    
+
             // Get line items for the current step
             if (window.ConversationFlowHelper) {
                 const lineItems = window.ConversationFlowHelper.getLineItemsForStep(
