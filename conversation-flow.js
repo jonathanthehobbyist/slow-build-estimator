@@ -186,7 +186,7 @@ kitchen_cabinet_fixtures: {
 
 
   kitchen_cabinet_organizers: {
-    question: "Choose your countertop material:",
+    question: "Cabinets can be improved with organizers, please select all that are interesting:",
     inputType: "multiSelectGallery", // Multi Select Image selection
     options: [
       { 
