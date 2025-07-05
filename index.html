@@ -1424,7 +1424,7 @@
             delete window.tempMultiSelections;
 
             // Continue conversation
-            
+
             console.log('🚀 About to call progressConversation with:', selectionNames);  // ← Add this
             setTimeout(() => {
                 progressConversation(selectionNames); // passing an array
@@ -1722,6 +1722,18 @@
             const baseName = lineItem.name.split(':')[0].trim();
             console.log('baseName extracted:', baseName);
             console.log('Available PRICING keys:', Object.keys(window.PRICING));
+
+            // Special case for cabinet organizers
+            if (lineItem.stepName === 'kitchen_cabinet_organizers') {
+                console.log('🔧 Cabinet organizer detected, using special pricing lookup');
+                const organizerPricing = window.PRICING["Cabinet Organizers"];
+                if (organizerPricing && organizerPricing[lineItem.userChoice]) {
+                    console.log('🔧 Found organizer pricing:', organizerPricing[lineItem.userChoice]);
+                    return organizerPricing[lineItem.userChoice].flat;
+                }
+                console.log('🔧 No organizer pricing found for:', lineItem.userChoice);
+                return 'TBD';
+            }
 
             const pricing = window.PRICING[baseName];
             //if (!pricing) return 'TBD';
