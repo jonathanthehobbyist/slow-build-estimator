@@ -784,9 +784,9 @@
             updateGalleryInput(stepConfig.options);
           } else if (stepConfig.inputType === 'continue') {
             updateContinueInput();
-          } else if ('multiSelect') {
+          } else if (stepConfig.inputType === 'multiSelect') {
             updateMultiSelectInput(stepConfig.options);
-          } else if ('multiSelectGallery') {
+          } else if (stepConfig.inputType === 'multiSelectGallery') {
             updateMultiSelectGallery(stepConfig.options);
           }
         }
@@ -1145,13 +1145,52 @@
             continueButton.className = 'option-button';
             continueButton.textContent = 'Continue';
             continueButton.disabled = true;
-            continueButton.onlick = () => confirmMultiSelect();
+            continueButton.onclick = () => confirmMultiSelect();
 
             inputOptions.appendChild(container);
             inputOptions.appendChild(continueButton);
 
             setTimeout(() => flashInputOptions(), 50);
 
+        }
+
+        // needs to go before updateMultiSelectGallery
+
+        function createMultiSelectGalleryCard(option) {
+            // Creates gallery card for multi-select using CSS classes
+            // Returns clickable card that can be selected/deselected
+
+            const card = document.createElement('div');
+            card.className = 'multi-select-gallery-card';
+
+            const image = document.createElement('img');
+            image.src = option.thumbnail || option.image;
+            image.alt = option.name;
+            image.className = 'card-image';
+
+            const content = document.createElement('div');
+            content.className = 'card-content';
+
+            const title = document.createElement('div');
+            title.textContent = option.name;
+            title.className = 'card-title';
+
+            const description = document.createElement('div');
+            description.textContent = option.description || '';
+            description.className = 'card-description';
+
+            content.appendChild(title);
+            if (option.description) {
+                content.appendChild(description);
+            }
+
+            card.appendChild(image);
+            card.appendChild(content);
+
+            // click handler for multi-select
+            card.onclick = () => toggleMultiSelectGallery(option, card);
+
+            return card;
         }
 
         function updateMultiSelectGallery(options) {
@@ -1182,6 +1221,7 @@
             galleryContainer.className = 'multi-select-gallery-container'
 
             options.forEach(option => {
+                const card = createMultiSelectGalleryCard(option);
                 galleryContainer.appendChild(card);
             });
 
@@ -1364,42 +1404,7 @@
 
         }
 
-        function createMultiSelectGalleryCard(option) {
-            // Creates gallery card for multi-select using CSS classes
-            // Returns clickable card that can be selected/deselected
-
-            const card = document.createElement('div');
-            card.className = 'multi-select-gallery-card';
-
-            const image = document.createElement('img');
-            image.src = option.thumbnail || option.image;
-            image.alt = option.name;
-            image.className = 'card-image';
-
-            const content = document.createElement('div');
-            content.className = 'card-content';
-
-            const title = document.createElement('div');
-            title.textContent = option.name;
-            title.className = 'card-title';
-
-            const description = document.createElement('div');
-            description.textContent = option.description || '';
-            description.className = 'card-description';
-
-            content.appendChild(title);
-            if (option.description) {
-                content.appendChild(description);
-            }
-
-            card.appendChild(image);
-            card.appendChild(content);
-
-            // click handler for multi-select
-            card.onclick = () => toggleMultiSelectGallery(option, card);
-
-            return card;
-        }
+        
 
         function updateNumberInput(validation) {
 
