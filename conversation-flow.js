@@ -73,7 +73,7 @@ const CONVERSATION_FLOW = {
     lineItems: [
       { name: "Cabinets", calculation: "flat", category: "materials" }
     ],
-    next: "kitchen_cabinet_fixtures"
+    next: "kitchen_cabinet_organizers"
   },
 
   // Example configuration for multi-select
@@ -93,7 +93,7 @@ const CONVERSATION_FLOW = {
 },*/
 
 // Example for multi-select gallery
-kitchen_cabinet_fixtures: {
+/*kitchen_cabinet_fixtures: {
   question: "Select all fixtures you need:",
   inputType: "multiSelectGallery", // New input type
   options: [
@@ -119,7 +119,64 @@ kitchen_cabinet_fixtures: {
     }
   ],
   next: "kitchen_cabinet_hardware"
-},
+},*/
+
+  kitchen_cabinet_organizers: {
+    question: "Cabinets can be improved with organizers, please select all that are interesting:",
+    inputType: "multiSelectGallery", // Multi Select Image selection
+    options: [
+      { 
+        name: "Trash can pull-out", 
+        image: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=400&h=300&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=200&h=150&fit=crop",
+        description: "Affordable laminate countertops"
+      },
+      { 
+        name: "Cutting board pull-out", 
+        image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=300&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=200&h=150&fit=crop",
+        description: "Durable engineered quartz"
+      },
+      { 
+        name: "Spice rack pull-out", 
+        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop",
+        description: "Natural granite stone"
+      },
+      { 
+        name: "Tray roll-out", 
+        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&sat=-100",
+        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop&sat=-100",
+        description: "Warm wood countertops"
+      },
+      { 
+        name: "Mixer lifts", 
+        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&sat=-100",
+        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop&sat=-100",
+        description: "Warm wood countertops"
+      },
+      { 
+        name: "Lazy Susan", 
+        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&sat=-100",
+        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop&sat=-100",
+        description: "Warm wood countertops"
+      }
+    ],
+    lineItems: [
+      {
+      condition: "selected", // Special condition for multiselect
+        items: [
+          { name: "Trash can pull-out", calculation: "flat", category: "materials" },
+          { name: "Cutting board pull-out", calculation: "flat", category: "materials" },
+          { name: "Spice rack pull-out", calculation: "flat", category: "materials" },
+          { name: "Tray roll-out", calculation: "flat", category: "materials" },
+          { name: "Mixer lifts", calculation: "flat", category: "materials" },
+          { name: "Lazy Susan", calculation: "flat", category: "materials" }    
+        ]
+      }
+    ],
+    next: "kitchen_cabinet_hardware"
+  },
 
   kitchen_cabinet_hardware: {
     question: "Please select a type of cabinet hardware to use:",
@@ -205,66 +262,11 @@ kitchen_cabinet_fixtures: {
     lineItems: [
         { name: "Appliances", calculation: "flat", category: "materials" }
     ],
-    next: "kitchen_cabinet_organizers"
+    next: "kitchen_cabinet_features"
   },
 
 
-  kitchen_cabinet_organizers: {
-    question: "Cabinets can be improved with organizers, please select all that are interesting:",
-    inputType: "multiSelectGallery", // Multi Select Image selection
-    options: [
-      { 
-        name: "Trash can pull-out", 
-        image: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=400&h=300&fit=crop",
-        thumbnail: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=200&h=150&fit=crop",
-        description: "Affordable laminate countertops"
-      },
-      { 
-        name: "Cutting board pull-out", 
-        image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=300&fit=crop",
-        thumbnail: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=200&h=150&fit=crop",
-        description: "Durable engineered quartz"
-      },
-      { 
-        name: "Spice rack pull-out", 
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop",
-        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop",
-        description: "Natural granite stone"
-      },
-      { 
-        name: "Tray roll-out", 
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&sat=-100",
-        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop&sat=-100",
-        description: "Warm wood countertops"
-      },
-      { 
-        name: "Mixer lifts", 
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&sat=-100",
-        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop&sat=-100",
-        description: "Warm wood countertops"
-      },
-      { 
-        name: "Lazy Susan", 
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&sat=-100",
-        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop&sat=-100",
-        description: "Warm wood countertops"
-      }
-    ],
-    lineItems: [
-      {
-      condition: "selected", // Special condition for multiselect
-        items: [
-          { name: "Trash can pull-out", calculation: "flat", category: "materials" },
-          { name: "Cutting board pull-out", calculation: "flat", category: "materials" },
-          { name: "Spice rack pull-out", calculation: "flat", category: "materials" },
-          { name: "Tray roll-out", calculation: "flat", category: "materials" },
-          { name: "Mixer lifts", calculation: "flat", category: "materials" },
-          { name: "Lazy Susan", calculation: "flat", category: "materials" }    
-        ]
-      }
-    ],
-    next: "kitchen_features"
-  },
+  
 
     // Example configuration for multi-select
 /*kitchen_features: {
