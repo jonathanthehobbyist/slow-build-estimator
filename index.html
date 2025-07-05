@@ -668,6 +668,7 @@
 
             // Get line items for the current step
             if (window.ConversationFlowHelper) {
+                console.log('🚀 ConversationFlowHelper exists, calling getLineItemsForStep');  // ← Add this
                 const lineItems = window.ConversationFlowHelper.getLineItemsForStep(
                     conversationState.currentStep, 
                     lastSelection
