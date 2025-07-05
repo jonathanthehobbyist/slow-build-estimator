@@ -1410,9 +1410,9 @@
             delete window.tempMultiSelections;
 
             // Continue conversation
-            const selectionText = selectionNames.join(', ');
+            
             setTimeout(() => {
-                progressConversation(selectionText);
+                progressConversation(selectionNames); // passing an array
             }, 500);
 
         }
