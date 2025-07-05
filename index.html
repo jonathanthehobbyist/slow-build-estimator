@@ -289,30 +289,34 @@
     margin: 0 auto !important;    /* Center the column */
 }
 
-/* Make cards full width in single-column */
+/* Make cards full width and taller in single-column */
 .gallery-container-single .gallery-card {
     width: 100% !important;
     max-width: none !important;
+    min-height: 300px !important;  /* ← Make cards taller */
 }
 
-/* Larger images for single-column */
+/* Much larger images for single-column */
 .gallery-container-single .gallery-card img {
-    height: 200px !important;  /* Taller than the 120px default */
+    height: 240px !important;  /* ← Increased from 200px */
     width: 100% !important;
 }
 
-/* Better content padding for wider cards */
+/* More spacious content padding */
 .gallery-container-single .gallery-card .card-content {
-    padding: 1rem !important;
+    padding: 1.5rem !important;  /* ← More padding */
+    flex: 1;  /* ← Take up remaining space */
 }
 
 /* Larger text for single-column cards */
 .gallery-container-single .gallery-card .card-title {
-    font-size: 1.1rem !important;
+    font-size: 1.2rem !important;  /* ← Bigger title */
+    margin-bottom: 0.5rem !important;
 }
 
 .gallery-container-single .gallery-card .card-description {
-    font-size: 0.9rem !important;
+    font-size: 1rem !important;  /* ← Bigger description */
+    line-height: 1.5 !important;
 }
 
 /* Gallery card selection state */
