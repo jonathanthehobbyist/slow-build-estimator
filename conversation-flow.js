@@ -392,6 +392,13 @@ class ConversationFlowHelper {
   }
   
   static getLineItemsForStep(stepName, userInput) {
+
+    console.log('=== getLineItemsForStep DEBUG ===');
+    console.log('stepName:', stepName);
+    console.log('userInput:', userInput);
+    console.log('userInput type:', typeof userInput);
+    console.log('userInput is array:', Array.isArray(userInput));
+    
     const stepConfig = CONVERSATION_FLOW[stepName];
     const lineItems = [];
     
