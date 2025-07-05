@@ -262,7 +262,7 @@ const CONVERSATION_FLOW = {
     lineItems: [
         { name: "Appliances", calculation: "flat", category: "materials" }
     ],
-    next: "kitchen_cabinet_features"
+    next: "kitchen_features"
   },
 
 
