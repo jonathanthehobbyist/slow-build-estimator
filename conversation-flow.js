@@ -409,6 +409,10 @@ class ConversationFlowHelper {
       console.log('🔍 lineItemDef.condition:', lineItemDef.condition);
       if (this.shouldAddLineItem(lineItemDef, userInput)) {
         console.log('🔍 shouldAddLineItem returned TRUE');
+
+
+
+
         if (lineItemDef.items) {
           console.log('🔍 Has items array, length:', lineItemDef.items.length);
           if(Array.isArray(userInput)) {
@@ -491,12 +495,24 @@ class ConversationFlowHelper {
   }*/
   
   static shouldAddLineItem(lineItemDef, userInput) {
-    if (!lineItemDef.condition) return true;
+    console.log('🔍 shouldAddLineItem called');
+  console.log('🔍 lineItemDef.condition:', lineItemDef.condition);
+  console.log('🔍 userInput:', userInput);
+  console.log('🔍 Array.isArray(userInput):', Array.isArray(userInput));
+
+    //if (!lineItemDef.condition) return true;
+
+     if (!lineItemDef.condition) {
+        console.log('🔍 No condition, returning true');
+        return true;
+      }
 
     // Multi-select logic
     if(lineItemDef.condition === 'selected') {
+      console.log('🔍 Condition is "selected"');
       if(Array.isArray(userInput)) {
-        return userInput > 0; // any items selected
+        console.log('🔍 userInput is array, length:', userInput.length);
+        return userInput.length > 0; // any items selected
       }
       return userInput && userInput !== ""; // Single item selected
     }
