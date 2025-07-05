@@ -393,6 +393,8 @@ class ConversationFlowHelper {
   
   static getLineItemsForStep(stepName, userInput) {
 
+    console.log('🚀 NEW CODE IS RUNNING!');
+
     console.log('=== getLineItemsForStep DEBUG ===');
     console.log('stepName:', stepName);
     console.log('userInput:', userInput);
