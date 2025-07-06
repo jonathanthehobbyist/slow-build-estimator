@@ -6,6 +6,11 @@
     <title>Interior Design Estimator</title>
     <script src="conversation-flow.js"></script>
     <script src="pricing-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS (you'll get this from EmailJS dashboard)
+        emailjs.init('WDXkQzVjEd5RcRLZ0'); // Replace with your actual public key
+    </script>
     <style>
         * {
             margin: 0;
@@ -124,6 +129,70 @@
             display: block;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
+        /* Email input container */
+.email-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Email input field */
+.email-input {
+    padding: 0.75rem;
+    border: 2px solid #2196f3;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+    transition: border-color 0.3s ease;
+}
+
+.email-input:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.email-input.error {
+    border-color: #e74c3c;
+}
+
+/* Email submit button */
+.email-submit-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.email-submit-button:hover:not(:disabled) {
+    background-color: #45a049;
+    transform: translateY(-1px);
+}
+
+.email-submit-button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Email error message */
+.email-error-message {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    display: none;
+    margin-top: 0.25rem;
+}
+
+.email-error-message.show {
+    display: block;
+}
 
         /* Multi-select button states */
 
@@ -850,6 +919,8 @@
             updateMultiSelectInput(stepConfig.options);
           } else if (stepConfig.inputType === 'multiSelectGallery') {
             updateMultiSelectGallery(stepConfig.options);
+          } else if (stepConfig.inputType === 'email') {
+            updateEmailInput(stepConfig.validation);
           }
         }
 
@@ -1767,6 +1838,283 @@
             setTimeout(() => flashInputOptions(), 50);
         }
 
+
+
+
+        /*--------  EmailJS  --------*/
+
+
+        async function sendEstimateEmails(customerEmail) {
+
+            try {
+                console.log('Preparing to send emails to', customerEmail);
+
+                // Gather the estimate data
+                const estimateData = generateEstimateData(customerEmail);
+
+                console.log('Estimate data prepared', estimateData);
+
+                // Send email to customer
+                console.log('Sending email to customer');
+                await emailjs.send(
+                    'service_ienqmwk', // EmailJS service ID
+                    'template_0mza96t', // replace with your customer template ID
+                    estimateData
+                );
+                console.log('Customer email sent successfully');
+
+                // Send email to designer
+                console.log('SEnding email to designer');
+                await emailjs.send(
+                    'service_ienqmwk',
+                    'template_t3gpybn',
+                    estimateData
+                );
+                console.log('Email sent successfully');
+
+                return { success: true };
+
+            } catch (error) {
+                console.error('Email sending failed', error);
+                throw new Error('Failed to send estimate emails');
+            }
+
+            // Collect all the user's choices
+           /* const estimateData = {
+                customer_email: customerEmail,
+                room: conversationState.sessionData.initial,
+                square_footage: conversationState.sessionData.square_footage,
+                project_type: conversationState.sessionData.project_type,
+                flooring: conversationState.sessionData.kitchen_flooring,
+                // ... etc.
+            };*/
+        }
+
+        function generateEstimateData(customerEmail) {
+            // Calculate current total estimate
+            const { minTotal, maxTotal } = calculateCurrentEstimate();
+
+            // Gather all user selections
+            const selections = [];
+            Object.keys(conversationState.sessionData.forEach(step => {
+                const value = conversationState.sessionData[step];
+                if (value && step !== 'initial') {
+                    // Format step names nicely
+                    const stepName = step
+                        .replace(/_/g, ' ')                         // Underscores -> spaces
+                        .replace(/\b\w/g, l => l.toUpperCase());    // capitalize each word
+
+                    selections.push(`${stepName}: ${value}`);
+                }
+            });
+
+            // Current line items summary
+            const lineItemsSummary = conversationState.costItems.map(item => {
+                const price = calculateLineItemPrice(item);
+                const priceStr = typeof price === 'number' ? `$${price.toLocaleString()}` : price;
+                return `${item.name} - ${priceStr}`;
+            }).join('\n');
+
+            return {
+                customer_email: customerEmail,
+                customer_name: customerEmail.split('@')[0],
+                room: conversationState.sessionData.initial,
+                square_footage: conversationState.sessionData.square_footage,
+                project_type: conversationState.sessionData.project_type,
+                flooring: conversationState.sessionData.kitchen_flooring,
+
+                // Pricing
+                estimate_min: `$${minTotal.toLocaleString()}`,
+                estimate_max: `$${maxTotal.toLocaleString()}`,
+                estimate_range: `$${minTotal.toLocaleString()} - $${maxTotal.toLocaleString()}`,
+                
+                // Timestamp
+                date_submitted: new Date().toLocaleDateString(),
+                time_submitted: new Date().toLocaleTimeString(),
+                
+                // For designer email
+                lead_source: 'Kitchen Estimator Tool',
+                follow_up_priority: maxTotal > 50000 ? 'High' : 'Medium'
+            };
+        }
+
+        function calculateCurrentEstimate() {
+            let runningTotal = 0;
+
+            // Add always included items
+            if (window.ALWAYS_INCLUDED) {
+                window.ALWAYS_INCLUDED.forEach(item => {
+                    runningTotal += item.price || 0;
+                });
+            }
+
+            // Add current line items
+            conversationState.costItems.forEach(item => {
+                const calculatedPrice = calculateLineItemPrice(item);
+                if (typeof calculatedPrice === 'number') {
+                    runningTotal += calculatedPrice;
+                }
+            });
+
+            // Calculate range
+            const minTotal = Math.round(runningTotal * 0.9);
+            const maxTotal = Math.round(runningTotal * 1.2);
+
+            return { minTotal, maxTotal };
+        }
+
+        /*----------  BYPASS FUNCTION  ------------*/
+
+        document.addEventListener('keydown', function(e) {
+            // Ctrl + Shift + B = Bypass
+            if (e.ctrlKey && e.shiftKey && e.key === 'B') {
+                console.log('🧪 Keyboard bypass activated');
+                if (conversationState.currentStep === 'email_capture') {
+                    selectOption('test@example.com');
+                }
+            }
+        });
+
+
+
+        function updateEmailInput () {
+            const inputOptions = document.getElementById('inputOptions');
+            inputOptions.innerHTML = '';
+
+            const inputContainer = document.createElement('div');
+            inputContainer.className = 'email-input-container';
+
+            const emailInput = document.createElement('input');
+            emailInput.type = 'email';
+            emailInput.className = 'email-input';
+            emailInput.placeholder = 'youremail@example.com';
+            emailInput.required = true;
+
+            const submitButton = document.createElement('button');
+            submitButton.className = 'option-button email-submit-button';
+            submitButton.textContent = 'Unlock premium features';
+            submitButton.onclick = () => handleEmailSubmit(emailInput);
+
+            const errorMessage = document.createElement('div');
+            errorMessage.id = 'emailInputError';
+            errorMessage.className = 'email-error-message';
+
+            // Event listeners
+            emailInput.addEventListener('input', () => clearEmailError());
+            emailInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleEmailSubmit(emailInput);
+                }
+            });
+
+            inputContainer.appendChild(emailInput);
+            inputContainer.appendChild(submitButton);
+            inputContainer.appendChild(errorMessage);
+            inputOptions.appendChild(inputContainer);
+
+            setTimeout(() => flashInputOptions(), 50);
+            setTimeout(() => emailInput.focus(), 100);
+        }
+
+        function showEmailError(message) {
+            const errorElement = document.getElementById('emailInputError');
+            const inputElement = document.querySelector('.email-input');
+
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+            }
+
+            if (inputElement) {
+                inputElement.classList.add('error');
+            }
+        }
+
+        function clearEmailError() {
+            const errorElement = document.getElementById('emailInputError');
+            const inputElement = document.querySelector('.email-input');
+
+            if (errorElement) {
+                errorElement.classList.remove('show');
+            }
+
+            if (inputElement) {
+                inputElement.classList.remove('error');
+            }
+        }
+
+        function handleEmailSubmit() {
+            const submitButton = inputElement.parentElement.querySelector('.option-button');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.style.opacity = '0.6';submitButton.textContent = 'Thinking...';
+            }
+
+            const email = inputElement.value.trim();
+
+            //validate email
+            if (!email) {
+                showEmailError('Please enter your email address');
+                resetEmailButton(submitButton);
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showEmailError('Please enter a valid email address');
+                resetEmailButton(submitButton);
+            }
+
+            // Send emails via EmailJS
+            sendEstimateEmail(email)
+                .then(() => {
+                    // success proceed with conversation
+                    selectOption(email);
+                })
+                .catch((error) => {
+                    console.error('Email send failed', error);
+                    showEmailError('Failed to send email. Please try again.');
+                    resetEmailButton(submitButton);
+                })
+        }
+
+        function isValidEmail() {
+            cosntEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function showEmailError(message) {
+            const errorElement = document.getElementById('emailInputError');
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+
+                const input = errorElement.parentElement.querySelector('input');
+                if (input) {
+                    input.style.borderColor = '#e74c4c';
+                }
+            }
+        }
+
+        function clearEmailError() {
+            const errorElement = document.getElementById('emailInputError');
+            fi (errorElement) {
+                errorElement.style.display = 'none';
+
+                const input errorElement.parentElement.querySelector('input');
+                if (input) {
+                    input.style.borderColor = '#2196f3';
+                }
+            }
+        }
+
+        function resetEmailButton() {
+            if (button) {
+                button.disabled = false;
+                button.style.opactiy = '1';
+                button.textContent = 'Unlock premium features';
+            }
+        }
 
         /* ------- LINE ITEM PRICING CALCs ------------*/
 
