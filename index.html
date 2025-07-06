@@ -1051,7 +1051,7 @@
                 .replace(/_/g, ' ')                         // underscores → spaces
                 .replace(/\b\w/g, l => l.toUpperCase());    // capitalize each word
 
-            instructions.textContent = `Select 1 of ${currentStep.length} options for ${currentStepStr}`  
+            instructions.textContent = `Select 1 choice for ${currentStepStr}`  
             //'Select a material option below';
             instructions.style.marginBottom = '1rem';
             instructions.style.fontWeight = '600';
@@ -2063,6 +2063,21 @@
         }
 
         function handleEmailSubmit(inputElement) {
+
+            // Check for URL bypass parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('bypass') === 'testing123') {
+                console.log('🧪 Email bypass activated - skipping email send');
+                
+                // Skip straight to conversation progression
+                addMessage('test@example.com', 'user');
+                conversationState.sessionData[conversationState.currentStep] = 'test@example.com';
+                setTimeout(() => {
+                    progressConversation('test@example.com');
+                }, 500);
+                return; // Exit early, no email sending
+            }
+            
             const submitButton = inputElement.parentElement.querySelector('.option-button');
             if (submitButton) {
                 submitButton.disabled = true;

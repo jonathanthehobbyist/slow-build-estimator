@@ -82,6 +82,12 @@ const CONVERSATION_FLOW = {
   responseLogic: (userEmail, sessionData) => {
     return `Thanks ${userEmail}! Now let's explore some amazing appliance options for your ${sessionData.square_footage} sq ft kitchen.`;
   },
+   // Add bypass check
+  // Add this to browser URL: ?bypass=testing123
+  bypassCheck: () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('bypass') === 'testing123';
+  },
   lineItems: [], // No cost impact
   next: "kitchen_cabinets"
 },
