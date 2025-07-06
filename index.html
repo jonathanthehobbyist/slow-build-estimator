@@ -1846,9 +1846,6 @@
 
         async function sendEstimateEmails(customerEmail) {
 
-            console.log('📧 Service ID:', 'YOUR_SERVICE_ID');
-            console.log('📧 Template IDs:', 'template_customer', 'template_designer');
-
             try {
                 console.log('Preparing to send emails to', customerEmail);
 
@@ -1873,6 +1870,9 @@
                     'template_t3gpybn',
                     estimateData
                 );
+
+                console.log('📧 Service ID:', 'YOUR_SERVICE_ID');
+                console.log('📧 Template IDs:', 'template_customer', 'template_designer');
                 console.log('Email sent successfully');
 
                 return { success: true };
