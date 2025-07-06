@@ -246,10 +246,10 @@ const CONVERSATION_FLOW = {
     next: "kitchen_appliances"
   },
 
-  kitchen_appliances: {
-    question: "Let's choose your appliance package:",
-    statement: "Interesting fact: on average, appliances make up 30% of the cost of a full kitchen remodel",
-    statementTiming: "before",
+  kitchen_appliances: { //step key or step name
+    question: "Let's choose your appliance package:",  // property
+    statement: "Interesting fact: on average, appliances make up 30% of the cost of a full kitchen remodel", // also a property
+    statementTiming: "before", // also a property
     inputType: "gallery",
     layout: "single-column",  // ← Add this property
     options: [

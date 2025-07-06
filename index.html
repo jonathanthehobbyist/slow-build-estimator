@@ -1048,7 +1048,15 @@
 
             // Want that to reference the current option
 
-            instructions.textContent = `Select an option for ${currentStep}`  //'Select a material option below';
+            // console.log('Current step', currentStep);
+
+            // 
+            const currentStepStr = conversationState.currentStep
+                .replace(/_/g, ' ')                         // underscores → spaces
+                .replace(/\b\w/g, l => l.toUpperCase());    // capitalize each word
+
+            instructions.textContent = `Select an option for ${currentStepStr}`  
+            //'Select a material option below';
             instructions.style.marginBottom = '1rem';
             instructions.style.fontWeight = '600';
             instructions.style.color = '#2c3e50';
