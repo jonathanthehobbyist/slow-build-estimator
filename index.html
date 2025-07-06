@@ -693,8 +693,18 @@
         // Handle option selection
         function selectOption(option) {
 
+            // Event or direct call? 
+            if (typeof option === 'object' && option.target) {
+                // It's an event? Get option text from button text
+                option = option.target.textContent;
+            }
+
             //disable all buttons immediately
-            disableAllButtons();
+            if (event && event.target) {
+                disableAllButtons();
+                event.target.classList.add('selected');
+            }
+            
 
             // Add user message
             addMessage(option, 'user');
@@ -2073,7 +2083,14 @@
             sendEstimateEmails(email)
                 .then(() => {
                     // success proceed with conversation
-                    selectOption(email);
+                    // selectOption(email);  // Changed
+
+                    // Skip selectOption entirely and call progressConversation directly
+                    addMessage(email, 'user');
+                    conversationState.sessionData[conversationState.currentStep] = email;
+                    setTimeout(() => {
+                        progressConversation(email);
+                    }, 500);
                 })
                 .catch((error) => {
                     console.error('Email send failed', error);
