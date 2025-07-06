@@ -2098,7 +2098,7 @@
 
         function clearEmailError() {
             const errorElement = document.getElementById('emailInputError');
-            fi (errorElement) {
+            if (errorElement) {
                 errorElement.style.display = 'none';
 
                 const input errorElement.parentElement.querySelector('input');
