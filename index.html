@@ -1933,6 +1933,9 @@
                 project_type: conversationState.sessionData.project_type,
                 flooring: conversationState.sessionData.kitchen_flooring,
 
+                selections_list: selections.join('\n'),  // ← Add this
+                line_items: lineItemsSummary,            // ← Add this
+
                 // Pricing
                 estimate_min: `$${minTotal.toLocaleString()}`,
                 estimate_max: `$${maxTotal.toLocaleString()}`,
