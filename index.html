@@ -1855,6 +1855,9 @@
                 // Gather the estimate data
                 const estimateData = generateEstimateData(customerEmail);
 
+                console.log('📋 Full estimate data being sent:');
+                console.log(JSON.stringify(estimateData, null, 2));  // ← Add this debug
+
                 console.log('Estimate data prepared', estimateData);
 
                 // Send email to customer
@@ -1882,6 +1885,7 @@
 
             } catch (error) {
                 console.error('Email sending failed', error);
+                console.log('📋 Data that failed:', estimateData);  // ← Add this too
                 throw new Error('Failed to send estimate emails');
             }
 
