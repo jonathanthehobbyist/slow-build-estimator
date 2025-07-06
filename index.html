@@ -693,18 +693,8 @@
         // Handle option selection
         function selectOption(option) {
 
-            // Event or direct call? 
-            if (typeof option === 'object' && option.target) {
-                // It's an event? Get option text from button text
-                option = option.target.textContent;
-            }
-
             //disable all buttons immediately
-            if (event && event.target) {
-                disableAllButtons();
-                event.target.classList.add('selected');
-            }
-            
+            disableAllButtons();
 
             // Add user message
             addMessage(option, 'user');
