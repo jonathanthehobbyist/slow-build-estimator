@@ -244,7 +244,7 @@ const CONVERSATION_FLOW = {
   },
   lineItems: [], // No cost impact
   next: "kitchen_appliances"
-}
+},
 
   kitchen_appliances: {
     question: "Let's choose your appliance package:",
