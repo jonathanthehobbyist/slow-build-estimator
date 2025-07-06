@@ -1046,16 +1046,12 @@
             // Add instructions
             const instructions = document.createElement('div');
 
-            // Want that to reference the current option
-
-            // console.log('Current step', currentStep);
-
-            // 
+            // Current step's key name
             const currentStepStr = conversationState.currentStep
                 .replace(/_/g, ' ')                         // underscores → spaces
                 .replace(/\b\w/g, l => l.toUpperCase());    // capitalize each word
 
-            instructions.textContent = `Select an option for ${currentStepStr}`  
+            instructions.textContent = `Select 1 of ${currentStep.length} options for ${currentStepStr}`  
             //'Select a material option below';
             instructions.style.marginBottom = '1rem';
             instructions.style.fontWeight = '600';
