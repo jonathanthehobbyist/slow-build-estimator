@@ -63,8 +63,28 @@ const CONVERSATION_FLOW = {
       { name: "Flooring Materials", calculation: "perSqFt", category: "materials" },
       { name: "Flooring Installation", calculation: "perSqFt", category: "labor" }
     ],
-    next: "kitchen_cabinets"
+    next: "email_capture"
   },
+
+    email_capture: {
+  question: "To unlock premium features and see appliance options, please enter your email:",
+  statement: "You're making great progress! Next we'll help you choose appliances, countertops, and premium features. Enter your email to continue and we'll send you a copy of your final estimate.",
+  statementTiming: "before",
+  inputType: "email",
+  validation: { required: true, format: "email" },
+  emailConfig: {
+    sendToCustomer: true,
+    sendToDesigner: true,
+    designerEmail: "hello@yourdesigncompany.com", // ← Your email
+    customerSubject: "Your Kitchen Renovation Estimate is Ready!",
+    designerSubject: "New Lead: Kitchen Renovation Estimate Request"
+  },
+  responseLogic: (userEmail, sessionData) => {
+    return `Thanks ${userEmail}! Now let's explore some amazing appliance options for your ${sessionData.square_footage} sq ft kitchen.`;
+  },
+  lineItems: [], // No cost impact
+  next: "kitchen_cabinets"
+},
 
   kitchen_cabinets: {
     question: "What type of cabinets do you want?",
@@ -223,28 +243,8 @@ const CONVERSATION_FLOW = {
       { name: "Countertops", calculation: "flat", category: "materials" },
       { name: "Countertop Installation", calculation: "flat", category: "labor", autoInclude: true }
     ],
-    next: "email_capture"
+    next: "kitchen_appliances"
   },
-
-  email_capture: {
-  question: "To unlock premium features and see appliance options, please enter your email:",
-  statement: "You're making great progress! Next we'll help you choose appliances, countertops, and premium features. Enter your email to continue and we'll send you a copy of your final estimate.",
-  statementTiming: "before",
-  inputType: "email",
-  validation: { required: true, format: "email" },
-  emailConfig: {
-    sendToCustomer: true,
-    sendToDesigner: true,
-    designerEmail: "hello@yourdesigncompany.com", // ← Your email
-    customerSubject: "Your Kitchen Renovation Estimate is Ready!",
-    designerSubject: "New Lead: Kitchen Renovation Estimate Request"
-  },
-  responseLogic: (userEmail, sessionData) => {
-    return `Thanks ${userEmail}! Now let's explore some amazing appliance options for your ${sessionData.square_footage} sq ft kitchen.`;
-  },
-  lineItems: [], // No cost impact
-  next: "kitchen_appliances"
-},
 
   kitchen_appliances: {
     question: "Let's choose your appliance package:",
