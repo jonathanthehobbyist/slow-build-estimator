@@ -1846,6 +1846,9 @@
 
         async function sendEstimateEmails(customerEmail) {
 
+            console.log('📧 Service ID:', 'YOUR_SERVICE_ID');
+            console.log('📧 Template IDs:', 'template_customer', 'template_designer');
+
             try {
                 console.log('Preparing to send emails to', customerEmail);
 
@@ -1896,7 +1899,7 @@
 
             // Gather all user selections
             const selections = [];
-            Object.keys(conversationState.sessionData.forEach(step => {
+            Object.keys(conversationState.sessionData).forEach(step => {
                 const value = conversationState.sessionData[step];
                 if (value && step !== 'initial') {
                     // Format step names nicely
@@ -1906,7 +1909,7 @@
 
                     selections.push(`${stepName}: ${value}`);
                 }
-            }));
+            });
 
             // Current line items summary
             const lineItemsSummary = conversationState.costItems.map(item => {
@@ -2109,7 +2112,7 @@
             }
         }
 
-        function resetEmailButton() {
+        function resetEmailButton(button) {
             if (button) {
                 button.disabled = false;
                 button.style.opactiy = '1';
