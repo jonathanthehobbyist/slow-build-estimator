@@ -1045,7 +1045,10 @@
 
             // Add instructions
             const instructions = document.createElement('div');
-            instructions.textContent = 'Select a material option below';
+
+            // Want that to reference the current option
+
+            instructions.textContent = `Select an option for ${currentStep}`  //'Select a material option below';
             instructions.style.marginBottom = '1rem';
             instructions.style.fontWeight = '600';
             instructions.style.color = '#2c3e50';
