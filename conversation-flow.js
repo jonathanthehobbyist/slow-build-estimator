@@ -66,7 +66,7 @@ const CONVERSATION_FLOW = {
   // ============== END INSPIRATION =================
 
   square_footage: {
-    question: `What's the approximate square footage of your ${sessionData.room}?`,
+    question: `What's the approximate square footage of your ${sessionData}?`,
     inputType: "number",
     validation: { min: 50, max: 2000, digitsOnly: true },
     lineItems: [], // Used for calculations
