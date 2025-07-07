@@ -14,8 +14,8 @@ const CONVERSATION_FLOW = {
   
   // ==================== INITIAL QUESTIONS ====================
   initial: {
-    question: "Which room would you like to work on?",
-    statement: "Hi, this app will walk you through getting an estimate for an interior design project.",
+    question: "Select a room to focus on",
+    statement: "Hi! This tool will help you generate a high-level estimate for your remodel.",
     statementTiming: "before",
     inputType: "choice",
     options: ["Kitchen", "Living Room", "Bedroom", "Bathroom"],
@@ -101,7 +101,7 @@ const CONVERSATION_FLOW = {
 
   // ==================== KITCHEN FLOW ====================
   kitchen_flooring: {
-    question: "What type of flooring do you want?",
+    question: "Kitchens remodels are great addition to any home. Let's start with the type of flooring you are thinking of.",
     inputType: "choice",
     options: ["Laminate", "Vinyl", "Hardwood", "Tile", "Natural Stone", "N/A"],
     lineItems: [
@@ -474,6 +474,7 @@ const INSPIRATION_FLOWS = {
 };
 
 // ==================== SIMPLIFIED ENGINE HELPER ====================
+
 class ConversationFlowHelper {
   
   static getCurrentStepConfig(stepName) {
@@ -513,9 +514,6 @@ class ConversationFlowHelper {
       console.log('🔍 lineItemDef.condition:', lineItemDef.condition);
       if (this.shouldAddLineItem(lineItemDef, userInput)) {
         console.log('🔍 shouldAddLineItem returned TRUE');
-
-
-
 
         if (lineItemDef.items) {
           console.log('🔍 Has items array, length:', lineItemDef.items.length);
@@ -568,35 +566,7 @@ class ConversationFlowHelper {
     
     return lineItems;
   }   
-   /* stepConfig.lineItems?.forEach(lineItemDef => {
-      if (this.shouldAddLineItem(lineItemDef, userInput)) {
-        if (lineItemDef.items) {
-          // Multiple items with conditions
-          lineItemDef.items.forEach(item => {
-            lineItems.push({
-              name: `${item.name}: ${userInput}`,
-              calculation: item.calculation,
-              category: item.category,
-              userChoice: userInput,
-              stepName: stepName
-            });
-          });
-        } else {
-          // Single item
-          lineItems.push({
-            name: `${lineItemDef.name}: ${userInput}`,
-            calculation: lineItemDef.calculation,
-            category: lineItemDef.category,
-            userChoice: userInput,
-            stepName: stepName,
-            autoInclude: lineItemDef.autoInclude || false
-          });
-        }
-      }
-    });
-    
-    return lineItems;
-  }*/
+
   
   static shouldAddLineItem(lineItemDef, userInput) {
     console.log('🔍 shouldAddLineItem called');
@@ -631,6 +601,174 @@ class ConversationFlowHelper {
     return false;
   }
 }
+
+
+// ==================== DYNAMIC STEP COUNTER ====================
+
+class ProgressCalculator {
+
+  static calulateTotalSteps(roomType, projectType = null) {
+    if (!roomtType) return 0;
+
+    const visited = new Set();
+    let stepCount = 0;
+
+    function traverseFlow(stepName, sessionData ={}) {
+      // prevent infinite loops
+      if(visited.has(stepName) || !stepName || stepName === 'complete') {
+        return;
+      }
+
+      visited.add(stepName);
+      stepCount++;
+
+      const stepConfig = window.CONVERSATION_FLOW[stepName];
+      if(!stepConfig) return;
+
+      // Get next step using existing helper logic
+      let nextStep = stepConfig.next;
+
+      // Handle special routing
+      if (nextStep === 'roomSpecific') {
+        nextStep = window.ROOM_FLOWS[roomType];
+      } else if (nextStep === 'inspiration') {
+        nextStep = window.INSPIRATION_FLOWS[roomType];
+      }
+
+      // Continue traversing
+      if (nextStep && nextStep !== 'complete') {
+        traverseFlow(nextStep, sessionData);
+      }
+
+    }
+      // Start traversing from initial step
+  traverseFlow('initial', { initial: roomType, project_type: projectType });
+
+  return stepCount;
+  }
+
+
+  static getCurrentStepIndex(roomType, currentStepName, sessionData = {}) {
+    if(!roomType || !currentStepName) return 0;
+
+    const visited = new Set();
+    let getCurrent = 0;
+    let found = false;
+
+    function traverseFlow(stepName) {
+      if (visited.has(stepName) || !stepName || stepName === 'complete' || found) {
+        return;
+      }
+
+      visited.add(stepName);
+
+      // Check if this is our current step
+      if (stepName === currentStepName) {
+        found = true;
+        return;
+      }
+
+      stepIndex++;
+
+      const stepConfig = window.CONVERSATION_FLOW[stepName];
+      if(!stepConfig) return;
+
+      // Get next step
+      let nextStep = stepConfig.next;
+
+      if(nextStep === 'roomSpecific') {
+        nextStep = window.ROOM_FLOWS[roomType];
+      } else if (nextStep === 'inspiration') {
+        nextStep = window.INSPIRATION_FLOWS[roomType];
+      }
+
+      if (nextStep && nextStep !== 'complete') {
+        traverseFlow(nextStep);
+      }
+    }
+
+    traverseFlow('initial');
+    return stepIndex;
+  } // End getCurrentStepIndex
+
+  static calculateProgress(roomtType, currentStepName, sessionData = {}) {
+    const totalSteps = this.calculateTotalSteps(roomType, sessionData.project_type);
+    const currentIndex = this.getCurrentStepIndex(roomType, currentStepName, sessionData);
+
+    if (totalSteps === 0) return 0;
+
+    // Add 1 to show progress after completing current step
+    const progressPercent = Math.min(((currentIndex + 1) / totalSteps) * 100, 100);
+    return Math.round(progressPercent);
+  }
+
+  static getProgressInfo(roomType, currentStepName, sessionData = {}) {
+    const totalSteps = this.calculateTotalSteps(roomtType, sessionData.project_type);
+    const currentIndex = this.getCurrentStepIndex(roomType, currentStepName, sessionData);
+    const progress = this.calculateProgress(roomType, currentStepName, sessionData);
+
+    return {
+      currentStep: currentIndex + 1,
+      totalSteps: totalSteps,
+      progressPercent: progress,
+      isCompelte: currentStepName === 'complete' || progress >= 100
+    };
+  }
+} // End class
+
+// Make available globally
+window.ProgressCalculator = ProgressCalculator;
+
+// More sophisticated version
+class AdvancedProgressCalculator extends ProgressCalculator {
+
+  static calculateTotalSteps(roomType, sessionData = {}) {
+    if(!roomType) return 0;
+
+    const visited = new Set();
+    let stepCount = 0;
+
+    function traverseFlow(stepName, currentSessionData) {
+      if (visited.has(stepName) || !stepName || stepName === 'complete') {
+        return;
+      }
+
+      visited.add(stepName);
+      stepCount++
+
+      const stepConfig = window.CONVERSATION_FLOW[stepName];
+      if(!stepConfig) return;
+
+      // Handle routing logic
+      let nextStep = stepConfig.next;
+
+      if(nextStep === 'roomSpecific') {
+        nextStep = window.ROOM_FLOWS[roomType];
+      } else if (nextStep === 'inspiration') {
+        nextStep = window.INSPIRATION_FLOWS[roomType];
+      }
+
+      // Skip conditional steps that wouldn't apply
+      if (stepName === 'project_type') {
+        // Simulate project type selection for counting
+        const projectTypes = ['Update (cosmetic changes)', 'Partial Renovation', 'Full Renovation'];
+        const simulatedProjectType = currentSessData.project_type || projectTypes[1]; // default to middle option
+        currentSessionData = { ...currentSessionData, project_type: simulartedProjectType };
+      }
+
+      if (nextStep && nextStep !== 'complete') {
+        traverseFlow(nextStep, currentSessionData);
+      }
+    }
+
+    traverseFlow('inital', { ...sessionData, initial: roomType });
+    return stepCount;
+  }
+
+  } // End AdvancedProgressCalculator class
+
+
+// ==================== GLOBAL ====================
 
 // Make available globally
 window.CONVERSATION_FLOW = CONVERSATION_FLOW;
