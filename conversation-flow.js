@@ -608,7 +608,7 @@ class ConversationFlowHelper {
 class ProgressCalculator {
 
   static calculateTotalSteps(roomType, projectType = null) {
-    if (!roomtType) return 0;
+    if (!roomType) return 0;
 
     const visited = new Set();
     let stepCount = 0;
