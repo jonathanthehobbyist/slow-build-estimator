@@ -70,6 +70,7 @@ const CONVERSATION_FLOW = {
     const room = conversationState.sessionData.initial || 'room';
     return `What's the approximate square footage of your ${room.toLowerCase()}?`;
     inputType: "number",
+    },
     validation: { min: 50, max: 2000, digitsOnly: true },
     lineItems: [], // Used for calculations
     next: "project_type"
