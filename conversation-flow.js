@@ -692,8 +692,8 @@ class ProgressCalculator {
   } // End getCurrentStepIndex
 
   static calculateProgress(roomtType, currentStepName, sessionData = {}) {
-    const totalSteps = this.calculateTotalSteps(roomType, sessionData.project_type);
-    const currentIndex = this.getCurrentStepIndex(roomType, currentStepName, sessionData);
+    const totalSteps = ProgressCalculator.calculateTotalSteps(roomType, sessionData.project_type);
+    const currentIndex = ProgressCalculator.getCurrentStepIndex(roomType, currentStepName, sessionData);
 
     if (totalSteps === 0) return 0;
 
@@ -703,9 +703,9 @@ class ProgressCalculator {
   }
 
   static getProgressInfo(roomType, currentStepName, sessionData = {}) {
-    const totalSteps = this.calculateTotalSteps(roomType, sessionData.project_type);
-    const currentIndex = this.getCurrentStepIndex(roomType, currentStepName, sessionData);
-    const progress = this.calculateProgress(roomType, currentStepName, sessionData);
+    const totalSteps = ProgressCalculator.calculateTotalSteps(roomType, sessionData.project_type);
+    const currentIndex = ProgressCalculator.getCurrentStepIndex(roomType, currentStepName, sessionData);
+    const progress = ProgressCalculator.calculateProgress(roomType, currentStepName, sessionData);
 
     return {
       currentStep: currentIndex + 1,
