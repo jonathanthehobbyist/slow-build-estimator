@@ -703,7 +703,7 @@ class ProgressCalculator {
   }
 
   static getProgressInfo(roomType, currentStepName, sessionData = {}) {
-    const totalSteps = this.calculateTotalSteps(roomtType, sessionData.project_type);
+    const totalSteps = this.calculateTotalSteps(roomType, sessionData.project_type);
     const currentIndex = this.getCurrentStepIndex(roomType, currentStepName, sessionData);
     const progress = this.calculateProgress(roomType, currentStepName, sessionData);
 
