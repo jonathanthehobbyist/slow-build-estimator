@@ -20,8 +20,50 @@ const CONVERSATION_FLOW = {
     inputType: "choice",
     options: ["Kitchen", "Living Room", "Bedroom", "Bathroom"],
     lineItems: [], // Just sets room context
+    next: "inspiration"
+  },
+
+  // inspiration
+
+  // ===================== INSPIRATION =====================
+
+  kitchen_inspiration: {
+    question: "Let's start with some inspiration - choose any style that catches your eye:",
+    inputType: "multiSelectGallery", // Multi Select Image selection
+    options: [
+      { 
+        name: "Modern", 
+        image: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=400&h=300&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=200&h=150&fit=crop",
+        description: "Affordable laminate countertops"
+      },
+      { 
+        name: "Magnolia", 
+        image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=300&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=200&h=150&fit=crop",
+        description: "Durable engineered quartz"
+      },
+      { 
+        name: "Farmhouse", 
+        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop",
+        description: "Natural granite stone"
+      },
+      { 
+        name: "Rustic", 
+        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&sat=-100",
+        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop&sat=-100",
+        description: "Warm wood countertops"
+      }
+    ],
+    lineItems: [
+      { name: "Countertops", calculation: "flat", category: "materials" },
+      { name: "Countertop Installation", calculation: "flat", category: "labor", autoInclude: true }
+    ],
     next: "square_footage"
   },
+
+  // ============== END INSPIRATION =================
 
   square_footage: {
     question: "What's the approximate square footage?",
@@ -83,7 +125,7 @@ const CONVERSATION_FLOW = {
     return `Thanks ${userEmail}! Now let's explore some amazing appliance options for your ${sessionData.square_footage} sq ft kitchen.`;
   },
    // Add bypass check
-  // Add this to browser URL: ?bypass=testing123
+  // Add this to browserURL: ?bypass=testing123
   bypassCheck: () => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('bypass') === 'testing123';
@@ -424,6 +466,10 @@ const ROOM_FLOWS = {
   "Bathroom": "bathroom_flooring"
 };
 
+const INSPIRATION_FLOWS = {
+  "Kitchen": "kitchen_inspiration"
+};
+
 // ==================== SIMPLIFIED ENGINE HELPER ====================
 class ConversationFlowHelper {
   
@@ -438,6 +484,9 @@ class ConversationFlowHelper {
       // Branch to room-specific flow
       const room = sessionData.room || sessionData.initial;
       return ROOM_FLOWS[room];
+    } else if (currentStep.next === 'inspiration') {
+      const room = sessionData.room || sessionData.initial;
+      return; INSPIRATION_FLOWS[room];
     }
     
     return currentStep.next;
