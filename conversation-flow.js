@@ -652,7 +652,7 @@ class ProgressCalculator {
     if(!roomType || !currentStepName) return 0;
 
     const visited = new Set();
-    let getCurrent = 0;
+    let stepIndex = 0;
     let found = false;
 
     function traverseFlow(stepName) {
