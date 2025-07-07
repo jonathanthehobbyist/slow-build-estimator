@@ -57,10 +57,7 @@ const CONVERSATION_FLOW = {
         description: "Warm wood countertops"
       }
     ],
-    lineItems: [
-      { name: "Countertops", calculation: "flat", category: "materials" },
-      { name: "Countertop Installation", calculation: "flat", category: "labor", autoInclude: true }
-    ],
+    lineItems: [],
     next: "square_footage"
   },
 
@@ -69,8 +66,10 @@ const CONVERSATION_FLOW = {
   square_footage: {
     question: function() {
       const room = conversationState.sessionData.initial || 'room';
-      return `What's the approximate square footage of your ${room.toLowerCase()}?`;
+      return `What's your ${room.toLowerCase()}'s approximate square footage?`;
       },
+    statement: "Thanks! Now let's find out more about the space you're looking to update.",
+    statementTiming: "before",
     inputType: "number",
     validation: { min: 50, max: 2000, digitsOnly: true },
     lineItems: [], // Used for calculations
