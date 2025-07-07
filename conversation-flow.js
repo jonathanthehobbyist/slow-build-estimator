@@ -30,6 +30,7 @@ const CONVERSATION_FLOW = {
   kitchen_inspiration: {
     question: "Let's start with some inspiration - choose any style that catches your eye:",
     inputType: "multiSelectGallery", // Multi Select Image selection
+    layout: "single-column",
     options: [
       { 
         name: "Modern", 
