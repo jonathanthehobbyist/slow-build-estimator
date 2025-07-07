@@ -7,7 +7,8 @@ const PRICING = {
     "Hardwood": { perSqFt: 8 },
     "Tile": { perSqFt: 6 },
     "Natural Stone": { perSqFt: 12 },
-    "Carpet": { perSqFt: 2 }
+    "Carpet": { perSqFt: 2 },
+    "N/A": { perSqFt: 0 }
   },
   
   // Labor pricing per square foot
@@ -17,14 +18,14 @@ const PRICING = {
     "Hardwood": { perSqFt: 20 },
     "Tile": { perSqFt: 20 },
     "Natural Stone": { perSqFt: 20 },
-    "Carpet": { perSqFt: 10 }
+    "Carpet": { perSqFt: 10 },
+    "N/A": { perSqFt: 0 }
   },
   
   // Kitchen items - flat pricing
   "Cabinets": {
     "Cabinet refacing": { flat: 30000 },
-    "Stock cabinets": { flat: 20000 },
-    "Semi-custom cabinets": { flat: 25000 },
+    "Stock cabinets": { flat: 25000 },
     "Full custom cabinets": { flat: 50000 }
   },
   "Cabinet Hardware": {

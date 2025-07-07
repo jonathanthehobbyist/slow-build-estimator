@@ -79,7 +79,7 @@ const CONVERSATION_FLOW = {
   project_type: {
     question: "What type of project is this?",
     inputType: "choice",
-    options: ["Update (cosmetic changes)", "Partial Renovation", "Full Renovation"],
+    options: ["Cosmetic changes", "Partial Renovation", "Full Renovation"],
     lineItems: [
       {
         condition: "Full Renovation",
@@ -103,7 +103,7 @@ const CONVERSATION_FLOW = {
   kitchen_flooring: {
     question: "What type of flooring do you want?",
     inputType: "choice",
-    options: ["Laminate", "Vinyl", "Hardwood", "Tile", "Natural Stone"],
+    options: ["Laminate", "Vinyl", "Hardwood", "Tile", "Natural Stone", "N/A"],
     lineItems: [
       { name: "Flooring Materials", calculation: "perSqFt", category: "materials" },
       { name: "Flooring Installation", calculation: "perSqFt", category: "labor" }
@@ -112,20 +112,20 @@ const CONVERSATION_FLOW = {
   },
 
     email_capture: {
-  question: "To unlock premium features and see appliance options, please enter your email:",
-  statement: "You're making great progress! Next we'll help you choose appliances, countertops, and premium features. Enter your email to continue and we'll send you a copy of your final estimate.",
+  question: "To continue refining your estimate, please enter your email:",
+  statement: "You're making great progress! Next we'll help you choose appliances, countertops, and premium features.",
   statementTiming: "before",
   inputType: "email",
   validation: { required: true, format: "email" },
   emailConfig: {
     sendToCustomer: true,
     sendToDesigner: true,
-    designerEmail: "hello@yourdesigncompany.com", // ← Your email
+    designerEmail: "jon@jonsimmons.co", // ← Your email
     customerSubject: "Your Kitchen Renovation Estimate is Ready!",
     designerSubject: "New Lead: Kitchen Renovation Estimate Request"
   },
   responseLogic: (userEmail, sessionData) => {
-    return `Thanks ${userEmail}! Now let's explore some amazing appliance options for your ${sessionData.square_footage} sq ft kitchen.`;
+    return `Great! Now let's explore more options for your ${sessionData.square_footage} sq ft ${sessionData.room_type}.`;
   },
    // Add bypass check
   // Add this to browserURL: ?bypass=testing123
@@ -138,9 +138,9 @@ const CONVERSATION_FLOW = {
 },
 
   kitchen_cabinets: {
-    question: "What type of cabinets do you want?",
+    question: "Fantastic! Next up: cabinets – what level of customization do you want in your kitchen cabinets?",
     inputType: "choice",
-    options: ["Stock cabinets", "Semi-custom cabinets", "Full custom cabinets", "Cabinet refacing"],
+    options: ["Stock cabinets", "Cabinet refacing", "Full custom cabinets"],
     lineItems: [
       { name: "Cabinets", calculation: "flat", category: "materials" }
     ],
@@ -250,11 +250,11 @@ const CONVERSATION_FLOW = {
   },
 
   kitchen_cabinet_hardware: {
-    question: "Please select a type of cabinet hardware to use:",
+    question: "In general, what level of finish would you like in the cabinet hardware?",
     statement: "Cabinet hardware gets daily use and keeps your cabinets looking pristine",
     statementTiming: "before",
     inputType: "choice",
-    options: ["High quality", "Luxury: Buster & Punch"],
+    options: ["High quality", "Luxury finish"],
     lineItems: [
       { name: "Cabinet Hardware", calculation: "flat", category: "materials" }
     ],
