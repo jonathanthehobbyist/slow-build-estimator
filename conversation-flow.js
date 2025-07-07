@@ -775,6 +775,7 @@ window.CONVERSATION_FLOW = CONVERSATION_FLOW;
 window.ConversationFlowHelper = ConversationFlowHelper;
 window.ALWAYS_INCLUDED = ALWAYS_INCLUDED;
 window.ROOM_FLOWS = ROOM_FLOWS;
+window.INSPIRATION_FLOWS = INSPIRATION_FLOWS;
 
 // ==================== USAGE EXAMPLE ====================
 /*
