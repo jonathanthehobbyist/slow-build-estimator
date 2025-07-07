@@ -867,8 +867,18 @@
                 } else if (stepConfig.statementTiming === 'after') {
 
                     // Question first, then statement
-                    if (stepConfig.question) {
+                    /*if (stepConfig.question) {
                         addMessage(stepConfig.question);
+                    }*/
+
+                    if (stepConfig.question) {
+                        let questionText;
+                        if (typeof stepConfig.question === 'function') {
+                            questionText = stepConfig.question();  // ← Call the function
+                        } else {
+                            questionText = stepConfig.question;    // ← Use string directly
+                        }
+                        addMessage(questionText);
                     }
 
                     setTimeout(() => {
@@ -882,8 +892,17 @@
                     });
                 } else {
                     // No statement, just question
-                    if (stepConfig.question) {
+                    /*if (stepConfig.question) {
                         addMessage(stepConfig.question);
+                    }*/
+                    if (stepConfig.question) {
+                        let questionText;
+                        if (typeof stepConfig.question === 'function') {
+                            questionText = stepConfig.question();  // ← Call the function
+                        } else {
+                            questionText = stepConfig.question;    // ← Use string directly
+                        }
+                        addMessage(questionText);
                     }
                     setTimeout(() => showInputs(stepConfig), window.CONVERSATION_TIMING.statementDelay);
                 }
