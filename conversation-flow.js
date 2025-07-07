@@ -691,7 +691,7 @@ class ProgressCalculator {
     return stepIndex;
   } // End getCurrentStepIndex
 
-  static calculateProgress(roomtType, currentStepName, sessionData = {}) {
+  static calculateProgress(roomType, currentStepName, sessionData = {}) {
     const totalSteps = ProgressCalculator.calculateTotalSteps(roomType, sessionData.project_type);
     const currentIndex = ProgressCalculator.getCurrentStepIndex(roomType, currentStepName, sessionData);
 
