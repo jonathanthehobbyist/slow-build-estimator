@@ -66,7 +66,9 @@ const CONVERSATION_FLOW = {
   // ============== END INSPIRATION =================
 
   square_footage: {
-    question: `What's the approximate square footage of your ?`,
+    question: function() {
+    const room = conversationState.sessionData.initial || 'room';
+    return `What's the approximate square footage of your ${room.toLowerCase()}?`;
     inputType: "number",
     validation: { min: 50, max: 2000, digitsOnly: true },
     lineItems: [], // Used for calculations
