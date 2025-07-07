@@ -486,7 +486,7 @@ class ConversationFlowHelper {
       return ROOM_FLOWS[room];
     } else if (currentStep.next === 'inspiration') {
       const room = sessionData.room || sessionData.initial;
-      return; INSPIRATION_FLOWS[room];
+      return INSPIRATION_FLOWS[room];
     }
     
     return currentStep.next;
