@@ -206,15 +206,19 @@
             flex: 1;
             padding: 1rem;
             overflow-y: auto;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            /* Add these for better scrolling */
+            min-height: 0; /* Important for flex children */
+            scroll-behavior: smooth;
             max-height: calc(85vh - 140px);
         }
 
         /* Gallery mode - full height when input options are hidden */
         .conversation-flow.gallery-mode {
-            max-height: calc(85vh - 60px); /* Only account for header */
+            max-height: none; /* calc(85vh - 60px); Only account for header */
         }
 
         .message {
@@ -894,6 +898,9 @@
 
             .main-content {
                 flex-direction: row; /* Keep side by side */
+                min-height: 100vh;
+                max-height: 100vh;
+                overflow: hidden; /* Prevent double scrollbars */
                 gap: 0;
                 padding: 0;
             }
@@ -919,6 +926,10 @@
                 box-shadow: none;
                 border-right: 1px solid var(--border-light);
                 position: relative;
+                display: flex;
+                flex-direction: column;
+                min-height: 0; /* Important for flex children */
+                overflow: hidden;
             }
 
             .cost-panel {
@@ -1554,8 +1565,10 @@
 
             // Scroll to confirm button
             setTimeout(() => {
-                confirmButton.scrollIntoView({ behavior: 'smooth', block: 'center'});
-            }, 100);
+                const conversationFlow = document.getElementById('conversationFlow');
+                conversationFlow.scrollTop = conversationFlow.scrollHeight;
+                // confirmButton.scrollIntoView({ behavior: 'smooth', block: 'center'});
+            }, 300);
         }
 
         function confirmGallerySelection() {
@@ -1600,6 +1613,8 @@
             // Continue conversation
             setTimeout(() => {
                 progressConversation(selectedOptionData.name);
+                const conversationFlow = document.getElementById('conversationFlow');
+                conversationFlow.scrollTop = conversationFlow.scrollHeight;
             }, 500);
 
         }
@@ -1770,9 +1785,11 @@
 
 
             setTimeout(() => {
-                galleryOverlay.scrollIntoView({ behavior: 'smooth' });
+                //galleryOverlay.scrollIntoView({ behavior: 'smooth' });
+                const conversationFlow = document.getElementById('conversationFlow');
+                conversationFlow.scrollTop = conversationFlow.scrollHeight;
                 flashInputOptions();
-            }, 100);
+            }, 300);
         }
 
         function toggleMultiSelect(option, buttonElement) {
@@ -1945,6 +1962,8 @@
             console.log('🚀 About to call progressConversation with:', selectionNames);  // ← Add this
             setTimeout(() => {
                 progressConversation(selectionNames); // passing an array
+                const conversationFlow = document.getElementById('conversationFlow');
+                conversationFlow.scrollTop = conversationFlow.scrollHeight;
             }, 500);
 
         }
