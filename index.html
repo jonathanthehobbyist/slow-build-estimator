@@ -1997,8 +1997,11 @@
                 progressFill.style.width = `${progressInfo.progressPercent}%`;
 
                 // Update with dynamic info
+                /*progressText.textContent = 
+                    `Step ${progressInfo.currentStep} of ${progressInfo.totalSteps} • ${progressInfo.progressPercent}% Complete`;*/
+
                 progressText.textContent = 
-                    `Step ${progressInfo.currentStep} of ${progressInfo.totalSteps} • ${progressInfo.progressPercent}% Complete`;
+                    `${progressInfo.progressPercent}% Complete`;
 
                 // Add completion styling
                 if (progressInfo.isComplete) {
