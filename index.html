@@ -113,7 +113,7 @@
         --button-secondary-bg: var(--surface);
         --button-secondary-hover: var(--surface-hover);
         --button-secondary-text: var(--text-primary);
-        --button-secondary-border: var(--primary-500);
+        --button-secondary-border: var(--neutral-500);
 
         /* Progress Bar Colors */
         --progress-bg: var(--neutral-200);
@@ -519,7 +519,7 @@
         }
 
         .continue-button:enabled {
-            background-color: #4CAF50;
+            background-color: var(--accent-rusty);
             color: white;
         }
 
@@ -627,14 +627,13 @@
         }
 
         .option-button {
-            font-family: var(--font-sans);
+            font-family: var(--font-serif);
             font-weight: var(--font-medium);
             font-size: var(--text-sm);
             padding: var(--space-sm) var(--space-lg);
-            border: 2px solid var(--button-secondary-border);
+            border: 1px solid var(--button-secondary-border);
             background: var(--button-secondary-bg);
             color: var(--button-secondary-text);
-            border-radius: var(--radius-xl);
             transition: all 0.2s ease;
         }
 
