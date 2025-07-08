@@ -27,6 +27,7 @@
 
         /* Accents */
          --accent-rusty: #DE7D60;
+         --accent-rusty-hover: #D25D39;
 
         /* Font Sizes */
         --text-xs: 0.75rem;
@@ -641,7 +642,7 @@
             position: static;
             padding: 1.5rem 2rem;
             border: none;
-            background: var(--surface);
+            background: var(--white);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add shadow like in image */
             border-radius: 8px;
             margin: 1rem 2rem; /* Space from edges */
@@ -654,7 +655,8 @@
         }
 
         .option-button {
-            background: var(--accent-rusty);
+            background: var(--white);
+            border: 1px solid var(--neutral-500);
             color: white;
             border: none;
             padding: 0.75rem 1.5rem;
@@ -667,15 +669,29 @@
         }
 
         .option-button:hover {
-            background: var(--button-primary-bg);
-            color: var(--button-primary-text);
-            border-color: var(--button-primary-bg);
+            background: var(--neutral-100);
+            border-color: var(--neutral-600);
         }
 
         .option-button.selected {
-            background: var(--button-primary-bg);
-            color: var(--button-primary-text);
-            border-color: var(--button-primary-bg);
+            background: var(--user-message-bg);
+            border-color: var(--accent-rusty);
+        }
+
+        /* Primary action buttons - rust colored */
+        .option-button.primary,
+        .continue-button,
+        .email-submit-button {
+            background: var(--accent-rusty);
+            color: white;
+            border: none;
+            font-weight: 600;
+        }
+
+        .option-button.primary:hover,
+        .continue-button:hover:not(:disabled),
+        .email-submit-button:hover:not(:disabled) {
+            background: var(--accent-rusty-hover);
         }
 
         /* Cost Panel */
