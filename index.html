@@ -813,6 +813,12 @@
 
         /* Desktop layout */
         @media (min-width: 768px) {
+
+            .main-content {
+                gap: 0;
+                padding: 0;
+            }
+
             .conversation-header,
             .cost-header {
                 font-size: var(--text-base);
@@ -836,15 +842,15 @@
             }
 
             .conversation-panel {
-                flex: 2;
-                min-height: 80vh;
+                border-radius: 0;
+                box-shadow: none;
+                border-right: 1px solid var(--border-light);
             }
 
             .cost-panel {
-                flex: 1;
-                min-height: 80vh;
-                position: sticky;
-                top: 2rem;
+                border-radius: 0;
+                box-shadow: none;
+                position: static;
             }
 
             .message-image {
