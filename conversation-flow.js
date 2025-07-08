@@ -77,6 +77,7 @@ const CONVERSATION_FLOW = {
     statementTiming: "before",
     inputType: "number",
     validation: { min: 50, max: 2000, digitsOnly: true },
+    userResponseTemplate: "You entered <strong>{selection}</strong>sq ft",
     lineItems: [], // Used for calculations
     next: "project_type"
   },
@@ -85,6 +86,7 @@ const CONVERSATION_FLOW = {
     question: "What type of project is this?",
     inputType: "choice",
     options: ["Cosmetic changes", "Partial Renovation", "Full Renovation"],
+    userResponseTemplate: "We'll be doing a <strong>{selection}</strong> renovation.",
     lineItems: [
       {
         condition: "Full Renovation",
