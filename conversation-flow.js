@@ -19,7 +19,7 @@ const CONVERSATION_FLOW = {
     statementTiming: "before",
     inputType: "choice",
     options: ["Kitchen", "Living Room", "Bedroom", "Bathroom"],
-    userResponseTemplate: "You selected: {selection}", // ← Add this
+    userResponseTemplate: "You selected: <strong>{selection}</strong>", // ← Add this
     lineItems: [], // Just sets room context
     next: "inspiration"
   },
