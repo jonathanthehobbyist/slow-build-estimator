@@ -30,6 +30,10 @@ const CONVERSATION_FLOW = {
 
   kitchen_inspiration: {
     question: "Let's start with some inspiration - choose any style that catches your eye:",
+    question: function() {
+      const room = conversationState.sessionData.initial || 'room';
+      return `Next, let's look at inspiration from various styles of ${room.toLowerCase()}s. Choose any that fit your style.`;
+      },
     inputType: "multiSelectGallery", // Multi Select Image selection
     layout: "single-column",
     options: [
