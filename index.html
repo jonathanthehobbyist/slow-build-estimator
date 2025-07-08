@@ -368,6 +368,27 @@
             margin-top: var(--space-xs);
         }
 
+        .number-input {
+            background: var(--user-message-bg); /* Same as user message #F1EFEF */
+            border: 1px solid var(--neutral-200);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--text-primary);
+            width: 200px; /* Constrained width like in image */
+        }
+
+        .number-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .number-input-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
         .email-error-message.show {
             display: block;
         }
@@ -617,24 +638,28 @@
         }
 
         .input-options {
-            padding: 1rem;
-            border-top: 1px solid #e5e5e5;
+            position: static; /* Remove any fixed positioning */
+            padding: 2rem;
+            border: none; /* Remove top border */
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            overflow-y: auto;
-            max-height: 40vh;
+            flex-direction: column;
+            gap: 1rem;
+            max-height: none; /* Remove height constraints */
+            overflow: visible;
+            background: transparent;
         }
 
         .option-button {
-            font-family: var(--font-serif);
+            background: var(--accent-rusty);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
             font-weight: var(--font-medium);
-            font-size: var(--text-sm);
-            padding: var(--space-sm) var(--space-lg);
-            border: 1px solid var(--button-secondary-border);
-            background: var(--button-secondary-bg);
-            color: var(--button-secondary-text);
-            transition: all 0.2s ease;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-sans);
+            cursor: pointer;
+            width: auto;
+            align-self: flex-start; /* Don't stretch full width */
         }
 
         .option-button:hover {
