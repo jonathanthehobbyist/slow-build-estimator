@@ -1085,7 +1085,7 @@
           inputOptions.innerHTML = '';
           
           const continueButton = document.createElement('button');
-          continueButton.className = 'option-button';
+          continueButton.className = 'option-button primary';
           continueButton.textContent = 'Continue';
           continueButton.style.backgroundColor = '#4CAF50';
           continueButton.onclick = () => selectOption('continue');
@@ -1235,29 +1235,7 @@
                     setTimeout(() => showInputs(stepConfig), window.CONVERSATION_TIMING.statementDelay);
                 }
               }, nextQuestionDelay);   
-            }
-
-                // removed
-                /* addMessage(stepConfig.question);
-
-                    // DEBUG: Log the step config
-                    console.log('Step config:', stepConfig);
-                    console.log('Input type:', stepConfig.inputType);
-                    console.log('Has options:', !!stepConfig.options);
-                
-                // Handle different input types
-                if (stepConfig.inputType === 'choice') {
-                    updateInputOptions(stepConfig.options.map(option => ({
-                        text: option,
-                        value: option
-                    })));
-                } else if (stepConfig.inputType === 'number') {
-                    updateNumberInput(stepConfig.validation);
-                } else if (stepConfig.inputType === 'gallery') {
-                    updateGalleryInput(stepConfig.options);
-                }
-            } */
-            
+            }            
             updateCostEstimate();
         }
             
@@ -1524,7 +1502,7 @@
             selectionText.style.color = '#2c3e50';
 
             const confirmButton = document.createElement('button');
-            confirmButton.className = 'option-button';
+            confirmButton.className = 'option-button primary';
             confirmButton.textContent = 'Confirm Selection';
             confirmButton.style.backgroundColor = '#4caf50';
             confirmButton.style.color = 'white';
@@ -1643,7 +1621,7 @@
 
             options.forEach(option => {
                 const button = document.createElement('button');
-                button.className = 'option-button multi-select-button';
+                button.className = 'option-button multi-select-button primary';
                 button.textContent = option;
                 button.onclick = () => toggleMultiSelect(option, button);
                 container.appendChild(button);
@@ -1974,7 +1952,7 @@
             // asked me to remove ^^
             
             const submitButton = document.createElement('button');
-            submitButton.className = 'option-button';
+            submitButton.className = 'option-button primary';
             submitButton.textContent = 'Continue';
             submitButton.onclick = () => handleNumberSubmit(numberInput, validation);
 
@@ -2405,7 +2383,7 @@
             emailInput.required = true;
 
             const submitButton = document.createElement('button');
-            submitButton.className = 'option-button email-submit-button';
+            submitButton.className = 'option-button email-submit-button primary';
             submitButton.textContent = 'Unlock premium features';
 
             submitButton.onclick = () => handleEmailSubmit(emailInput);
