@@ -1979,10 +1979,6 @@
             const selectionNames = window.tempMultiSelections.map(item => item.name || item);
             const selectionText = selectionNames.join(', ');
 
-            // Create custom messages with text and image grid
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message user';
-
             // Get template if available
             const stepConfig = window.CONVERSATION_FLOW[conversationState.currentStep];
             let displayMessage = selectionText;
@@ -1990,8 +1986,47 @@
                 displayMessage = stepConfig.userResponseTemplate.replace('{selection}', selectionText);
             }
 
+            // Create custom messages with text and image grid
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user';
+
+            // Create message bubble
+            const messageBubble = document.createElement('div');
+            messageBubble.className = 'message-bubble';
+            messageBubble.textContent = displayMessage;
+
+            // Create image grid
+            const imageGrid = document.createElement('div');
+            imageGrid.className = 'multi-select-image-card';
+
+            window.tempMultiSelections.forEach(selection => {
+                const imageUrl = selection.thumbnail || selection.image;
+                const name = selection.name || selection;
+
+                const gridItem = document.createElement('div');
+                gridItem.className = 'grid-image-item';
+
+                const img = document.createElement('div');
+                img.src = imageUrl;
+                img.alt = name;
+                img.className = 'grid-image';
+
+                const label = document.createElement('div');
+                label.className = 'grid-image-label';
+                label.textContent = name;
+
+                gridItem.appendChild(img);
+                gridItem.appendChild(label);
+                imageGrid.appendChild(gridItem);
+            });
+
+            // Assemble the message
+            messageDiv.appendChild(messageBubble);
+            messageDiv.appendChild(imageGrid);
+            conversationFlow.appendChild(messageDiv);
+
             // Create message content within image and grid
-            messageDiv.innerHTML = `
+            /*messageDiv.innerHTML = `
                 <div class="message-bubble">${displayMessage}</div>
                 <div class="multi-select-image-grid">
                     ${window.tempMultiSelections.map(selection => {
@@ -2003,7 +2038,7 @@
                         </div>`;
                         }).join('')}
                     </div>
-                `;
+                `;*/
 
             conversationFlow.appendChild('messageDiv');
 
