@@ -14,11 +14,12 @@ const CONVERSATION_FLOW = {
   
   // ==================== INITIAL QUESTIONS ====================
   initial: {
-    question: "Select a room to focus on",
+    question: "First, select a room to focus on",
     statement: "Hi! This tool will help you generate a high-level estimate for your remodel.",
     statementTiming: "before",
     inputType: "choice",
     options: ["Kitchen", "Living Room", "Bedroom", "Bathroom"],
+    userResponseTemplate: "You selected: {selection}", // ← Add this
     lineItems: [], // Just sets room context
     next: "inspiration"
   },

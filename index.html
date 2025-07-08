@@ -1022,8 +1022,19 @@
             disableAllButtons();
 
             // Add user message
-            addMessage(option, 'user');
+            //addMessage(option, 'user');
             
+            // Get the current step config
+            const stepConfig = window.CONVERSATION_FLOW[conversationState.currentStep];
+
+            let displayMessage = option;
+            if (stepConfig && stepConfig.userResponseTemplate) {
+                displayMessage = stepConfig.userResponseTemplate.replace('{selection}', option);
+            }
+
+            // Added
+            addMessage(displayMessage, 'user');
+
             // Store selection in sessionData
             conversationState.sessionData[conversationState.currentStep] = option;
             
