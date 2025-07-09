@@ -444,6 +444,8 @@
         }
 
         /* SPECIFIC BUTTON CLASSES - For backwards compatibility */
+
+        /* Using the rust accent color, stand-alone buttons */
         .option-button.continue-button,
         .option-button.primary,
         .option-button.email-submit-button.primary {
@@ -475,6 +477,7 @@
             transform: none;
         }
 
+        /* White bg, grey border, usually buttons in groups */
         .option-button,
         .multi-select-button {
             font-family: var(--font-sans);
@@ -487,7 +490,7 @@
             white-space: nowrap;
             flex-shrink: 0;
             background: var(--white);
-            border:L 1px solid var(--neutral-300);
+            border: 1px solid var(--neutral-300);
             color: var(--text-primary);
         }
 
