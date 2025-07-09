@@ -382,12 +382,16 @@
         .number-input {
             background: var(--user-message-bg); /* Same as user message #F1EFEF */
             border: 1px solid var(--neutral-200);
-            padding: 0.75rem 1rem;
+            padding: 0.5rem 1rem;
             border-radius: 6px;
             font-family: var(--font-sans);
-            font-size: 1rem;
+            font-size: var(--text-sm);
             color: var(--text-primary);
             width: 200px; /* Constrained width like in image */
+        }
+
+        .number-input:focus {
+            border-color: var(--neutral-800)!important;
         }
 
         .number-input::placeholder {
@@ -979,6 +983,7 @@
 
             .range-display {
                 font-size: var(--text-sm);
+                text-align: right;
                 /* padding: var(--space-sm) var(--space-lg);*/
             }
 
