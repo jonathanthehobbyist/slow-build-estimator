@@ -119,31 +119,12 @@ const CONVERSATION_FLOW = {
     next: "email_capture"
   },
 
-    email_capture: {
-  question: "To continue refining your estimate, please enter your email:",
-  statement: "You're making great progress! Next we'll help you choose appliances, countertops, and premium features.",
-  statementTiming: "before",
-  inputType: "email",
-  validation: { required: true, format: "email" },
-  emailConfig: {
-    sendToCustomer: true,
-    sendToDesigner: true,
-    designerEmail: "jon@jonsimmons.co", // ← Your email
-    customerSubject: "Your Kitchen Renovation Estimate is Ready!",
-    designerSubject: "New Lead: Kitchen Renovation Estimate Request"
-  },
-  responseLogic: (userEmail, sessionData) => {
-    return `Great! Now let's explore more options for your ${sessionData.square_footage} sq ft ${sessionData.room_type}.`;
-  },
-   // Add bypass check
-  // Add this to browserURL: ?bypass=testing123
-  bypassCheck: () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('bypass') === 'testing123';
-  },
-  lineItems: [], // No cost impact
-  next: "kitchen_cabinets"
-},
+
+
+
+
+
+
 
   kitchen_cabinets: {
     question: "Fantastic! Next up: cabinets – what level of customization do you want in your kitchen cabinets?",
@@ -378,7 +359,7 @@ const CONVERSATION_FLOW = {
         items: [{ name: "Additional Features", calculation: "flat", category: "materials" }]
       }
     ],
-    next: "complete"
+    next: "email_capture"
   },
 
   // ==================== BATHROOM FLOW ====================
@@ -410,7 +391,7 @@ const CONVERSATION_FLOW = {
     lineItems: [
       { name: "Vanity", calculation: "flat", category: "materials" }
     ],
-    next: "complete"
+    next: "email_capture"
   },
 
   // ==================== LIVING ROOM FLOW ====================
@@ -435,7 +416,7 @@ const CONVERSATION_FLOW = {
         items: [{ name: "Additional Features", calculation: "flat", category: "materials" }]
       }
     ],
-    next: "complete"
+    next: "email_capture"
   },
 
   // ==================== BEDROOM FLOW ====================
@@ -460,8 +441,34 @@ const CONVERSATION_FLOW = {
         items: [{ name: "Additional Features", calculation: "flat", category: "materials" }]
       }
     ],
-    next: "complete"
+    next: "email_capture"
   }
+},
+
+email_capture: {
+  question: "To continue refining your estimate, please enter your email:",
+  statement: "You're making great progress! Next we'll help you choose appliances, countertops, and premium features.",
+  statementTiming: "before",
+  inputType: "email",
+  validation: { required: true, format: "email" },
+  emailConfig: {
+    sendToCustomer: true,
+    sendToDesigner: true,
+    designerEmail: "jon@jonsimmons.co", // ← Your email
+    customerSubject: "Your Kitchen Renovation Estimate is Ready!",
+    designerSubject: "New Lead: Kitchen Renovation Estimate Request"
+  },
+  responseLogic: (userEmail, sessionData) => {
+    return `Great! Now let's explore more options for your ${sessionData.square_footage} sq ft ${sessionData.room_type}.`;
+  },
+   // Add bypass check
+  // Add this to browserURL: ?bypass=testing123
+  bypassCheck: () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('bypass') === 'testing123';
+  },
+  lineItems: [], // No cost impact
+  next: "complete"
 };
 
 // ==================== ALWAYS INCLUDED ITEMS ====================
