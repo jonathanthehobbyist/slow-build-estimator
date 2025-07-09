@@ -472,7 +472,7 @@ const CONVERSATION_FLOW = {
 const ALWAYS_INCLUDED = [
   { 
     name: "Design Consultation", 
-    price: 0, // Changed from 500 to make it free
+    price: 550, // Changed from 500 to make it free
     category: "design", 
     description: "Complimentary design consultation" 
   }
