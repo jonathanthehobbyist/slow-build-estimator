@@ -85,8 +85,8 @@ const CONVERSATION_FLOW = {
   project_type: {
     question: "What type of project is this?",
     inputType: "choice",
-    options: ["Cosmetic changes", "Partial Renovation", "Full Renovation"],
-    userResponseTemplate: "We'll be doing a <strong>{selection}</strong> renovation.",
+    options: ["Cosmetic change", "Partial Renovation", "Full Renovation"],
+    userResponseTemplate: "We'll be doing a <strong>{selection}</strong>.",
     lineItems: [
       {
         condition: "Full Renovation",
