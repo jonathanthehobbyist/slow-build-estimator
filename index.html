@@ -330,7 +330,7 @@
             font-size: var(--text-base);
             font-weight: var(--font-normal);
             padding: var(--space-sm) var(--space-md);
-            border: 2px solid var(--primary-500);
+            border: 1px solid var(--primary-500);
             border-radius: var(--radius-sm);
             color: var(--text-primary);
             transition: border-color 0.3s ease;
@@ -339,7 +339,7 @@
         .email-input:focus {
             outline: none;
             border-color: var(--accent-rusty);
-            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+            box-shadow: 0 0 0 3px rgba(var(--accent-rusty), 0.1);
         }
 
         .email-input.error {
@@ -444,8 +444,9 @@
         }
 
         /* SPECIFIC BUTTON CLASSES - For backwards compatibility */
-        .continue-button,
-        .email-submit-button {
+        .option-button.continue-button,
+        .option-button.primary,
+        .option-button.email-submit-button.primary {
             font-family: var(--font-sans);
             font-weight: 600;
             font-size: var(--text-base);
@@ -457,7 +458,7 @@
             flex-shrink: 0;
             border: none;
             background-color: var(--accent-rusty);
-            color: white;
+            color: var(--text-inverse);
         }
 
         .continue-button:hover:not(:disabled),
@@ -486,7 +487,7 @@
             white-space: nowrap;
             flex-shrink: 0;
             background: var(--white);
-            
+            border:L 1px solid var(--neutral-300);
             color: var(--text-primary);
         }
 
