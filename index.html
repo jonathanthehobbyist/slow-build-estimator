@@ -1177,8 +1177,15 @@
             // Get the current step config
             const stepConfig = window.CONVERSATION_FLOW[conversationState.currentStep];
 
-            const formattedOptions = formatOptions(option);
-            const displayMessage = stepConfig.userResponseTemplate.replace('{selection}', formattedOptions);
+            // Only show user message if user response template exists
+            if(stepConfig && stepConfig.userResponseTemplate) {
+
+                const formattedOptions = formatOptions(option);
+                const displayMessage = stepConfig.userResponseTemplate.replace('{selection}', formattedOptions);
+
+                // Added
+                addMessage(displayMessage, 'user');
+            }
 
             /*let displayMessage = option;
             if (stepConfig && stepConfig.userResponseTemplate) {
@@ -1188,8 +1195,7 @@
             console.log('displayMessage', displayMessage);
             console.log('formattedOptions', formattedOptions);
 
-            // Added
-            addMessage(displayMessage, 'user');
+            
 
             // Store selection in sessionData
             conversationState.sessionData[conversationState.currentStep] = option;
