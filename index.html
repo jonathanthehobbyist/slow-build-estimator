@@ -374,7 +374,7 @@
         }
 
         .number-input:focus {
-            border-color: var(--neutral-800)!important;
+            border: 1px solid var(--neutral-800)!important;
             outline-color: var(--accent-rusty!important);
         }
 
@@ -2240,39 +2240,23 @@
         /* ------- STYLE FUNCTIONS ------------*/
 
         function flashInputOptions() {
-            // Highlights the input options area with 2 flashes when new options load
+            // Highlights the input options area with fast flash and slow fade
             // Provides visual feedback that new choices are available
             const inputOptions = document.getElementById('inputOptions');
             if (!inputOptions) return;
             
-            const originalBackground = inputOptions.style.backgroundColor;
-            const flashColor = '#e3f2fd'; // Light blue system color
-
-            // Add CSS transition for smooth animation
-            inputOptions.style.transition = 'background-color 300ms ease-in-out';
+            const originalBackground = inputOptions.style.backgroundColor || '';
+            const flashColor = '#FFCEBF'; // Light rust system color
             
-            let flashCount = 0;
-            const maxFlashes = 2;
+            // Fast flash (100ms)
+            inputOptions.style.transition = 'background-color 100ms ease-out';
+            inputOptions.style.backgroundColor = flashColor;
             
-            function doFlash() {
-                if (flashCount >= maxFlashes * 2) {
-                    // Reset to original background
-                    inputOptions.style.backgroundColor = originalBackground;
-                    return;
-                }
-                
-                // Alternate between flash color and original
-                if (flashCount % 2 === 0) {
-                    inputOptions.style.backgroundColor = flashColor;
-                } else {
-                    inputOptions.style.backgroundColor = originalBackground;
-                }
-                
-                flashCount++;
-                setTimeout(doFlash, 200); // 200ms per flash phase
-            }
-            
-            doFlash();
+            // Then slow fade back to original (1000ms)
+            setTimeout(() => {
+                inputOptions.style.transition = 'background-color 1000ms ease-in-out';
+                inputOptions.style.backgroundColor = originalBackground;
+            }, 100);
         }
 
         /* ------- NUMBER INPUT FUNCTIONS ------------*/
