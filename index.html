@@ -314,9 +314,12 @@
         /* Email input container */
         .email-input-container {
             display: flex;
-            flex-direction: column;
             gap: 0.5rem;
+            width: 100%;
         }
+
+        .email-input-container button { flex: 2; } 
+        .email-input-container input { flex: 1; }
 
         /* ============ INPUT FIELDS ==============  */
 
@@ -377,6 +380,8 @@
         .number-input::placeholder {
             color: var(--text-secondary);
         }
+
+
 
 
         /* ============ BUTTONS ==============  */
