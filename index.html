@@ -521,13 +521,13 @@
         /* ============== GALLERY CARDS ETC ============== */
 
         /* Multi-select gallery card base styles */
-        /.gallery-card,
+        .gallery-card,
         .multi-select-gallery-card {
             display: flex;
             align-items: center;
             width: 100%;
             background: var(--surface);
-            border: 1px solid var(--neutral-200);
+            border: 2px solid var(--neutral-200);
             border-radius: var(--space-sm);
             overflow: hidden;
             transition: all 0.2s ease;
@@ -538,6 +538,7 @@
         .multi-select-gallery-card .card-image {
             width: 200px; /* Fixed width for image */
             height: 180px;
+
             object-fit: cover;
             flex-shrink: 0;
         }
@@ -2071,6 +2072,10 @@
             // Updated
 
             console.log('Called confirmMultiSelectGallery', stepConfig);
+            // Only show user message if user response template exists
+            // if(stepConfig && stepConfig.userResponseTemplate) {
+
+            // FIX THIS
 
             const formattedOptions = formatOptions(selectionNames);
             const displayMessage = stepConfig.userResponseTemplate.replace('{selection}', formattedOptions);
