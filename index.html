@@ -2055,10 +2055,18 @@
 
             // Get template if available
             const stepConfig = window.CONVERSATION_FLOW[conversationState.currentStep];
-            let displayMessage = selectionText;
+
+            // Orig
+
+            /*let displayMessage = selectionText;
             if (stepConfig && stepConfig.userResponseTemplate) {
                 displayMessage = stepConfig.userResponseTemplate.replace('{selection}', selectionText);
-            }
+            }*/
+
+            // Updated
+
+            const formattedOptions = formatOptions(selectionNames);
+            const displayMessage = stepConfig.userResponseTemplate.replace('{selection}', formattedOptions);
 
             // Create custom messages with text and image grid
             const messageDiv = document.createElement('div');
