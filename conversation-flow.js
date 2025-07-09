@@ -35,7 +35,6 @@ const CONVERSATION_FLOW = {
       return `Next, let's look at inspiration from various styles of ${room.toLowerCase()}s. Choose any that fit your style.`;
       },
     inputType: "multiSelectGallery", // Multi Select Image selection
-    layout: "single-column",
     options: [
       { 
         name: "Modern", 
