@@ -26,8 +26,8 @@
         --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
         /* Accents */
-         --accent-rusty: #DE7D60;
-         --accent-rusty-hover: #D25D39;
+         --accent-rusty: #D25D39;
+         --accent-rusty-hover: #BD4F2D;
 
         /* Font Sizes */
         --text-xs: 0.75rem;
@@ -451,7 +451,7 @@
         .option-button.primary,
         .option-button.email-submit-button.primary {
             font-family: var(--font-sans);
-            font-weight: 600;
+            font-weight: var(--font-medium);
             font-size: var(--text-base);
             padding: var(--space-sm) var(--space-lg);
             border-radius: var(--radius-sm);
@@ -616,7 +616,7 @@
             grid-template-columns: repeat(2, 1fr); /* Single column, full width */
             gap: 1rem;
             width: 100%;
-            margin: 0 0 var(--space-sm) 0; /* Remove margins */
+            margin: 0 0 var(--space-lg) 0; /* Remove margins */
             padding: 0; /* Remove padding */
         }
 
