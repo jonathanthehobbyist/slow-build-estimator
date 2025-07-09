@@ -1169,7 +1169,7 @@
             const stepConfig = window.CONVERSATION_FLOW[conversationState.currentStep];
 
             const formattedOptions = formatOptions(option);
-            displayMessage = stepConfig.userResponseTemplate.replace('{selection}', formattedOptions);
+            const displayMessage = stepConfig.userResponseTemplate.replace('{selection}', formattedOptions);
 
             /*let displayMessage = option;
             if (stepConfig && stepConfig.userResponseTemplate) {
