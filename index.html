@@ -1139,6 +1139,8 @@
             if (typeof options === 'string') {
                 return options;
             }
+
+            console.log('formatOptions - OPTIONS:', options);
             
             if (!Array.isArray(options)) {
                 return String(options);
