@@ -86,7 +86,7 @@ const CONVERSATION_FLOW = {
     question: "What type of project is this?",
     inputType: "choice",
     options: ["Cosmetic change", "Partial Renovation", "Full Renovation"],
-    userResponseTemplate: "We'll be doing a <strong>{selection}</strong>.",
+    userResponseTemplate: "We'll be doing a <strong>{selection}</strong> renovation.",
     lineItems: [
       {
         condition: "Full Renovation",
@@ -116,13 +116,8 @@ const CONVERSATION_FLOW = {
       { name: "Flooring Materials", calculation: "perSqFt", category: "materials" },
       { name: "Flooring Installation", calculation: "perSqFt", category: "labor" }
     ],
-    next: "email_capture"
+    next: "kitchen_cabinets"
   },
-
-
-
-
-
 
 
 
@@ -431,6 +426,7 @@ const CONVERSATION_FLOW = {
     next: "bedroom_features"
   },
 
+
   bedroom_features: {
     question: "Any additional features?",
     inputType: "choice",
@@ -442,34 +438,35 @@ const CONVERSATION_FLOW = {
       }
     ],
     next: "email_capture"
-  }
-},
+  },
 
-email_capture: {
-  question: "To continue refining your estimate, please enter your email:",
-  statement: "You're making great progress! Next we'll help you choose appliances, countertops, and premium features.",
-  statementTiming: "before",
-  inputType: "email",
-  validation: { required: true, format: "email" },
-  emailConfig: {
-    sendToCustomer: true,
-    sendToDesigner: true,
-    designerEmail: "jon@jonsimmons.co", // ← Your email
-    customerSubject: "Your Kitchen Renovation Estimate is Ready!",
-    designerSubject: "New Lead: Kitchen Renovation Estimate Request"
-  },
-  responseLogic: (userEmail, sessionData) => {
-    return `Great! Now let's explore more options for your ${sessionData.square_footage} sq ft ${sessionData.room_type}.`;
-  },
-   // Add bypass check
-  // Add this to browserURL: ?bypass=testing123
-  bypassCheck: () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('bypass') === 'testing123';
-  },
-  lineItems: [], // No cost impact
-  next: "complete"
-};
+  email_capture: {
+    question: "To continue refining your estimate, please enter your email:",
+    statement: "You're making great progress! Next we'll help you choose appliances, countertops, and premium features.",
+    statementTiming: "before",
+    inputType: "email",
+    validation: { required: true, format: "email" },
+    emailConfig: {
+      sendToCustomer: true,
+      sendToDesigner: true,
+      designerEmail: "jon@jonsimmons.co", // ← Your email
+      customerSubject: "Your Kitchen Renovation Estimate is Ready!",
+      designerSubject: "New Lead: Kitchen Renovation Estimate Request"
+    },
+    responseLogic: (userEmail, sessionData) => {
+      return `Great! Now let's explore more options for your ${sessionData.square_footage} sq ft ${sessionData.room_type}.`;
+    },
+     // Add bypass check
+    // Add this to browserURL: ?bypass=testing123
+    bypassCheck: () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('bypass') === 'testing123';
+    },
+    lineItems: [], // No cost impact
+    next: "complete"
+  }
+}; // END
+
 
 // ==================== ALWAYS INCLUDED ITEMS ====================
 const ALWAYS_INCLUDED = [
