@@ -712,7 +712,7 @@
 
         .input-options {
             position: static;
-            padding: 1.5rem 2rem;
+            padding: 1.5rem 1rem;
             border: none;
             background: var(--white);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add shadow like in image */
@@ -731,7 +731,7 @@
             border: 1px solid var(--neutral-500);
             color: var(--text-primary)
             border: none;
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem .75rem;
             font-weight: 600;
             border-radius: 6px;
             font-family: var(--font-sans);
@@ -2112,13 +2112,14 @@
             inputRow.style.alignItems = 'center';
             
             const numberInput = document.createElement('input');
+            numberInput.className = 'number-input';
             numberInput.type = 'text';
             numberInput.placeholder = validation ? `${validation.min} - ${validation.max} sq ft` : 'Enter square footage';
-            numberInput.style.padding = '0.5rem';
+            /* numberInput.style.padding = '0.5rem';
             numberInput.style.border = '2px solid #2196f3';
             numberInput.style.borderRadius = '8px';
             numberInput.style.fontSize = '1rem';
-            numberInput.style.flex = '1';
+            numberInput.style.flex = '1';*/
             
             /* if (validation) {
                 numberInput.min = validation.min;
