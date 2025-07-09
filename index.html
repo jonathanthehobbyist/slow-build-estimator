@@ -1141,7 +1141,7 @@
             }
             console.log('formatOptions - OPTIONS:', options);
 
-            
+
             
             if (!Array.isArray(options)) {
                 return String(options);
@@ -1165,6 +1165,8 @@
         // Handle option selection
         function selectOption(option) {
 
+            console.log('selectOption called', option);
+
             //disable all buttons immediately
             disableAllButtons();
 
@@ -1181,6 +1183,8 @@
             if (stepConfig && stepConfig.userResponseTemplate) {
                 displayMessage = stepConfig.userResponseTemplate.replace('{selection}', option);
             }*/
+
+            console.log('displayMessage', displayMessage);
 
             // Added
             addMessage(displayMessage, 'user');
