@@ -362,7 +362,7 @@
             font-style: italic;
         }
 
-        .number-input {
+        input.number-input {
             background: var(--user-message-bg); /* Same as user message #F1EFEF */
             border: 1px solid var(--neutral-200);
             padding: var(--space-sm) var(--space-md);
@@ -373,12 +373,12 @@
             width: 200px; /* Constrained width like in image */
         }
 
-        .number-input:focus {
+        input.number-input:focus {
             border: 1px solid var(--neutral-800)!important;
             outline-color: var(--accent-rusty!important);
         }
 
-        .number-input::placeholder {
+        input.number-input::placeholder {
             color: var(--text-secondary);
         }
 
@@ -558,10 +558,10 @@
 
         /* Multi-select gallery card selected state */
         .multi-select-gallery-card.selected {
-            border-color: #2196f3 !important;
-            background-color: #f0f7ff !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 4px 12px rgba(var(--neutral-500), 0.2) !important;
+            border-color: var(--accent-rusty)!important;
+            background-color: #f0f7ff!important;
+            transform: translateY(-2px)!important;
+            box-shadow: 0 4px 12px rgba(var(--neutral-500), 0.2)!important;
         }
 
         /* Multi-select gallery card image */
@@ -1131,6 +1131,31 @@
             }, 200);
         }
 
+        function formatOptions(options) {
+            // Handle different input types
+            if (typeof options === 'string') {
+                return options;
+            }
+            
+            if (!Array.isArray(options)) {
+                return String(options);
+            }
+            
+            // Handle array formatting
+            if (options.length === 0) {
+                return '';
+            } else if (options.length === 1) {
+                return options[0];
+            } else if (options.length === 2) {
+                return `${options[0]} and ${options[1]}`;
+            } else {
+                // 3+ options: "item1, item2, and item3"
+                const lastItem = options[options.length - 1];
+                const firstItems = options.slice(0, -1);
+                return `${firstItems.join(', ')}, and ${lastItem}`;
+            }
+        }
+
         // Handle option selection
         function selectOption(option) {
 
@@ -1143,10 +1168,13 @@
             // Get the current step config
             const stepConfig = window.CONVERSATION_FLOW[conversationState.currentStep];
 
-            let displayMessage = option;
+            const formattedOptions = formatOptions(option);
+            displayMessage = stepConfig.userResponseTemplate.repace('{selection}', formattedOptions);
+
+            /*let displayMessage = option;
             if (stepConfig && stepConfig.userResponseTemplate) {
                 displayMessage = stepConfig.userResponseTemplate.replace('{selection}', option);
-            }
+            }*/
 
             // Added
             addMessage(displayMessage, 'user');
