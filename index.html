@@ -318,7 +318,10 @@
             gap: 0.5rem;
         }
 
+        /* ============ INPUT FIELDS ==============  */
+
         /* Email input field */
+
         .email-input {
             font-family: var(--font-sans);
             font-size: var(--text-base);
@@ -340,36 +343,6 @@
             border-color: #e74c3c;
         }
 
-        .email-input::placeholder {
-            color: var(--text-tertiary);
-            font-style: italic;
-        }
-
-        /* Email submit button */
-        .email-submit-button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .email-submit-button:hover:not(:disabled) {
-            background-color: #45a049;
-            transform: translateY(-1px);
-        }
-
-        .email-submit-button:disabled {
-            background-color: #ccc;
-            color: #666;
-            cursor: not-allowed;
-            transform: none;
-        }
-
         /* Email error message */
         .email-error-message,
         .number-input-error {
@@ -378,6 +351,11 @@
             font-weight: var(--font-medium);
             color: var(--error-500);
             margin-top: var(--space-xs);
+        }
+
+        .email-input::placeholder {
+            color: var(--text-tertiary);
+            font-style: italic;
         }
 
         .number-input {
@@ -400,45 +378,134 @@
             color: var(--text-secondary);
         }
 
-        .number-input-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
 
-        .email-error-message.show {
-            display: block;
-        }
+        /* ============ BUTTONS ==============  */
 
-        /* Multi-select button states */
-
-        .multi-select-button {
-            background-color: white !important;
-            color: #2196f3 !important;
-            border: 2px solid #2196f3 !important;
+        /* Base button styles - shared by all buttons */
+        .btn {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: var(--text-base);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
             transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+            border: none;
         }
 
-        .multi-select-button.selected {
-            background-color: #2196f3 !important;
-            color: white !important;
+        /* PRIMARY BUTTONS - Rust colored for main actions */
+        .btn-primary {
+            background-color: var(--accent-rusty);
+            color: white;
+            border: none;
         }
 
-        .multi-select-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+        .btn-primary:hover:not(:disabled) {
+            background-color: var(--accent-rusty-hover);
+            transform: translateY(-1px);
         }
 
-        .multi-select-button {
+        .btn-primary:disabled {
+            background-color: #ccc;
+            color: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* SECONDARY BUTTONS - White with border for options/selections */
+        .btn-secondary {
+            background: var(--white);
+            border: 1px solid var(--neutral-500);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--neutral-50);
+            border-color: var(--neutral-600);
+        }
+
+        .btn-secondary:disabled {
+            background-color: #f5f5f5;
+            color: #999;
+            border-color: #ddd;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary.selected {
+            background: var(--user-message-bg);
+            border-color: var(--accent-rusty);
+        }
+
+        /* SPECIFIC BUTTON CLASSES - For backwards compatibility */
+        .continue-button,
+        .email-submit-button {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: var(--text-base);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
             transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+            border: none;
+            background-color: var(--accent-rusty);
+            color: white;
         }
 
-        .multi-select-button.selected {
-            background-color: #2196f3 !important;
-            color: white !important;
+        .continue-button:hover:not(:disabled),
+        .email-submit-button:hover:not(:disabled) {
+            background-color: var(--accent-rusty-hover);
+            transform: translateY(-1px);
         }
+
+        .continue-button:disabled,
+        .email-submit-button:disabled {
+            background-color: #ccc;
+            color: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .option-button,
+        .multi-select-button {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: var(--text-base);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+            background: var(--white);
+            border: 1px solid var(--neutral-500);
+            color: var(--text-primary);
+        }
+
+        .option-button:hover:not(:disabled),
+        .multi-select-button:hover:not(:disabled) {
+            background: var(--neutral-50);
+            border-color: var(--neutral-600);
+        }
+
+        .option-button:disabled,
+        .multi-select-button:disabled {
+            background-color: #f5f5f5;
+            color: #999;
+            border-color: #ddd;
+            cursor: not-allowed;
+        }
+
+        .option-button.selected,
+        .multi-select-button.selected {
+            background: var(--user-message-bg);
+            border-color: var(--accent-rusty);
+        }
+
+        /* ============== GALLERY CARDS ETC ============== */
 
         /* Multi-select gallery card base styles */
         /.gallery-card,
@@ -560,35 +627,7 @@
             margin-bottom: var(--space-lg);
         }
 
-        /* Continue button styles */
-        .continue-button,
-        .email-submit-button {
-            font-family: var(--font-sans);
-            font-weight: var(--font-semibold);
-            font-size: var(--text-base);
-            padding: var(--space-md) var(--space-xl);
-            background-color: var(--success-600);
-            color: var(--text-inverse);
-            border: none;
-            border-radius: var(--radius-md);
-            transition: all 0.2s ease;
-        }
 
-        .continue-button:disabled {
-            background-color: #ccc;
-            color: #666;
-            cursor: not-allowed;
-        }
-
-        .continue-button:enabled {
-            background-color: var(--accent-rusty);
-            color: white;
-        }
-
-        .continue-button:enabled:hover {
-            background-color: var(--success-500);
-            transform: translateY(-1px);
-        }
 
         /* Single-column gallery container */
         .gallery-container-single {
@@ -739,45 +778,7 @@
             overflow: visible;
         }
 
-        .option-button {
-            background: var(--white);
-            border: 1px solid var(--neutral-500);
-            color: var(--text-primary)
-            border: none;
-            padding: 0.5rem .75rem;
-            font-weight: 600;
-            border-radius: 6px;
-            font-family: var(--font-sans);
-            cursor: pointer;
-            white-space: nowrap; /* Prevent text wrapping */
-            flex-shrink: 0; /* Don't shrink */
-        }
 
-        .option-button:hover {
-            background: var(--neutral-50);
-            border-color: var(--neutral-600);
-        }
-
-        .option-button.selected {
-            background: var(--user-message-bg);
-            border-color: var(--accent-rusty);
-        }
-
-        /* Primary action buttons - rust colored */
-        .option-button.primary,
-        .continue-button,
-        .email-submit-button {
-            background: var(--accent-rusty);
-            color: white;
-            border: none;
-            font-weight: 600;
-        }
-
-        .option-button.primary:hover,
-        .continue-button:hover:not(:disabled),
-        .email-submit-button:hover:not(:disabled) {
-            background: var(--accent-rusty-hover);
-        }
 
         /* Cost Panel */
         .cost-panel {
