@@ -24,7 +24,7 @@ const PRICING = {
   
   // Kitchen items - flat pricing
   "Cabinets": {
-    "Cabinet refacing": { flat: 30000 },
+    "Refaced cabinets": { flat: 30000 },
     "Stock cabinets": { flat: 25000 },
     "Full custom cabinets": { flat: 50000 }
   },

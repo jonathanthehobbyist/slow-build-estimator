@@ -35,6 +35,7 @@ const CONVERSATION_FLOW = {
       return `Next, let's look at inspiration from various styles of ${room.toLowerCase()}s. Choose any that fit your style.`;
       },
     inputType: "multiSelectGallery", // Multi Select Image selection
+    userResponseTemplate: "You selected: <strong>{selection}</strong>", // TO-DO: 
     options: [
       { 
         name: "Modern", 
@@ -76,7 +77,7 @@ const CONVERSATION_FLOW = {
     statementTiming: "before",
     inputType: "number",
     validation: { min: 50, max: 2000, digitsOnly: true },
-    userResponseTemplate: "You entered <strong>{selection}</strong>sq ft",
+    userResponseTemplate: "You entered <strong>{selection}</strong> sq ft",
     lineItems: [], // Used for calculations
     next: "project_type"
   },
@@ -110,6 +111,7 @@ const CONVERSATION_FLOW = {
     question: "Kitchens remodels are great addition to any home. Let's start with the type of flooring you are thinking of.",
     inputType: "choice",
     options: ["Laminate", "Vinyl", "Hardwood", "Tile", "Natural Stone", "N/A"],
+    userResponseTemplate: "You chose <strong>{selection}</strong> to use for your kitchen remodel flooring.", // ← Add this
     lineItems: [
       { name: "Flooring Materials", calculation: "perSqFt", category: "materials" },
       { name: "Flooring Installation", calculation: "perSqFt", category: "labor" }
@@ -146,7 +148,8 @@ const CONVERSATION_FLOW = {
   kitchen_cabinets: {
     question: "Fantastic! Next up: cabinets – what level of customization do you want in your kitchen cabinets?",
     inputType: "choice",
-    options: ["Stock cabinets", "Cabinet refacing", "Full custom cabinets"],
+    options: ["Stock cabinets", "Refaced cabinets", "Full custom cabinets"],
+    userResponseTemplate: "The kitchen remodel will use <strong>{selection}</strong>", // ← Add this
     lineItems: [
       { name: "Cabinets", calculation: "flat", category: "materials" }
     ],
@@ -201,6 +204,7 @@ const CONVERSATION_FLOW = {
   kitchen_cabinet_organizers: {
     question: "Cabinets can be improved with organizers, please select all that are interesting:",
     inputType: "multiSelectGallery", // Multi Select Image selection
+    userResponseTemplate: "We'll organize your cabinets with the following: <strong>{selection}</strong>", // ← Add this
     options: [
       { 
         name: "Trash can pull-out", 
@@ -260,6 +264,7 @@ const CONVERSATION_FLOW = {
     statement: "Cabinet hardware gets daily use and keeps your cabinets looking pristine",
     statementTiming: "before",
     inputType: "choice",
+    userResponseTemplate: "Your cabinets will include <strong>{selection}</strong> hardware", 
     options: ["High quality", "Luxury finish"],
     lineItems: [
       { name: "Cabinet Hardware", calculation: "flat", category: "materials" }
@@ -270,6 +275,7 @@ const CONVERSATION_FLOW = {
   kitchen_countertops: {
     question: "Choose your countertop material:",
     inputType: "gallery", // Image selection
+    userResponseTemplate: "We'll use <strong>{selection}</strong> for your kitchen's countertops.", 
     options: [
       { 
         name: "Laminate", 
@@ -309,6 +315,7 @@ const CONVERSATION_FLOW = {
     statementTiming: "before", // also a property
     inputType: "gallery",
     layout: "single-column",  // ← Add this property
+    userResponseTemplate: "We'll install <strong>{selection}</strong> appliances.", 
     options: [
       { 
         name: "LG and GE", 
