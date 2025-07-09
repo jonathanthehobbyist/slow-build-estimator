@@ -732,9 +732,10 @@
         }
 
         .multi-select-image-card {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: var(--space-sm);
+            grid-auto-row: row; /* Force left to right order  */
         }
 
         /* 4-column image grid for multi-select responses */
