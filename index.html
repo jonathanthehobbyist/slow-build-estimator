@@ -335,7 +335,7 @@
 
         .email-input:focus {
             outline: none;
-            border-color: #1976d2;
+            border-color: var(--accent-rusty);
             box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
         }
 
@@ -371,7 +371,7 @@
 
         .number-input:focus {
             border-color: var(--neutral-800)!important;
-            outline-color: var(--neutral-800!important);
+            outline-color: var(--accent-rusty!important);
         }
 
         .number-input::placeholder {
@@ -474,15 +474,15 @@
             font-family: var(--font-sans);
             font-weight: 600;
             font-size: var(--text-sm);
-            padding: 0.75rem 1.5rem;
+            padding: var(--space-sm) var(--space-lg);
             border-radius: var(--radius-sm);
             cursor: pointer;
             transition: all 0.3s ease;
             white-space: nowrap;
             flex-shrink: 0;
-            background: var(--white);
+            background: var(--accent-rusty);
             border: 1px solid var(--neutral-400);
-            color: var(--text-primary);
+            color: var(--text-inverse);
         }
 
         .option-button:hover:not(:disabled),
@@ -515,7 +515,7 @@
             width: 100%;
             background: var(--surface);
             border: 1px solid var(--neutral-200);
-            border-radius: 8px;
+            border-radius: var(--space-sm);
             overflow: hidden;
             transition: all 0.2s ease;
         }
@@ -551,7 +551,7 @@
             border-color: #2196f3 !important;
             background-color: #f0f7ff !important;
             transform: translateY(-2px) !important;
-            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2) !important;
+            box-shadow: 0 4px 12px rgba(var(--neutral-500), 0.2) !important;
         }
 
         /* Multi-select gallery card image */
@@ -581,7 +581,7 @@
         }
 
         /* Selection checkmark for multi-select */
-        .multi-select-gallery-card .selection-checkmark {
+        /*.multi-select-gallery-card .selection-checkmark {
             position: absolute;
             top: 8px;
             right: 8px;
@@ -597,7 +597,7 @@
             font-weight: bold;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             z-index: 1;
-        }
+        }*/
 
         /* Multi-select gallery container */
         .gallery-container,
@@ -705,7 +705,7 @@
             position: absolute;
             top: 8px;
             right: 8px;
-            background-color: #4CAF50;
+            background-color: var(--accent-rusty);
             color: white;
             border-radius: 50%;
             width: 24px;
