@@ -121,7 +121,7 @@
         --progress-fill: linear-gradient(90deg, var(--success-500) 0%, var(--success-600) 100%);
 
         /* Cost Panel Colors */
-        --cost-total-bg: var(--neutral-100);
+        --cost-total-bg: var(--white);
         --cost-item-border: var(--border-light);
 
         /* Gallery Colors */
@@ -822,22 +822,24 @@
         .total-section {
             padding: 1rem;
             background: var(--cost-total-bg);
-            border-top: 2px solid var(--border-medium);
+            border-top: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
         }
 
         .total-range {
             display: flex;
             justify-content: between;
-            font-family: var(--font-sans);
+            font-family: var(--font-serif);
             font-weight: var(--font-semibold);
-            font-size: var(--text-lg);
+            font-size: var(--text-text);
             color: var(--text-primary);
         }
 
         .range-display {
-            font-family: var(--font-sans);
-            font-weight: var(--font-semibold);
-            font-size: var(--text-xl);
+            font-family: var(--font-serif);
+            font-weight: var(--font-normal);
+            font-size: var(--text-base);
             color: var(--text-inverse);
             text-align: center;
             padding: var(--space-md) var(--space-xl);
