@@ -85,6 +85,8 @@ const CONVERSATION_FLOW = {
   project_type: {
     question: "What type of project is this?",
     inputType: "choice",
+    statement: "You can now see items such as 'Demolition' under 'Project Estimate' on the right column.",
+    statementTiming: "After",
     options: ["Cosmetic change", "Partial Renovation", "Full Renovation"],
     userResponseTemplate: "We'll be doing a <strong>{selection}</strong>.",
     lineItems: [
