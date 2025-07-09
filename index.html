@@ -666,6 +666,11 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
+        .multi-select-image-card {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
         /* 4-column image grid for multi-select responses */
         .multi-select-image-grid {
             display: grid;
@@ -684,7 +689,7 @@
 
         .grid-image {
             width: 100%;
-            height: 60px;
+            height: 1200px;
             object-fit: cover;
             border-radius: 4px;
             border: 1px solid var(--neutral-200);
@@ -2011,7 +2016,7 @@
                 img.alt = name;
                 img.className = 'grid-image';
 
-                const label = document.createElement('div');
+                const label = document.createElement('span');
                 label.className = 'grid-image-label';
                 label.textContent = name;
 
