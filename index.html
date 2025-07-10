@@ -565,7 +565,7 @@
 
         /* Multi-select gallery card selected state */
         .multi-select-gallery-card.selected {
-            border: 1px solid var(--accent-rusty)!important;
+            border: 2px solid var(--accent-rusty)!important;
             background-color: #f0f7ff!important;
             transform: translateY(-2px)!important;
             box-shadow: 0 4px 12px rgba(var(--neutral-500), 0.2)!important;
@@ -578,11 +578,13 @@
             height: 180px;
             object-fit: cover;
             display: block;
+            border-radius: var(--space-sm) var(--space-sm) 0 0;
         }
 
         /* Multi-select gallery card content */
         .multi-select-gallery-card .card-content {
             padding: 0.75rem;
+            border-radius: 0 0 var(--space-sm) var(--space-sm);
         }
 
         .multi-select-gallery-card .card-title {
