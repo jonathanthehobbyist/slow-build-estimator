@@ -21,7 +21,6 @@ const PRICING = {
     "Carpet": { perSqFt: 10 },
     "N/A": { perSqFt: 0 }
   },
-  
   // Kitchen items - flat pricing
   "Cabinets": {
     "Refaced cabinets": { flat: 30000 },
