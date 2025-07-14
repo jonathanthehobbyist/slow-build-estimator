@@ -129,7 +129,8 @@ const CONVERSATION_FLOW = {
     options: ["Stock cabinets", "Refaced cabinets", "Full custom cabinets"],
     userResponseTemplate: "The kitchen remodel will use <strong>{selection}</strong>", // ← Add this
     lineItems: [
-      { name: "Cabinets", calculation: "flat", category: "materials" }
+      { name: "Cabinets", calculation: "flat", category: "materials" },
+      { name: "Cabinet Hardware", calculation: "flat", category: "materials" }
     ],
     next: "kitchen_cabinet_organizers"
   },
