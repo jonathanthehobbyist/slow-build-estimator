@@ -1390,6 +1390,8 @@
                             ? 1500 // longer delay for galleries
                             : window.CONVERSATION_TIMING.statementDelay; // Normal delay for other inputs
 
+                        console.log('🕐 Input type:', stepConfig.inputType, 'Delay:', inputDelay + 'ms'); // ← Add this
+
                         setTimeout(() => showInputs(stepConfig), inputDelay);
 
                         /*setTimeout(() => showInputs(stepConfig), window.CONVERSATION_TIMING.statementDelay);*/
