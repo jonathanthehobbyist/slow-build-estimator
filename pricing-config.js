@@ -29,8 +29,9 @@ const PRICING = {
     "Full custom cabinets": { flat: 50000 }
   },
   "Cabinet Hardware": {
-    "High quality": { flat: 1500 },
-    "Luxury: Buster & Punch": { flat: 4000 }, 
+    "Full custom cabinets": { flat: 1500 },
+    "Refaced cabinets": { flat: 1500 }, 
+    "Stock cabinets": { flat: 1500 }
   },
   "Cabinet Organizers": {
     "Trash can pull-out": { flat: 500 },
