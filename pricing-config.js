@@ -44,6 +44,7 @@ const PRICING = {
   // Kitchen Cabinet Accessories has a special function in index.html > calculateLineItemPrice()
    "Kitchen Cabinet Accessories": {
     "Pot filler": { flat: 1500 },
+    "Pot filler - Plumbing Labor": { flat: 2000 },
     "Vent hood": { flat: 1500 },
     "Sharp Microwave Drawer": { flat: 1500 },
     "Sous vide": { flat: 5000 }
