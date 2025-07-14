@@ -143,38 +143,38 @@ const CONVERSATION_FLOW = {
     options: [
       { 
         name: "Trash can pull-out", 
-        image: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=400&h=300&fit=crop",
-        thumbnail: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=200&h=150&fit=crop",
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Trash-Can-Pull-Out.jpeg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Trash-Can-Pull-Out.jpeg",
         description: "Affordable laminate countertops"
       },
       { 
         name: "Cutting board pull-out", 
-        image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=300&fit=crop",
-        thumbnail: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=200&h=150&fit=crop",
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/cutting-board-pull-out.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/cutting-board-pull-out.jpg",
         description: "Durable engineered quartz"
       },
       { 
         name: "Spice rack pull-out", 
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop",
-        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop",
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/spice-rack-pull-out.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/spice-rack-pull-out.jpg",
         description: "Natural granite stone"
       },
       { 
         name: "Tray roll-out", 
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&sat=-100",
-        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop&sat=-100",
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/tray-roll-out.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/tray-roll-out.jpg",
         description: "Warm wood countertops"
       },
       { 
         name: "Mixer lifts", 
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&sat=-100",
-        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop&sat=-100",
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/mixer-left.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/mixer-left.jpg",
         description: "Warm wood countertops"
       },
       { 
         name: "Lazy Susan", 
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&sat=-100",
-        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop&sat=-100",
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/lazy-susan.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/lazy-susan.jpg",
         description: "Warm wood countertops"
       }
     ],
