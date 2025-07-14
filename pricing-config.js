@@ -33,6 +33,7 @@ const PRICING = {
     "Refaced cabinets": { flat: 1500 }, 
     "Stock cabinets": { flat: 1500 }
   },
+  // Cabinent Organizers has a special function in index.html > calculateLineItemPrice()
   "Cabinet Organizers": {
     "Trash can pull-out": { flat: 500 },
     "Cutting board pull-out": { flat: 500 },
@@ -41,7 +42,7 @@ const PRICING = {
     "Mixer lifts": { flat: 500 },
     "Lazy Susan": { flat: 1000 }
   },
-
+  // Kitchen Cabinet Accessories has a special function in index.html > calculateLineItemPrice()
    "Kitchen Cabinet Accessories": {
     "Pot filler": { flat: 1500 },
     "Vent hood": { flat: 1500 },

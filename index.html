@@ -2808,7 +2808,7 @@
 
             // Special case for cabinet organizers
             if (lineItem.stepName === 'kitchen_cabinet_organizers') {
-                console.log('🔧 Cabinet organizer detected, using special pricing lookup');
+                console.log('🔧 kitchen_cabinet_organizer detected, using special pricing lookup');
                 const organizerPricing = window.PRICING["Cabinet Organizers"];
                 if (organizerPricing && organizerPricing[lineItem.userChoice]) {
                     console.log('🔧 Found organizer pricing:', organizerPricing[lineItem.userChoice]);
@@ -2816,6 +2816,12 @@
                 }
                 console.log('🔧 No organizer pricing found for:', lineItem.userChoice);
                 return 'TBD';
+            } else if (lineItem.stepName === 'kitchen_cabinet_accessories') {
+                // 2nd special case
+                const accessoryPricing = window.PRICING["Kitchen Cabinet Accessories"];
+                if (accessoryPricing && accessoryPricing[lineItem.userChoice]){
+                    return accessoryPricing[lineItem.userChoice].flat;
+                }
             }
 
             const pricing = window.PRICING[baseName];
