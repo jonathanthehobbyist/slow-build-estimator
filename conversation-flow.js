@@ -234,18 +234,49 @@ const CONVERSATION_FLOW = {
         ]
       }
     ],
-    next: "kitchen_cabinet_hardware"
+    next: "kitchen_cabinet_accessories"
   },
 
-  kitchen_cabinet_hardware: {
-    question: "In general, what level of finish would you like in the cabinet hardware?",
-    statement: "Cabinet hardware gets daily use and keeps your cabinets looking pristine",
-    statementTiming: "before",
-    inputType: "choice",
-    userResponseTemplate: "Your cabinets will include <strong>{selection}</strong> hardware", 
-    options: ["High quality", "Luxury finish"],
+  kitchen_cabinet_accessories: {
+    question: "Before we get the main appliances, what appliances would like integrated with cabinets?",
+    inputType: "multiSelectGallery", // Multi Select Image selection
+    userResponseTemplate: "You selected the following: <strong>{selection}</strong>", // ← Add this
+    options: [
+      { 
+        name: "Pot filler", 
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/matte-black-giving-tree-pot-fillers-xlhddotu0014-64_600.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/matte-black-giving-tree-pot-fillers-xlhddotu0014-64_600.jpg",
+        description: "Example of a black pot filler"
+      },
+      { 
+        name: "Vent hood", 
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/DW-304-18-FPNZ-CH-MWD-1-RA36-KBCRN-36-SA60D-36-Smaller.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/DW-304-18-FPNZ-CH-MWD-1-RA36-KBCRN-36-SA60D-36-Smaller.jpg",
+        description: "Vent hood cover and vent"
+      },
+      { 
+        name: "Sharp Microwave Drawer", 
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Sharp-microwave-drawer-4389000d88f510eb6a53a516d2c25b74.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Sharp-microwave-drawer-4389000d88f510eb6a53a516d2c25b74.jpg",
+        description: "Sharp microwave drawer pull out"
+      },
+      { 
+        name: "Sous vide", 
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Sous-Vide-54604129-5.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Sous-Vide-54604129-5.jpg",
+        description: "Wolf sous vide pull out"
+      }
+    ],
     lineItems: [
-      { name: "Cabinet Hardware", calculation: "flat", category: "materials" }
+      {
+      condition: "selected", // Special condition for multiselect
+        items: [
+          { name: "Pot filler", calculation: "flat", category: "materials" },
+          { name: "Vent hood", calculation: "flat", category: "materials" },
+          { name: "Sharp Microwave Drawer", calculation: "flat", category: "materials" },
+          { name: "Sous vide", calculation: "flat", category: "materials" }  
+        ]
+      }
     ],
     next: "kitchen_countertops"
   },

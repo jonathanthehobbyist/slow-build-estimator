@@ -40,6 +40,13 @@ const PRICING = {
     "Mixer lifts": { flat: 500 },
     "Lazy Susan": { flat: 1000 }
   },
+
+   "Kitchen Cabinet Accessories": {
+    "Pot filler": { flat: 1500 },
+    "Vent hood": { flat: 1500 },
+    "Sharp Microwave Drawer": { flat: 1500 },
+    "Sous vide": { flat: 5000 }
+  },
   
   "Countertops": {
     "Laminate": { flat: 10000 },
