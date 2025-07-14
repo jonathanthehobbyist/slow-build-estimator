@@ -1413,10 +1413,16 @@
                         addMessage(questionText);
                     }
 
+                    const inputDelay = (stepConfig.inputType === 'multiSelectGallery' || stepConfig.inputType === 'gallery')
+                            ? 1500 // longer delay for galleries
+                            : window.CONVERSATION_TIMING.statementDelay;
+                    console.log('🕐 Input type:', stepConfig.inputType, 'Delay:', inputDelay + 'ms');
+
                     setTimeout(() => {
                         showInputs(stepConfig);
                         displayStatement(stepConfig.statement, () => {});
-                    }, window.CONVERSATION_TIMING.statementDelay);
+                    }, inputDelay);
+
                 } else if (stepConfig.inputType === 'continue') {
                     // Information-only step
                     displayStatement(stepConfig.statement, () => {
@@ -1436,7 +1442,14 @@
                         }
                         addMessage(questionText);
                     }
-                    setTimeout(() => showInputs(stepConfig), window.CONVERSATION_TIMING.statementDelay);
+
+                    const inputDelay = (stepConfig.inputType === 'multiSelectGallery' || stepConfig.inputType === 'gallery')
+                            ? 1500 // longer delay for galleries
+                            : window.CONVERSATION_TIMING.statementDelay;
+                    console.log('🕐 Input type:', stepConfig.inputType, 'Delay:', inputDelay + 'ms');
+
+                    setTimeout(() => showInputs(stepConfig), inputDelay);
+
                 }
               }, nextQuestionDelay);   
             }            
