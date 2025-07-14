@@ -21,52 +21,8 @@ const CONVERSATION_FLOW = {
     options: ["Kitchen", "Living Room", "Bedroom", "Bathroom"],
     userResponseTemplate: "You selected: <strong>{selection}</strong>", // ← Add this
     lineItems: [], // Just sets room context
-    next: "inspiration"
-  },
-
-  // inspiration
-
-  // ===================== INSPIRATION =====================
-
-  kitchen_inspiration: {
-    question: "Let's start with some inspiration - choose any style that catches your eye:",
-    question: function() {
-      const room = conversationState.sessionData.initial || 'room';
-      return `Next, let's look at inspiration from various styles of ${room.toLowerCase()}s. Choose any that fit your style.`;
-      },
-    inputType: "multiSelectGallery", // Multi Select Image selection
-    userResponseTemplate: "You selected: <strong>{selection}</strong>", // TO-DO: 
-    options: [
-      { 
-        name: "Modern", 
-        image: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=400&h=300&fit=crop",
-        thumbnail: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=200&h=150&fit=crop",
-        description: "Affordable laminate countertops"
-      },
-      { 
-        name: "Magnolia", 
-        image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=300&fit=crop",
-        thumbnail: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=200&h=150&fit=crop",
-        description: "Durable engineered quartz"
-      },
-      { 
-        name: "Farmhouse", 
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop",
-        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop",
-        description: "Natural granite stone"
-      },
-      { 
-        name: "Rustic", 
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&sat=-100",
-        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop&sat=-100",
-        description: "Warm wood countertops"
-      }
-    ],
-    lineItems: [],
     next: "square_footage"
   },
-
-  // ============== END INSPIRATION =================
 
   square_footage: {
     question: function() {

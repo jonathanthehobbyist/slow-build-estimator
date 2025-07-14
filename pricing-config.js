@@ -55,6 +55,15 @@ const PRICING = {
     "Granite": { flat: 15000 },
     "Butcher Block": { flat: 15000 }
   },
+  "Electrical": {
+    "Kitchen": { flat: 5000 },
+    "Bathroom": { flat: 1000 },
+    "Bathroom": { flat: 3000 },
+    "Living Room": {flat: 5000 }
+  },
+  "Lighting": {
+    "Kitchen": { flat: 3000 }
+  },
   
   "Countertop Installation": {
     "default": { flat: 2000 } // Auto-included installation
