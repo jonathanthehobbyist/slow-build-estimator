@@ -618,8 +618,10 @@ class ConversationFlowHelper {
 
     // Specific item condition
     if(Array.isArray(userInput)) {
+      console.log('🔍 Checking if', lineItemDef.condition, 'is in', userInput);
       return userInput.includes(lineItemDef.condition);
     } else {
+      console.log('🔍 Checking direct match:', lineItemDef.condition, '===', userInput);
       return lineItemDef.condition === userInput;
     }
 
