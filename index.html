@@ -883,6 +883,24 @@
             color: #2c3e50;
         }*/
 
+        /* Line item flash animation */
+        @keyframes lineItemFlash {
+            0% {
+                background-color: var(--accent-rusty);
+                transform: translateX(-10px);
+                opacity: 0;
+            }
+            50% {
+                background-color: var(--accent-rusty);
+                opacity: 1;
+            }
+            100% {
+                background-color: transparent;
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
         .cost-items {
             flex: 1;
             padding: 1rem;
@@ -896,6 +914,11 @@
             align-items: center;
             padding: 0.5rem 0;
             border-bottom: 1px solid var(--cost-item-border);
+            transition: all 0.3s ease;
+        }
+
+        .cost-item.new-item {
+            animation: lineItemFlash 0.8s ease-out;
         }
 
         .cost-item:last-child {
@@ -3006,63 +3029,61 @@
             costItems.innerHTML = '';
 
             let runningTotal = 0;
+            let animationDelay = 0;
             
             // Add always included items
             if (window.ALWAYS_INCLUDED) {
                 window.ALWAYS_INCLUDED.forEach(item => {
-                    addCostItem(item.name, item.price);
+                    addCostItem(item.name, item.price, animationDelay);
                     runningTotal += item.price || 0;
+                    animationDelay += 500;
                 });
             }
             
             // Add dynamic cost items (placeholder pricing for now)
             conversationState.costItems.forEach(item => {
                 const calculatedPrice = calculateLineItemPrice(item);
-                addCostItem(item.name, calculatedPrice);
+                addCostItem(item.name, calculatedPrice, animationDelay);
 
                 // Add to running total if it's a number
                 if (typeof calculatedPrice === 'number') {
                     runningTotal += calculatedPrice;
                 }
-
+                animationDelay += 500;
             });
 
             // Calculate range (10% below and 20% above for est. range)
             const minTotal = Math.round(runningTotal * 0.9);
             const maxTotal = Math.round(runningTotal * 1.2);
-            
-            // Calculate totals (placeholder)
-            /*let baseTotal = window.ALWAYS_INCLUDED ? 
-                window.ALWAYS_INCLUDED.reduce((sum, item) => sum + item.price, 0) : 0;
-            let rangeMultiplier = conversationState.costItems.length * 500; // Placeholder
-            */
-
-            //totalRange.textContent = `${baseTotal.toLocaleString()} - ${(baseTotal + rangeMultiplier).toLocaleString()}`;
-
             totalRange.textContent = `$${minTotal.toLocaleString()} - $${maxTotal.toLocaleString()}`;
         }
 
         // Add cost item to display
-        function addCostItem(name, price) {
-            const costItems = document.getElementById('costItems');
-            const costItemDiv = document.createElement('div');
-            costItemDiv.className = 'cost-item';
+        function addCostItem(name, price, delay = 0) {
+            setTimeout(() => {
+                const costItems = document.getElementById('costItems');
+                const costItemDiv = document.createElement('div');
+                costItemDiv.className = 'cost-item new-item';
 
+                let displayPrice;
+                if (typeof price === 'number') {
+                    displayPrice = '$' + price.toLocaleString();
+                } else {
+                    displayPrice = price;
+                }
 
-            let displayPrice;
-            if (typeof price === 'number') {
-                displayPrice = '$' + price.toLocaleString();
-            } else {
-                displayPrice = price;
-            }
+                costItemDiv.innerHTML = `
+                    <span class="cost-item-name">${name}</span>
+                    <span class="cost-item-price">${typeof price === 'number' ? '$' + price : price}</span>
+                `;
 
-            
-            costItemDiv.innerHTML = `
-                <span class="cost-item-name">${name}</span>
-                <span class="cost-item-price">${typeof price === 'number' ? '$' + price : price}</span>
-            `;
-            
-            costItems.appendChild(costItemDiv);
+                costItems.appendChild(costItemDiv);
+
+                //remove animation class after animation completes
+                setTimeout(() => {
+                    costItemDiv.classList.remove('new-item');
+                }, 800);
+            }, delay); 
         }
 
         // Initialize conversation

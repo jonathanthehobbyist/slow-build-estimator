@@ -243,6 +243,12 @@ const CONVERSATION_FLOW = {
           items: [
             { name: "Pot filler - Plumbing Labor", calculation: "flat", category: "labor" }
           ]
+      },
+      {
+        condition: "Vent hood",
+          items: [
+            { name: "Vent hood - Electrical Labor", calculation: "flat", category: "labor" }
+          ]
       }
     ],
     next: "kitchen_countertops"
