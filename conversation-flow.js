@@ -616,14 +616,21 @@ class ConversationFlowHelper {
       return userInput && userInput !== ""; // Single item selected
     }
 
+    // Specific item condition
+    if(Array.isArray(userInput)) {
+      return userInput.includes(lineItemDef.condition);
+    } else {
+      return lineItemDef.condition === userInput;
+    }
+
     
     // Simple condition checking
-    if (lineItemDef.condition === userInput) return true;
+    /*if (lineItemDef.condition === userInput) return true;
     if (lineItemDef.condition === `not ${userInput}`) return false;
     if (lineItemDef.condition.startsWith('not ') && 
         !userInput.includes(lineItemDef.condition.substring(4))) return true;
     
-    return false;
+    return false;*/
   }
 }
 
