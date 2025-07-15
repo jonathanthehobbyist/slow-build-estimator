@@ -1541,12 +1541,12 @@
 
             const card = document.createElement('div');
             card.className = 'gallery-card';
-            card.style.cursor = 'pointer';
+            /*card.style.cursor = 'pointer';
             card.style.border = '2px solid #e5e5e5';
             card.style.borderRadius = '8px';
             card.style.overflow = 'hidden';
             card.style.transition = 'all 0.3s ease';
-            card.style.backgroundColor = 'white';
+            card.style.backgroundColor = 'white';*/
 
             //Hover effects
             card.addEventListener('mouseenter', () => {
@@ -1567,27 +1567,32 @@
             const image = document.createElement('img');
             image.src = option.thumbnail || option.image;
             image.alt = option.name;
-            image.style.width = '100%';
+            /*image.style.width = '100%';
             image.style.width = '100%';
             image.style.height = '120px';
             image.style.objectFit = 'cover';
-            image.style.display = 'block';
+            image.style.display = 'block';*/
+            image.className = 'card-image';
 
-            const content = document.createElement('div');
-            content.style.padding = '0.75rem';
+            const content = document.createElement('div'); // card content?
+            content.className = 'card-content';
+            /*content.style.padding = '0.75rem';*/
 
-            const title = document.createElement('div');
+            const title = document.createElement('div'); // card title
             title.textContent = option.name;
-            title.style.fontWeight = '600';
+            title.className = 'card-title';
+            /*title.style.fontWeight = '600';
             title.style.fontSize = '0.9rem';
             title.style.marginBottom = '0.25rem';
-            title.style.color = '#2c3e50';
+            title.style.color = '#2c3e50';*/
+
 
             const description = document.createElement('div');
             description.textContent = option.description || '';
-            description.style.fontSize = '0.8rem';
+            /*description.style.fontSize = '0.8rem';
             description.style.color = '#666';
-            description.style.lineHeight = '1.3';
+            description.style.lineHeight = '1.3';*/
+            card.className = 'card-description';
 
             content.appendChild(title);
             if (option.description) {
