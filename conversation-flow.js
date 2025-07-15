@@ -233,11 +233,16 @@ const CONVERSATION_FLOW = {
       condition: "selected", // Special condition for multiselect
         items: [
           { name: "Pot filler", calculation: "flat", category: "materials" },
-          { name: "Pot filler - Plumbing Labor", calculation: "flat", category: "labor" },
           { name: "Vent hood", calculation: "flat", category: "materials" },
           { name: "Sharp Microwave Drawer", calculation: "flat", category: "materials" },
           { name: "Sous vide", calculation: "flat", category: "materials" }  
         ]
+      },
+      {
+        condition: "Pot filler",
+          items: [
+            { name: "Pot filler - Plumbing Labor", calculation: "flat", category: "labor" }
+          ]
       }
     ],
     next: "kitchen_countertops"
