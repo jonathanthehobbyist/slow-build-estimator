@@ -521,8 +521,6 @@ class ConversationFlowHelper {
   
   static getLineItemsForStep(stepName, userInput) {
 
-    console.log('🚀 NEW CODE IS RUNNING!');
-
     console.log('=== getLineItemsForStep DEBUG ===');
     console.log('stepName:', stepName);
     console.log('userInput:', userInput);
@@ -530,13 +528,17 @@ class ConversationFlowHelper {
     console.log('userInput is array:', Array.isArray(userInput));
 
     const stepConfig = CONVERSATION_FLOW[stepName];
+    console.log('stepConfig found:', !!stepConfig);
+    console.log('stepConfig.lineItems:', stepConfig?.lineItems);
     const lineItems = [];
 
     stepConfig.lineItems?.forEach(lineItemDef => {
+
       console.log('🔍 Processing lineItemDef:', lineItemDef);
       console.log('🔍 lineItemDef.condition:', lineItemDef.condition);
       if (this.shouldAddLineItem(lineItemDef, userInput)) {
-        console.log('🔍 shouldAddLineItem returned TRUE');
+        
+        console.log('🔍 shouldAddLineItem returned TRUE for:', lineItemDef);
 
         if (lineItemDef.items) {
           console.log('🔍 Has items array, length:', lineItemDef.items.length);
@@ -560,7 +562,7 @@ class ConversationFlowHelper {
               }
           });
         } else {
-           console.log('🔍 shouldAddLineItem returned FALSE');
+           console.log('🔍 shouldAddLineItem returned FALSE for:', lineItemDef);
            console.log('🔍 Checking why: condition =', lineItemDef.condition, 'userInput =', userInput);
           // single select: original logic
           lineItemDef.items.forEach(item => {
@@ -586,7 +588,7 @@ class ConversationFlowHelper {
           }    
         }
       });
-    
+    console.log('🔍 Final lineItems to return:', lineItems);
     return lineItems;
   }   
 
