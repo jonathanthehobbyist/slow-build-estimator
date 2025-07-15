@@ -677,8 +677,8 @@
             width: 100%;
             padding-top: 2rem; /* Only top/bottom padding */
             padding-bottom: 1rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
+            padding-left: 0rem;
+            padding-right: 0rem;
             background: transparent;
             margin: 0;
             border-radius: var(--radius-md);
@@ -1608,11 +1608,11 @@
 
             const galleryOverlay = document.createElement('div');
             galleryOverlay.id = 'galleryOverlay';
-            galleryOverlay.style.width = '100%';
+            /*galleryOverlay.style.width = '100%';
             galleryOverlay.style.padding = '1rem';
             galleryOverlay.style.backgroundColor = '#f8f9ff';
             galleryOverlay.style.borderRadius = '8px';
-            galleryOverlay.style.marginTop = '1rem';
+            galleryOverlay.style.marginTop = '1rem';*/
 
             // Ensure the container can expand
             //inputOptions.style.display = 'block'; // Override any flex settings
@@ -1621,9 +1621,9 @@
             const galleryContainer = document.createElement('div');
             galleryContainer.style.display = 'grid';
             //galleryContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(180px, 1fr))';
-            galleryContainer.style.gap = '1rem';
+            /*galleryContainer.style.gap = '1rem';
             galleryContainer.style.padding = '0 .5rem 0';
-            galleryContainer.style.width = '100%';
+            galleryContainer.style.width = '100%';*/
 
             //check for single column layout
             const currentStep = window.CONVERSATION_FLOW[conversationState.currentStep];
@@ -1651,9 +1651,9 @@
 
             instructions.textContent = `Select 1 choice for ${currentStepStr}`  
             //'Select a material option below';
-            instructions.style.marginBottom = '1rem';
+           /* instructions.style.marginBottom = '1rem';
             instructions.style.fontWeight = '600';
-            instructions.style.color = '#2c3e50';
+            instructions.style.color = '#2c3e50';*/
 
             galleryOverlay.appendChild(instructions);
             galleryOverlay.appendChild(galleryContainer);
@@ -1665,17 +1665,20 @@
                 // Scroll to gallery instructions, not the bottom
                 const instructions = galleryOverlay.querySelector('.gallery-instructions');
                 if (instructions){
-                    instructions.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+
+                    const stickyQuestion = document.getElementById('currentQuestion');
+                    const offset = stickyQuestion ? stickyQuestion.offsetHeight + 20 : 20;
+
+                    //scroll with offset
+                    const instructionsTop = instruction.offsetTop - offset;
+                    const conversationFlow = document.getElementById('conversationFlow');
+
+                    conversationFlow.scrollIntoView({
+                        top: instructionsTop,
+                        behavior: 'smooth'
+                      
                     });
-                } else {
-                    // Fallback scroll to gallery container itself
-                    galleryOverlay.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                } 
 
                 //galleryOverlay.scrollIntoView({ behavior: 'smooth' });
                 flashInputOptions(); // Flash the input area
@@ -2012,12 +2015,19 @@
 
 
             setTimeout(() => {
-                // Scroll so gallery instructions appears just below the last message
-                const instruction = galleryOverlay.querySelector('.multi-select-gallery-instructions');
+
+                const instructions = galleryOverlay.querySelector('.multi-select-gallery-instructions');
                 if (instructions) {
-                    instructions.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start' // Align top of viewport
+                    // Get sticky question height to calculate offset
+                    const stickyQuestion = document.getElementById('currentQuestion');
+                    const offset = stickyQuestion ? stickyQuestion.offsetHeight + 20 : 20; // +20 for breathing room
+                    
+                    // Scroll with offset
+                    const instructionsTop = instructions.offsetTop - offset;
+                    const conversationFlow = document.getElementById('conversationFlow');
+                    conversationFlow.scrollTo({
+                        top: instructionsTop,
+                        behavior: 'smooth'
                     });
                 }
 
