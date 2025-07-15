@@ -1190,7 +1190,8 @@
         let conversationState = {
             currentStep: 'initial',
             sessionData: {},
-            costItems: []
+            costItems: [],
+            displayedCostItems: []
         };
 
         function showLoadingState() {
@@ -3032,19 +3033,36 @@
             let animationDelay = 0;
             
             // Add always included items
-            if (window.ALWAYS_INCLUDED) {
+            if (window.ALWAYS_INCLUDED && conversationState.displayedCostItems.length === 0) {
                 window.ALWAYS_INCLUDED.forEach(item => {
                     addCostItem(item.name, item.price, animationDelay);
+                    conversationState.displayedCostItems.push({ name: item.name, price: item.price });
                     runningTotal += item.price || 0;
                     animationDelay += 500;
                 });
+            } else if (window.ALWAYS_INCLUDED) {
+                // Just add total, don't re-display
+                window.ALWAYS_INCLUDED.forEach(item => {
+                    runningTotal += item.price || 0;
+                })
             }
             
             // Add dynamic cost items (placeholder pricing for now)
             conversationState.costItems.forEach(item => {
-                const calculatedPrice = calculateLineItemPrice(item);
-                addCostItem(item.name, calculatedPrice, animationDelay);
 
+                // Check if already displayed
+                const isAlreadyDisplayed = conversationState.displayedCostItems.some(
+                    displayedItem => displayedItem.name === item.name
+                );
+
+                if(!isAlreadyDisplayed) {
+                    const calculatedPrice = calculateLineItemPrice(item);
+                    addCostItem(item.name, calculatedPrice, animationDelay);
+                    conversationState.displayedCostItems.push({ name: item.name, price: calculatedPrice });
+                    animationDelay += 500;
+                }
+
+                const calculatedPrice = calculateLineItemPrice(item);
                 // Add to running total if it's a number
                 if (typeof calculatedPrice === 'number') {
                     runningTotal += calculatedPrice;
