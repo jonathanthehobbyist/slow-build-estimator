@@ -1166,10 +1166,7 @@
                 </div>
                 
                 <div class="cost-items" id="costItems">
-                    <div class="cost-item">
-                        <span class="cost-item-name">Initial Consultation</span>
-                        <span class="cost-item-price">$150</span>
-                    </div>
+ 
                     <!-- Cost items will be dynamically added here -->
                 </div>
 
@@ -3021,92 +3018,59 @@
         }
 
 
-        // Update cost estimate
         function updateCostEstimate() {
-                console.log('📊 updateCostEstimate called');
-    console.log('📊 conversationState.costItems before:', conversationState.costItems);
+            console.log('📊 updateCostEstimate called');
+            console.log('📊 conversationState.costItems before:', conversationState.costItems);
+
             const costItems = document.getElementById('costItems');
             const totalRange = document.getElementById('totalRange');
-            
-            // Clear existing items (except always included)
-            //costItems.innerHTML = '';
-            console.log('📊 Cleared DOM costItems');
+
+            // Clear existing items and rebuild (simpler approach)
+            costItems.innerHTML = '';
 
             let runningTotal = 0;
-            let animationDelay = 0;
-            
+
             // Add always included items
-            if (window.ALWAYS_INCLUDED && conversationState.displayedCostItems.length === 0) {
+            if (window.ALWAYS_INCLUDED) {
                 window.ALWAYS_INCLUDED.forEach(item => {
-                    console.log('📊 Adding always included:', item.name);
-                    addCostItem(item.name, item.price, animationDelay);
-                    conversationState.displayedCostItems.push({ name: item.name, price: item.price });
+                    console.log('📊 Adding always included:', item.name, item.price);
+                    addCostItem(item.name, item.price);
                     runningTotal += item.price || 0;
-                    animationDelay += 500;
                 });
-            } else if (window.ALWAYS_INCLUDED) {
-                // Just add total, don't re-display
-                window.ALWAYS_INCLUDED.forEach(item => {
-                    runningTotal += item.price || 0;
-                })
             }
-            
-            // Add dynamic cost items (placeholder pricing for now)
+
+            // Add dynamic cost items
             console.log('📊 About to add', conversationState.costItems.length, 'dynamic items');
             conversationState.costItems.forEach(item => {
-                console.log('📊 Adding dynamic item:', item.name);
-                // Check if already displayed
-                const isAlreadyDisplayed = conversationState.displayedCostItems.some(
-                    displayedItem => displayedItem.name === item.name
-                );
+            console.log('📊 Adding dynamic item:', item.name);
+            const calculatedPrice = calculateLineItemPrice(item);
+            addCostItem(item.name, calculatedPrice);
 
-                if(!isAlreadyDisplayed) {
-                    const calculatedPrice = calculateLineItemPrice(item);
-                    addCostItem(item.name, calculatedPrice, animationDelay);
-                    conversationState.displayedCostItems.push({ name: item.name, price: calculatedPrice });
-                    animationDelay += 500;
-                }
-
-                const calculatedPrice = calculateLineItemPrice(item);
-                // Add to running total if it's a number
-                if (typeof calculatedPrice === 'number') {
+            if (typeof calculatedPrice === 'number') {
                     runningTotal += calculatedPrice;
                 }
-                animationDelay += 500;
             });
 
-            // Calculate range (10% below and 20% above for est. range)
+            // Calculate range
             const minTotal = Math.round(runningTotal * 0.9);
             const maxTotal = Math.round(runningTotal * 1.2);
             totalRange.textContent = `$${minTotal.toLocaleString()} - $${maxTotal.toLocaleString()}`;
         }
 
         // Add cost item to display
-        function addCostItem(name, price, delay = 0) {
-            setTimeout(() => {
-                const costItems = document.getElementById('costItems');
-                const costItemDiv = document.createElement('div');
-                costItemDiv.className = 'cost-item new-item';
-
-                let displayPrice;
-                if (typeof price === 'number') {
-                    displayPrice = '$' + price.toLocaleString();
-                } else {
-                    displayPrice = price;
-                }
-
-                costItemDiv.innerHTML = `
-                    <span class="cost-item-name">${name}</span>
-                    <span class="cost-item-price">${typeof price === 'number' ? '$' + price : price}</span>
-                `;
-
-                costItems.appendChild(costItemDiv);
-
-                //remove animation class after animation completes
-                setTimeout(() => {
-                    costItemDiv.classList.remove('new-item');
-                }, 800);
-            }, delay); 
+        function addCostItem(name, price) {
+            const costItems = document.getElementById('costItems');
+            const costItemDiv = document.createElement('div');
+            costItemDiv.className = 'cost-item';
+            
+            let displayPrice = typeof price === 'number' ? '$' + price.toLocaleString() : price;
+            
+            costItemDiv.innerHTML = `
+                <span class="cost-item-name">${name}</span>
+                <span class="cost-item-price">${displayPrice}</span>
+            `;
+            
+            costItems.appendChild(costItemDiv);
         }
 
         // Initialize conversation
