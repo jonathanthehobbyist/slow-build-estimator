@@ -3023,11 +3023,14 @@
 
         // Update cost estimate
         function updateCostEstimate() {
+                console.log('📊 updateCostEstimate called');
+    console.log('📊 conversationState.costItems before:', conversationState.costItems);
             const costItems = document.getElementById('costItems');
             const totalRange = document.getElementById('totalRange');
             
             // Clear existing items (except always included)
             costItems.innerHTML = '';
+            console.log('📊 Cleared DOM costItems');
 
             let runningTotal = 0;
             let animationDelay = 0;
@@ -3035,6 +3038,7 @@
             // Add always included items
             if (window.ALWAYS_INCLUDED && conversationState.displayedCostItems.length === 0) {
                 window.ALWAYS_INCLUDED.forEach(item => {
+                    console.log('📊 Adding always included:', item.name);
                     addCostItem(item.name, item.price, animationDelay);
                     conversationState.displayedCostItems.push({ name: item.name, price: item.price });
                     runningTotal += item.price || 0;
@@ -3048,8 +3052,9 @@
             }
             
             // Add dynamic cost items (placeholder pricing for now)
+            console.log('📊 About to add', conversationState.costItems.length, 'dynamic items');
             conversationState.costItems.forEach(item => {
-
+                console.log('📊 Adding dynamic item:', item.name);
                 // Check if already displayed
                 const isAlreadyDisplayed = conversationState.displayedCostItems.some(
                     displayedItem => displayedItem.name === item.name
