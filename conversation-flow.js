@@ -136,6 +136,8 @@ const CONVERSATION_FLOW = {
   next: "kitchen_cabinet_hardware"
 },*/
 
+  // Kitchen Cabinet Accessories has a special function in index.html > calculateLineItemPrice()
+
   kitchen_cabinet_organizers: {
     question: "Cabinets can be improved with organizers, please select all that are interesting:",
     inputType: "multiSelectGallery", // Multi Select Image selection
@@ -193,6 +195,8 @@ const CONVERSATION_FLOW = {
     ],
     next: "kitchen_cabinet_accessories"
   },
+
+  // Kitchen Cabinet Accessories has a special function in index.html > calculateLineItemPrice()
 
   kitchen_cabinet_accessories: {
     question: "Before we get the main appliances, what appliances would like integrated with cabinets?",

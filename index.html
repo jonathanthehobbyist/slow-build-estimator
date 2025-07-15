@@ -1455,8 +1455,24 @@
             }            
             updateCostEstimate();
         }
-            
 
+        // Show sticky question for galleries only
+        function showStickyQuestionForGallery(questionText) {
+            const stickyQuestion = document.getElementById('currentQuestion');
+            if (stickyQuestion && questionText) {
+                stickyQuestion.textContent = questionText;
+                stickyQuestion.classList.remove('hidden');
+            }
+        }
+
+        // Hide sticky question
+        function hideStickyQuestion() {
+            const stickyQuestion = document.getElementById('currentQuestion');
+            if (stickyQuestion) {
+                stickyQuestion.classList.add('hidden');
+            }
+        }
+            
         function showInputs(stepConfig) {
           if (stepConfig.inputType === 'choice') {
             updateInputOptions(stepConfig.options.map(option => ({
@@ -1466,17 +1482,29 @@
           } else if (stepConfig.inputType === 'number') {
             updateNumberInput(stepConfig.validation);
           } else if (stepConfig.inputType === 'gallery') {
+            // show sticky question
+            const lastMessage = document.querySelector('.message:last-child .message-bubble');
+            if (lastMessage) {
+                showStickyQuestionForGallery(lastMessage.textContent);
+            }
             updateGalleryInput(stepConfig.options);
           } else if (stepConfig.inputType === 'continue') {
             updateContinueInput();
           } else if (stepConfig.inputType === 'multiSelect') {
             updateMultiSelectInput(stepConfig.options);
           } else if (stepConfig.inputType === 'multiSelectGallery') {
+            // Show sticky question for multi-select gallery
+            const lastMessage = document.querySelector('.message:last-child .message-bubble');
+            if (lastMessage) {
+                showStickyQuestionForGallery(lastMessage.textContent);
+            }
             updateMultiSelectGallery(stepConfig.options);
           } else if (stepConfig.inputType === 'email') {
             updateEmailInput(stepConfig.validation);
           }
         }
+
+      
 
         /*------------------ GALLERY -------------------*/
 
@@ -1739,6 +1767,8 @@
         function confirmGallerySelection() {
             // Finallizes gallery selection and proceeds with conversation
             // Cleans up Gallery overlay and restores normal input area
+
+            hideStickyQuestion(); // Clear sticky question
 
             const selectedOptionData = window.tempGallerySelection;
             if (!selectedOptionData || !selectedOptionData.name) return;
@@ -2052,6 +2082,8 @@
             // Finalizes the multi-select pill button functions
             // Proceeds with conversation using selected options
 
+
+
             if (!window.tempMultiSelections || window.tempMultiSelections.length === 0) return;
 
             console.log('Multi-select confirmed:', window.tempMultiSelections);
@@ -2074,6 +2106,8 @@
         function confirmMultiSelectGallery() {
             // Finalizes multi-select gallery selections with images
             // Shows selected images in conversation and procceds
+
+            hideStickyQuestion(); // Clear sticky questiuon
 
             console.log('🚀 confirmMultiSelectGallery called!');  // ← Add this
             console.log('🚀 tempMultiSelections:', window.tempMultiSelections);  // ← Add this
