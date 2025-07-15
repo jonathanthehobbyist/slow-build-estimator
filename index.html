@@ -1656,7 +1656,23 @@
 
             //scroll to gallery
             setTimeout(() => {
-                galleryOverlay.scrollIntoView({ behavior: 'smooth' });
+
+                // Scroll to gallery instructions, not the bottom
+                const instructions = galleryOverlay.querySelector('.gallery-instructions');
+                if (instructions){
+                    instructions.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                } else {
+                    // Fallback scroll to gallery container itself
+                    galleryOverlay.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+
+                //galleryOverlay.scrollIntoView({ behavior: 'smooth' });
                 flashInputOptions(); // Flash the input area
             }, 100);
 
@@ -1991,11 +2007,20 @@
 
 
             setTimeout(() => {
-                //galleryOverlay.scrollIntoView({ behavior: 'smooth' });
-                const conversationFlow = document.getElementById('conversationFlow');
-                conversationFlow.scrollTop = conversationFlow.scrollHeight;
+                // Scroll so gallery instructions appears just below the last message
+                const instruction = galleryOverlay.querySelector('.multi-select-gallery-instructions');
+                if (instructions) {
+                    instructions.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start' // Align top of viewport
+                    });
+                }
+
+
+                /*const conversationFlow = document.getElementById('conversationFlow');
+                conversationFlow.scrollTop = conversationFlow.scrollHeight;*/
                 flashInputOptions();
-            }, 300);
+            }, 100);
         }
 
         function toggleMultiSelect(option, buttonElement) {
