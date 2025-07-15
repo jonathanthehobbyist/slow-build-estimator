@@ -139,7 +139,7 @@ const CONVERSATION_FLOW = {
   // Kitchen Cabinet Accessories has a special function in index.html > calculateLineItemPrice()
 
   kitchen_cabinet_organizers: {
-    question: "Cabinets can be improved with organizers, please select all that are interesting:",
+    question: "Select any desired cabinet organizers",
     inputType: "multiSelectGallery", // Multi Select Image selection
     userResponseTemplate: "We'll organize your cabinets with the following: <strong>{selection}</strong>", // ← Add this
     options: [
