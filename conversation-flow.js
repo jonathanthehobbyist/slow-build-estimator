@@ -567,10 +567,10 @@ class ConversationFlowHelper {
           // single select: original logic
           lineItemDef.items.forEach(item => {
                 lineItems.push({
-                  name: `${item.name}: ${userInput}`,
+                  name: userInput ? `${item.name}` : item.name,
                   calculation: item.calculation,
                   category: item.category,
-                  userChoice: userInput,
+                  userChoice: lineItemDef.condition,
                   stepName: stepName,
                 });
               });
