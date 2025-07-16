@@ -1875,6 +1875,7 @@
             console.log('Options array contents:', JSON.stringify(options, null, 2));
 
             const inputOptions = document.getElementById('inputOptions');
+
             console.log('inputOptions element:', inputOptions);
             console.log('inputOptions style object:', inputOptions.style);
 
@@ -1933,8 +1934,15 @@
             continueButton.disabled = true;
             continueButton.onclick = () => confirmMultiSelect();
 
+            // Skip button
+            const skipButton = document.createElement('button');
+            skipButton.className = 'option-button skip';
+            skipButton.textContent = 'Skip';
+            skipButton.onclick = () => skipMultiSelect;
+
             inputOptions.appendChild(container);
             inputOptions.appendChild(continueButton);
+            inputOptions.appendChild(skipButton);
 
             setTimeout(() => flashInputOptions(), 50);
 
@@ -2025,9 +2033,15 @@
                 confirmMultiSelectGallery();
             };
 
+            const skipButton = document.createElement('button');
+            skipButton.className = 'option-button skip';
+            skipButton.textContent = 'Skip';
+            skipButton.onclick = () => skipMultiSelectGallery();
+
             galleryOverlay.appendChild(instructions);
             galleryOverlay.appendChild(galleryContainer);
             galleryOverlay.appendChild(continueButton);
+            galleryOverlay.appendChild(skipButton);
             conversationFlow.appendChild(galleryOverlay);
 
 
@@ -2047,6 +2061,42 @@
                 conversationFlow.scrollTop = conversationFlow.scrollHeight;*/
                 flashInputOptions();
             }, 100);
+        }
+
+        function skipMultiSelect() {
+            console.log('skipMultiSelect called');
+            window.tempMultiSelections = [];
+            addMessage('Skipped', 'user');
+            conversationState.sessionData[conversationState.currentStep] = [];
+            setTimeout(() => {
+                progressConversation([]);
+            }, 500);
+        }
+
+        function skipMultiSelectGallery() {
+            console.log('skipMultiSelectGallery called');
+            hideStickyQuestion();
+            window.tempMultiSelections = [];
+
+            const galleryOverlay = document.getElementById('multiSelectGalleryOverlay');
+            if (galleryOverlay) galleryOverlay.remove();
+
+            const conversationFlow = document.getElementById('conversationFlow');
+            conversationState.classList.remove('gallery-mode');
+
+            const inputOptions = document.getElementById('inputOptions');
+            inputOptions.style.display = 'flex';
+
+            addMessage('skipped', 'user');
+            conversationState.sessionData[conversationState.currentStep] = [];
+            conversationState.sessionData[conversationState.currentStep + '_fullData'] = [];
+
+            delete window.tempMultiSelections;
+
+            setTimeout(() => {
+                progressConversation([]);
+                conversationFlow.scrollTop = conversationFlow.scrollHeight;
+            }, );
         }
 
         function toggleMultiSelect(option, buttonElement) {
