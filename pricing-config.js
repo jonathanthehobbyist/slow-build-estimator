@@ -46,6 +46,7 @@ const PRICING = {
     "Pot filler": { flat: 1500 },
     "Pot filler - Plumbing Labor": { flat: 2000 },
     "Vent hood": { flat: 1500 },
+    "Vent hood - Electrical Labor": { flat: 1500 },
     "Sharp Microwave Drawer": { flat: 1500 },
     "Sous vide": { flat: 5000 }
   },
@@ -62,8 +63,10 @@ const PRICING = {
     "Bathroom": { flat: 3000 },
     "Living Room": {flat: 5000 }
   },
-  "Lighting": {
-    "Kitchen": { flat: 3000 }
+  "Kitchen Lighting" : {
+    "Standard Kitchen Lighting" : { flat: 5000 }
+    "Inset cabinet shelf lighting" : { flat: 2000 },
+    "Under countertop lighting" : { flat: 2000 }
   },
   
   "Countertop Installation": {

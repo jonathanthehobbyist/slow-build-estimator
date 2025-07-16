@@ -288,6 +288,25 @@ const CONVERSATION_FLOW = {
       { name: "Countertops", calculation: "flat", category: "materials" },
       { name: "Countertop Installation", calculation: "flat", category: "labor", autoInclude: true }
     ],
+    next: "kitchen_lighting"
+  },
+
+  kitchen_lighting: {
+    question: "For lighting, we'll add a budget for overhead fixtures.",
+    inputType: "multiSelect",
+    statement: "Would you like any special touches?",
+    statementTiming: "after",
+    options: ["Inset cabinet shelf lighting", "Under countertop lighting"],
+    userResponseTemplate: "You chose <strong>{selection}</strong> to use for your kitchen lighting.", // ← Add this
+    lineItems: [
+       { name: "Standard kitchen lighting", calculation: "flat", category: "materials" },
+      condition: "selected", // Special condition for multiselect
+        items: [
+          { name: "Inset cabinet shelf lighting", calculation: "flat", category: "materials" },
+          { name: "Under countertop lighting", calculation: "flat", category: "materials" } 
+        ]
+      }
+    ],
     next: "kitchen_appliances"
   },
 
