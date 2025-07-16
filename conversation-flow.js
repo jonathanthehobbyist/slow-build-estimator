@@ -542,7 +542,7 @@ class ConversationFlowHelper {
 
         if (lineItemDef.items) {
           console.log('🔍 Has items array, length:', lineItemDef.items.length);
-          if(Array.isArray(userInput)) {
+          if(Array.isArray(userInput) && lineItemDef.condition === 'selected') {
             console.log('🔍 Taking multi-select path');
             console.log('🔍 userInput array:', userInput);
             // Multi select: only create line items for selected items
@@ -578,7 +578,7 @@ class ConversationFlowHelper {
           } else {
             // single item (no items array)
             lineItems.push({
-                name: `${lineItemDef.name}: ${userInput}`,
+                name: item.name,
                 calculation: lineItemDef.calculation,
                 category: lineItemDef.category,
                 userChoice: userInput,
