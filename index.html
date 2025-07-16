@@ -1739,18 +1739,10 @@
             // Remove previous selections
             document.querySelectorAll('.gallery-card').forEach(card => {
                 card.classList.remove('selected');
-                card.style.borderColor = 'e5e5e5';
-                card.style.transform = 'translateY(0)';
-                card.style.boxShadow = 'none';
-                card.style.backgroundColor = 'white';
             });
 
             //highlight selected card
             cardElement.classList.add('selected');
-            cardElement.style.borderColor = '#2196f3';
-            cardElement.style.backgroundColor = '#f8f9ff';
-            cardElement.style.transform = 'translateY(-2px)';
-            cardElement.style.boxShadow = '0 4px 12px rgba(33, 150, 243, 0.2)';
 
             //disable all cards to prevent double-click
             /* document.querySelectorAll('.gallery-card').forEach(card => {
