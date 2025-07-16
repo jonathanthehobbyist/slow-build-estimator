@@ -520,28 +520,27 @@ class ConversationFlowHelper {
   }
   
   static getLineItemsForStep(stepName, userInput) {
-
     console.log('=== getLineItemsForStep DEBUG ===');
     console.log('stepName:', stepName);
     console.log('userInput:', userInput);
     console.log('userInput type:', typeof userInput);
     console.log('userInput is array:', Array.isArray(userInput));
-
+    
     const stepConfig = CONVERSATION_FLOW[stepName];
     console.log('stepConfig found:', !!stepConfig);
     console.log('stepConfig.lineItems:', stepConfig?.lineItems);
     const lineItems = [];
-
+    
     stepConfig.lineItems?.forEach(lineItemDef => {
-
       console.log('🔍 Processing lineItemDef:', lineItemDef);
       console.log('🔍 lineItemDef.condition:', lineItemDef.condition);
+      
       if (this.shouldAddLineItem(lineItemDef, userInput)) {
-        
         console.log('🔍 shouldAddLineItem returned TRUE for:', lineItemDef);
-
+        
         if (lineItemDef.items) {
           console.log('🔍 Has items array, length:', lineItemDef.items.length);
+          
           if(Array.isArray(userInput) && lineItemDef.condition === 'selected') {
             console.log('🔍 Taking multi-select path');
             console.log('🔍 userInput array:', userInput);
@@ -553,44 +552,44 @@ class ConversationFlowHelper {
               if (matchingItem) {
                 console.log('🔍 Adding line item for:', selectedItem);
                 lineItems.push({
-                  name: matchingItem.name, //just the item name
+                  name: matchingItem.name,
                   calculation: matchingItem.calculation,
                   category: matchingItem.category,
-                  userChoice: selectedItem, // individual selection
+                  userChoice: selectedItem,
                   stepName: stepName
                 });
               }
-          });
-        } else {
-           console.log('🔍 shouldAddLineItem returned FALSE for:', lineItemDef);
-           console.log('🔍 Checking why: condition =', lineItemDef.condition, 'userInput =', userInput);
-          // single select: original logic
-          lineItemDef.items.forEach(item => {
-                lineItems.push({
-                  name: userInput ? `${item.name}` : item.name,
-                  calculation: item.calculation,
-                  category: item.category,
-                  userChoice: lineItemDef.condition,
-                  stepName: stepName,
-                });
-              });
-            }
-          } else {
-            // single item (no items array)
-            lineItems.push({
-                name: item.name,
-                calculation: lineItemDef.calculation,
-                category: lineItemDef.category,
-                userChoice: userInput,
-                stepName: stepName,
-                autoInclude: lineItemDef.autoInclude || false
             });
-          }    
+          } else {
+            // specific conditions like "Pot filler"
+            console.log('🔍 Taking specific condition path for:', lineItemDef.condition);
+            lineItemDef.items.forEach(item => {
+              lineItems.push({
+                name: item.name,
+                calculation: item.calculation,
+                category: item.category,
+                userChoice: lineItemDef.condition,
+                stepName: stepName
+              });
+            });
+          }
+        } else {
+          // Handle single item (no items array)
+          lineItems.push({
+            name: `${lineItemDef.name}: ${userInput}`,
+            calculation: lineItemDef.calculation,
+            category: lineItemDef.category,
+            userChoice: userInput,
+            stepName: stepName,
+            autoInclude: lineItemDef.autoInclude || false
+          });
         }
-      });
+      }
+    });
+    
     console.log('🔍 Final lineItems to return:', lineItems);
     return lineItems;
-  }   
+  }  
 
   
   static shouldAddLineItem(lineItemDef, userInput) {
