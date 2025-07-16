@@ -1756,10 +1756,16 @@
             // Remove previous selections
             document.querySelectorAll('.gallery-card').forEach(card => {
                 card.classList.remove('selected');
+
+                // remove checkmark
+                removeSelectionCheckmark(cardElement);
             });
 
             //highlight selected card
             cardElement.classList.add('selected');
+            addSelectionCheckmark(cardElement);
+
+
 
             //disable all cards to prevent double-click
             /* document.querySelectorAll('.gallery-card').forEach(card => {
