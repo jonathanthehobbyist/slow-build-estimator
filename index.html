@@ -1641,7 +1641,7 @@
             //inputOptions.style.width = '100%';
 
             const galleryContainer = document.createElement('div');
-            galleryContainer.className = 'gallery-container';
+            // galleryContainer.className = 'gallery-container';
             /*galleryContainer.style.display = 'grid';
             galleryContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(180px, 1fr))';
             galleryContainer.style.gap = '1rem';
@@ -1656,7 +1656,8 @@
                 // CSS classes handle grid layout
             } else {
                 console.log('🎨 Using default multi-column layout');
-                galleryContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(180px, 1fr))';
+                //galleryContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(180px, 1fr))';
+                galleryContainer.className = 'gallery-container';
             }
 
             options.forEach(option => {
