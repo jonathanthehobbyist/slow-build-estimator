@@ -151,6 +151,10 @@
         --radius-lg: 12px;
         --radius-xl: 18px;
         --radius-full: 50%;
+
+        /* Sometimes there's a box over a box and the border needs to be... */
+        --radius-sm-selected: 6px;
+        --radium-md-selected: 10px;
         }
 
 
@@ -1790,7 +1794,7 @@
             confirmContainer.id = 'galleryConfirmButton';
 
 
-            const selectionText = document.createElement('div');
+            /*const selectionText = document.createElement('div');
 
             // DEBUG: Test different ways of setting the text
             const testText = 'You selected: ' + chosenOption;
@@ -1800,7 +1804,7 @@
             console.log('selectionText.textContent after setting:', selectionText.textContent);
             selectionText.style.marginBottom = '1rem';
             selectionText.style.fontWeight = '600';
-            selectionText.style.color = '#2c3e50';
+            selectionText.style.color = '#2c3e50';*/
 
             const confirmButton = document.createElement('button');
             confirmButton.className = 'option-button primary';
@@ -1808,7 +1812,7 @@
 
             confirmButton.onclick = () => confirmGallerySelection();
 
-            confirmContainer.appendChild(selectionText);
+            /*confirmContainer.appendChild(selectionText);*/
             confirmContainer.appendChild(confirmButton);
             galleryOverlay.appendChild(confirmContainer);
 
