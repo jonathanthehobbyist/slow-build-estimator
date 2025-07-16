@@ -446,6 +446,17 @@
 
         /* SPECIFIC BUTTON CLASSES - For backwards compatibility */
 
+        #galleryConfirmButton {
+            /* Container for Gallery */
+
+            margin-top: var(--space-lg);
+            text-align: left;
+            padding: var(--space-lg);
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            border-color: var(--neutral-100);
+        }
+
         /* Using the rust accent color, stand-alone buttons */
         .option-button.continue-button,
         .option-button.primary,
@@ -779,6 +790,8 @@
             transform: translateY(-2px) !important;
             box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2) !important;
         }
+
+
 
         /* Selection checkmark */
         .selection-checkmark {
@@ -1775,12 +1788,7 @@
 
             const confirmContainer = document.createElement('div');
             confirmContainer.id = 'galleryConfirmButton';
-            confirmContainer.style.marginTop = '1.5rem';
-            confirmContainer.style.textAlign = 'center';
-            confirmContainer.style.padding = '1rem';
-            confirmContainer.style.backgroundColor = 'white';
-            confirmContainer.style.borderRadius = '8px';
-            confirmContainer.style.borderColor = '2px solid #2196f3';
+
 
             const selectionText = document.createElement('div');
 
