@@ -299,7 +299,8 @@ const CONVERSATION_FLOW = {
     options: ["Inset cabinet shelf lighting", "Under countertop lighting"],
     userResponseTemplate: "You chose <strong>{selection}</strong> to use for your kitchen lighting.", // ← Add this
     lineItems: [
-       { name: "Standard kitchen lighting", calculation: "flat", category: "materials" },
+      { name: "Standard kitchen lighting", calculation: "flat", category: "materials" },
+      {
       condition: "selected", // Special condition for multiselect
         items: [
           { name: "Inset cabinet shelf lighting", calculation: "flat", category: "materials" },
