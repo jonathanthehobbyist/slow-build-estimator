@@ -3181,6 +3181,8 @@
                 }
             });
 
+             console.log('📊 Final runningTotal:', runningTotal, 'Type:', typeof runningTotal);
+
             // Calculate range
             let minTotal, maxTotal;
             if (shouldShowPrices()) {
@@ -3193,7 +3195,8 @@
                 const maxTotal = Math.round(runningTotal * 1.2);
             }
 
-
+            console.log('📊 Before toLocaleString - minTotal:', minTotal, 'maxTotal:', maxTotal);
+            console.log('📊 Types - minTotal:', typeof minTotal, 'maxTotal:', typeof maxTotal);
             
             totalRange.textContent = `$${minTotal.toLocaleString()} - $${maxTotal.toLocaleString()}`;
         }
