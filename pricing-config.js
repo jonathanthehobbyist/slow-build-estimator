@@ -65,7 +65,7 @@ const PRICING = {
   },
   "Kitchen Lighting" : {
     "Standard Kitchen Lighting": { flat: 5000 },
-    "Under cabinet lighting": { flat: 2000 },
+    "Under cabinet ba lighting": { flat: 2000 },
     "Under countertop lighting": { flat: 2000 }
   },
   

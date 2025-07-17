@@ -3127,6 +3127,13 @@
 
             // sort items by base name to group related items together
             const sortedItems = [...conversationState.costItems].sort((a,b) => {
+                // First, sort by step name to keep chrono order
+                
+                if (a.stepName !== b.stepName) {
+                    return a.stepName.localeCompare(b.stepName);
+                }
+
+                // Within the step, sort by baseName to group related items
                 const baseNameA = a.name.split(' - ')[0]; // get baseName before -
                 const baseNameB = b.name.split(' - ')[0];
                 return baseNameA.localeCompare(baseNameB);
