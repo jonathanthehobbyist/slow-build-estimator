@@ -3218,14 +3218,14 @@
             const costItemDiv = document.createElement('div');
             costItemDiv.className = 'cost-item';
             
-            let displayPrice = typeof price === 'number' ? '$' + price.toLocaleString() : price;
+            let displayPrice;
             
-            if (shouldShowPrices){
+            if (shouldShowPrices()){
                 //show actual prices with bypass parameter
                 displayPrice = typeof price === 'number' ? '$' + price.toLocaleString() : price;
             } else {
                 // Hide prices for regular users
-                displayPrice = '•••';
+                displayPrice = 'TBD';
             }
 
             costItemDiv.innerHTML = `
