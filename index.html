@@ -3154,7 +3154,7 @@
             const costItems = document.getElementById('costItems');
             const totalRange = document.getElementById('totalRange');
 
-            if(conversationState.costItems) {
+            if(!conversationState.costItems) {
                 conversationState.costItems = [];
             }
 
@@ -3177,7 +3177,7 @@
             conversationState.costItems.forEach(item => {
             console.log('📊 Adding dynamic item:', item.name);
             const calculatedPrice = calculateLineItemPrice(item);
-            addCostItem(item.name, calculatedPrice);
+            addCostItem(item.name, calculatedPrice, shouldShow);
 
                 if (typeof calculatedPrice === 'number') {
                     runningTotal += calculatedPrice;
@@ -3196,13 +3196,13 @@
             if (shouldShowPrices()) {
                 // Tighter range with bypass (10% variance)
                 console.log('📊 Using bypass pricing (tight range)');
-                const minTotal = Math.round(runningTotal * 0.95);
-                const maxTotal = Math.round(runningTotal * 1.05);
+                minTotal = Math.round(runningTotal * 0.95);
+                maxTotal = Math.round(runningTotal * 1.05);
             } else {
                 // Wider range for lead generation (40% variance)
                 console.log('📊 Using regular pricing (wide range)');
-                const minTotal = Math.round(runningTotal * 0.8);
-                const maxTotal = Math.round(runningTotal * 1.2);
+                minTotal = Math.round(runningTotal * 0.8);
+                maxTotal = Math.round(runningTotal * 1.2);
             }
 
             console.log('📊 After calculation - minTotal:', minTotal, 'maxTotal:', maxTotal);
