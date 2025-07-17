@@ -317,16 +317,21 @@ const CONVERSATION_FLOW = {
     ],
     userResponseTemplate: "You chose <strong>{selection}</strong> to use for your kitchen lighting.", // ← Add this
     lineItems: [
+      // Always included 
       { name: "Standard kitchen lighting", calculation: "flat", category: "materials" },
+      // Only if 'Under cabinet lighting' was selected
       {
       condition: "Under cabinet lighting", // Special condition for multiselect
         items: [
           { name: "Under cabinet lighting", calculation: "flat", category: "materials" }
+          //{ name: "Under countertop lighting", calculation: "flat", category: "materials" } 
         ]
       },
+      {
       condition: "Under countertop lighting", // Special condition for multiselect
         items: [
-          { name: "Under countertop lighting", calculation: "flat", category: "materials" } 
+          { name: "Under countertop lighting", calculation: "flat", category: "materials" }
+          //{ name: "Under countertop lighting", calculation: "flat", category: "materials" } 
         ]
       }
     ],
