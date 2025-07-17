@@ -2684,7 +2684,9 @@
         // Should prices be shown
         function shouldShowPrices() {
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('bypass') === 'testing123';
+            const result = urlParams.get('bypass') === 'testing123';
+            console.log('📊 shouldShowPrices - URL params:', urlParams.toString(), 'Result:', result);
+            return result;
         }
 
 
@@ -3183,6 +3185,11 @@
             });
 
              console.log('📊 Final runningTotal:', runningTotal, 'Type:', typeof runningTotal);
+
+            // ADD DEBUGGING HERE
+            console.log('📊 About to calculate ranges');
+            console.log('📊 shouldShowPrices():', shouldShowPrices());
+
 
             // Calculate range
             let minTotal, maxTotal;
