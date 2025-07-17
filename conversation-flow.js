@@ -292,18 +292,31 @@ const CONVERSATION_FLOW = {
   },
 
   kitchen_lighting: {
-    question: "For lighting, we'll add a budget for overhead fixtures.",
-    inputType: "multiSelect",
+    question: "For lighting, we'll add a standard budget for overhead fixtures.",
+    inputType: "multiSelectGallery",
     statement: "Would you like any special touches?",
     statementTiming: "after",
-    options: ["Inset cabinet shelf lighting", "Under countertop lighting"],
+    options: [
+      { 
+        name: "Under cabinet lighting", 
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Lumaz_modern_kitchen_with_warm_under_cabinet_lights02_fab61c3f-5aa8-492b-9e1b-250259854746.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Lumaz_modern_kitchen_with_warm_under_cabinet_lights02_fab61c3f-5aa8-492b-9e1b-250259854746.jpg",
+        description: "Under cabinet lighting"
+      },
+      { 
+        name: "Under countertop lighting", 
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/backlit-white-quartz-kitchen-counter-with-white-led-sheet.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/backlit-white-quartz-kitchen-counter-with-white-led-sheet.jpg",
+        description: "Under countertop lighting"
+      }
+    ],
     userResponseTemplate: "You chose <strong>{selection}</strong> to use for your kitchen lighting.", // ← Add this
     lineItems: [
       { name: "Standard kitchen lighting", calculation: "flat", category: "materials" },
       {
       condition: "selected", // Special condition for multiselect
         items: [
-          { name: "Inset cabinet shelf lighting", calculation: "flat", category: "materials" },
+          { name: "Under cabinet lighting", calculation: "flat", category: "materials" },
           { name: "Under countertop lighting", calculation: "flat", category: "materials" } 
         ]
       }
