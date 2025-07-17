@@ -261,26 +261,26 @@ const CONVERSATION_FLOW = {
     options: [
       { 
         name: "Laminate", 
-        image: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=400&h=300&fit=crop",
-        thumbnail: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=200&h=150&fit=crop",
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Laminate-awi-qcp-blog-why-decorative-laminate-is-an-important-part-of-the-architectural-woodworking-standards.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Laminate-awi-qcp-blog-why-decorative-laminate-is-an-important-part-of-the-architectural-woodworking-standards.jpg",
         description: "Affordable laminate countertops"
       },
       { 
         name: "Quartz", 
-        image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=300&fit=crop",
-        thumbnail: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=200&h=150&fit=crop",
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/how-quartz-slabs-are-made.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/how-quartz-slabs-are-made.jpg",
         description: "Durable engineered quartz"
       },
       { 
         name: "Granite", 
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop",
-        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop",
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/granite-What-Are-the-Different-Grades-of-Granite-Countertops-1024x683-1.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/granite-What-Are-the-Different-Grades-of-Granite-Countertops-1024x683-1.jpg",
         description: "Natural granite stone"
       },
       { 
         name: "Butcher Block", 
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&sat=-100",
-        thumbnail: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=150&fit=crop&sat=-100",
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/100020668_american-cherry-butcher-block-countertop-12ft-kitchen-countertop_room.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/100020668_american-cherry-butcher-block-countertop-12ft-kitchen-countertop_room.jpg",
         description: "Warm wood countertops"
       }
     ],
