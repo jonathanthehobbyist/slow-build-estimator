@@ -2112,7 +2112,7 @@
             const inputOptions = document.getElementById('inputOptions');
             inputOptions.style.display = 'flex';
 
-            addMessage('skipped', 'user');
+            addMessage('Skipped', 'user');
             conversationState.sessionData[conversationState.currentStep] = [];
             conversationState.sessionData[conversationState.currentStep + '_fullData'] = [];
 
@@ -2681,6 +2681,14 @@
             setTimeout(() => flashInputOptions(), 50);
         }
 
+        // Should prices be shown
+        function shouldShowPrices() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('bypass') === 'testing123';
+        }
+
+
+
 
 
 
@@ -2758,12 +2766,37 @@
                 }
             });
 
+            // Detailed line items with actual prices for email
+            const detailedLineItems = [];
+            let emailRunningTotal = 0;
+
+            // Add always included items to email
+            if (window.ALWAYS_INCLUDED) {
+                window.ALWAYS_INCLUDED.forEach(item => {
+                    detailedLineItems.push(`${item.name} - $${(item.price || 0).toLocaleString()}`);
+                    emailRunningTotal += item.price || 0;
+                })
+            }
+
+            // Add dynamic items to email with actual prices
+            conversationState.costItems.forEach(item => {
+                const price = calculateLineItemPrice(item);
+                const priceStr = typeof price === 'number' ? `$${price.toLocaleString()}` : 'TBD';
+                detailedLineItems.push(`${item.name} - ${priceStr}`);
+                if (typeof pirce === 'number') {
+                    emailRunningTotal += price;
+                }
+            });
+
             // Current line items summary
-            const lineItemsSummary = conversationState.costItems.map(item => {
+            /*const lineItemsSummary = conversationState.costItems.map(item => {
                 const price = calculateLineItemPrice(item);
                 const priceStr = typeof price === 'number' ? `$${price.toLocaleString()}` : price;
                 return `${item.name} - ${priceStr}`;
-            }).join('\n');
+            }).join('\n');*/
+
+            const emailMinTotal = Math.round(emailRunningTotal * 0.95);
+            const emailMaxTotal = Math.round(emailRunningTotal * 1.05);
 
             return {
                 customer_email: customerEmail,
@@ -2774,12 +2807,12 @@
                 flooring: conversationState.sessionData.kitchen_flooring,
 
                 selections_list: selections.join('\n'),  // ← Add this
-                line_items: lineItemsSummary,            // ← Add this
+                line_items: detailedLineItems.join('\n'), // Detailed breakdown for
 
-                // Pricing
-                estimate_min: `$${minTotal.toLocaleString()}`,
-                estimate_max: `$${maxTotal.toLocaleString()}`,
-                estimate_range: `$${minTotal.toLocaleString()} - $${maxTotal.toLocaleString()}`,
+                // Tighter pricing for email
+                estimate_min: `$${emailMinTotal.toLocaleString()}`,
+                estimate_max: `$${emailMaxTotal.toLocaleString()}`,
+                estimate_range: `$${emailMinTotal.toLocaleString()} - $${emailMaxTotal.toLocaleString()}`,
                 
                 // Timestamp
                 date_submitted: new Date().toLocaleDateString(),
@@ -2787,7 +2820,7 @@
                 
                 // For designer email
                 lead_source: 'Kitchen Estimator Tool',
-                follow_up_priority: maxTotal > 50000 ? 'High' : 'Medium'
+                follow_up_priority: emailMaxTotal > 50000 ? 'High' : 'Medium'
             };
         }
 
@@ -2992,6 +3025,25 @@
             }
         }
 
+        function addBypassIndicator() {
+            if (shouldShowPrices()) {
+                const indicator = document.createElement('div');
+                indicator.style.cssText = `
+                    position: fixed;
+                    top: 10px;
+                    right: 10px;
+                    background: #ff6b6b;
+                    color: white;
+                    padding: 5px 10px;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    z-index: 1000;
+                `;
+                indicator.textContent = 'BYPASS MODE - SHOWING PRICES';
+                document.body.appendChild(indicator);
+            }
+        }
+
         /* ------- LINE ITEM PRICING CALCs ------------*/
 
         function calculateLineItemPrice(lineItem) {
@@ -3126,8 +3178,19 @@
             });
 
             // Calculate range
-            const minTotal = Math.round(runningTotal * 0.9);
-            const maxTotal = Math.round(runningTotal * 1.2);
+            let minTotal, maxTotal;
+            if (shouldShowPrices()) {
+                // Tighter range with bypass (10% variance)
+                const minTotal = Math.round(runningTotal * 0.95);
+                const maxTotal = Math.round(runningTotal * 1.05);
+            } else {
+                // Wider range for lead generation (40% variance)
+                const minTotal = Math.round(runningTotal * 0.8);
+                const maxTotal = Math.round(runningTotal * 1.2);
+            }
+
+
+            
             totalRange.textContent = `$${minTotal.toLocaleString()} - $${maxTotal.toLocaleString()}`;
         }
 
@@ -3139,6 +3202,14 @@
             
             let displayPrice = typeof price === 'number' ? '$' + price.toLocaleString() : price;
             
+            if (shouldShowPrices){
+                //show actual prices with bypass parameter
+                displayPrice = typeof price === 'number' ? '$' + price.toLocaleString() : price;
+            } else {
+                // Hide prices for regular users
+                displayPrice = '•••';
+            }
+
             costItemDiv.innerHTML = `
                 <span class="cost-item-name">${name}</span>
                 <span class="cost-item-price">${displayPrice}</span>
