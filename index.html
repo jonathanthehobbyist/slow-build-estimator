@@ -2107,7 +2107,7 @@
             if (galleryOverlay) galleryOverlay.remove();
 
             const conversationFlow = document.getElementById('conversationFlow');
-            conversationState.classList.remove('gallery-mode');
+            conversationFlow.classList.remove('gallery-mode');
 
             const inputOptions = document.getElementById('inputOptions');
             inputOptions.style.display = 'flex';
@@ -2121,7 +2121,7 @@
             setTimeout(() => {
                 progressConversation([]);
                 conversationFlow.scrollTop = conversationFlow.scrollHeight;
-            }, );
+            }, 500);
         }
 
         function toggleMultiSelect(option, buttonElement) {
