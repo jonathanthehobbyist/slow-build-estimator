@@ -3213,14 +3213,14 @@
         }
 
         // Add cost item to display
-        function addCostItem(name, price) {
+        function addCostItem(name, price, showPrice = false) {
             const costItems = document.getElementById('costItems');
             const costItemDiv = document.createElement('div');
             costItemDiv.className = 'cost-item';
             
             let displayPrice;
             
-            if (shouldShowPrices()){
+            if (shouldShowPrices() || showPrice){
                 //show actual prices with bypass parameter
                 displayPrice = typeof price === 'number' ? '$' + price.toLocaleString() : price;
             } else {
