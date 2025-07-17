@@ -3195,16 +3195,18 @@
             let minTotal, maxTotal;
             if (shouldShowPrices()) {
                 // Tighter range with bypass (10% variance)
+                console.log('📊 Using bypass pricing (tight range)');
                 const minTotal = Math.round(runningTotal * 0.95);
                 const maxTotal = Math.round(runningTotal * 1.05);
             } else {
                 // Wider range for lead generation (40% variance)
+                console.log('📊 Using regular pricing (wide range)');
                 const minTotal = Math.round(runningTotal * 0.8);
                 const maxTotal = Math.round(runningTotal * 1.2);
             }
 
+            console.log('📊 After calculation - minTotal:', minTotal, 'maxTotal:', maxTotal);
             console.log('📊 Before toLocaleString - minTotal:', minTotal, 'maxTotal:', maxTotal);
-            console.log('📊 Types - minTotal:', typeof minTotal, 'maxTotal:', typeof maxTotal);
             
             totalRange.textContent = `$${minTotal.toLocaleString()} - $${maxTotal.toLocaleString()}`;
         }
