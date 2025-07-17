@@ -2032,6 +2032,12 @@
                 galleryContainer.appendChild(card);
             });
 
+            // Add button container
+            const buttonContainer = document.createElement('div');
+            buttonContainer.style.display = 'flex';
+            buttonContainer.style.flexDirection = 'row';
+            buttonContainer.style.gap = '0.25rem';
+
             // Add continue button
             const continueButton = document.createElement('button');
             continueButton.id = 'multiSelectGalleryContinue';
@@ -2046,19 +2052,26 @@
                 confirmMultiSelectGallery();
             };
 
+            // Skip button
             const skipButton = document.createElement('button');
             skipButton.className = 'option-button skip';
             skipButton.textContent = 'Skip';
             skipButton.onclick = () => skipMultiSelectGallery();
 
+            // buttons into buttonContainer
+            buttonContainer.appendChild(continueButton);
+            buttonContainer.appendChild(skipButton);
+
             galleryOverlay.appendChild(instructions);
             galleryOverlay.appendChild(galleryContainer);
-            galleryOverlay.appendChild(continueButton);
-            galleryOverlay.appendChild(skipButton);
+
+            // buttonContainer into overlay
+            galleryOverlay.appendChild(buttonContainer);
             conversationFlow.appendChild(galleryOverlay);
 
-
-
+            /*galleryOverlay.appendChild(continueButton);
+            galleryOverlay.appendChild(skipButton);*/
+            
             setTimeout(() => {
                 // Scroll so gallery instructions appears just below the last message
                 const instruction = galleryOverlay.querySelector('.multi-select-gallery-instructions');
@@ -2068,7 +2081,6 @@
                         block: 'start' // Align top of viewport
                     });
                 }
-
 
                 /*const conversationFlow = document.getElementById('conversationFlow');
                 conversationFlow.scrollTop = conversationFlow.scrollHeight;*/
