@@ -230,24 +230,29 @@ const CONVERSATION_FLOW = {
     ],
     lineItems: [
       {
-      condition: "selected", // Special condition for multiselect
-        items: [
-          { name: "Pot filler", calculation: "flat", category: "materials" },
-          { name: "Vent hood", calculation: "flat", category: "materials" },
-          { name: "Sharp Microwave Drawer", calculation: "flat", category: "materials" },
-          { name: "Sous vide", calculation: "flat", category: "materials" }  
-        ]
-      },
-      {
         condition: "Pot filler",
           items: [
+            { name: "Pot filler", calculation: "flat", category: "materials" },
             { name: "Pot filler - Plumbing Labor", calculation: "flat", category: "labor" }
           ]
       },
       {
         condition: "Vent hood",
           items: [
+            { name: "Vent hood", calculation: "flat", category: "materials" },
             { name: "Vent hood - Electrical Labor", calculation: "flat", category: "labor" }
+          ]
+      },
+      {
+        condition: "Sharp Microwave Drawer",
+          items: [
+            { name: "Sharp Microwave Drawer", calculation: "flat", category: "materials" }
+          ]
+      },
+      {
+        condition: "Sous vide",
+          items: [
+            { name: "Sous vide", calculation: "flat", category: "materials" }
           ]
       }
     ],
