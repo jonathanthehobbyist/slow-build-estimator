@@ -319,9 +319,13 @@ const CONVERSATION_FLOW = {
     lineItems: [
       { name: "Standard kitchen lighting", calculation: "flat", category: "materials" },
       {
-      condition: "selected", // Special condition for multiselect
+      condition: "Under cabinet lighting", // Special condition for multiselect
         items: [
-          { name: "Under cabinet lighting", calculation: "flat", category: "materials" },
+          { name: "Under cabinet lighting", calculation: "flat", category: "materials" }
+        ]
+      },
+      condition: "Under countertop lighting", // Special condition for multiselect
+        items: [
           { name: "Under countertop lighting", calculation: "flat", category: "materials" } 
         ]
       }
@@ -518,6 +522,7 @@ const ALWAYS_INCLUDED = [
     name: "Design Consultation", 
     price: 550, // Changed from 500 to make it free
     category: "design", 
+    showPrice: true,
     description: "Complimentary design consultation" 
   }
 ];
