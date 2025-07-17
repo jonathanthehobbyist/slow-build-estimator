@@ -3114,16 +3114,33 @@
             }
 
             // Add dynamic cost items
-            console.log('📊 About to add', conversationState.costItems.length, 'dynamic items');
+            /*console.log('📊 About to add', conversationState.costItems.length, 'dynamic items');
             conversationState.costItems.forEach(item => {
             console.log('📊 Adding dynamic item:', item.name);
             const calculatedPrice = calculateLineItemPrice(item);
             addCostItem(item.name, calculatedPrice);
 
-            if (typeof calculatedPrice === 'number') {
+                if (typeof calculatedPrice === 'number') {
+                    runningTotal += calculatedPrice;
+                }
+            });*/
+
+            // sort items by base name to group related items together
+            const sortedItems = [...conversationState.costItems].sort((a,b) => {
+                const baseNameA = a.name.split(' - ')[0]; // get baseName before -
+                const baseNameB = b.name.split(' - ')[0];
+                return baseNameA.localeCompare(baseNameB);
+            });
+
+            sortedItems.forEach(item => {
+                console.log('adding dynamic item', item.name);
+                const calculatedPrice = calculateLineItemPrice(item);
+                addCostItem(item.name, calculatedPrice);
+                if (typeof calculatedPrice === 'number') {
                     runningTotal += calculatedPrice;
                 }
             });
+
 
             // Calculate range
             const minTotal = Math.round(runningTotal * 0.9);
