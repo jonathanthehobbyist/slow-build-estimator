@@ -3161,9 +3161,10 @@
             let runningTotal = 0;
 
             // Add always included items
-            if (window.ALWAYS_INCLUDED && Object.keys(conversationState.sessionData).length > 0) {
+            if (window.ALWAYS_INCLUDED) {
                 window.ALWAYS_INCLUDED.forEach(item => {
                     console.log('📊 Adding always included:', item.name, item.price);
+                    const shouldShow = item.showPrice || false;
                     addCostItem(item.name, item.price);
                     runningTotal += item.price || 0;
                 });
