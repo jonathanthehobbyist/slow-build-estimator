@@ -3152,6 +3152,10 @@
             const costItems = document.getElementById('costItems');
             const totalRange = document.getElementById('totalRange');
 
+            if(conversationState.costItems) {
+                conversationState.costItems = [];
+            }
+
             // Clear existing items and rebuild (simpler approach)
             costItems.innerHTML = '';
             let runningTotal = 0;
