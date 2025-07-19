@@ -314,6 +314,8 @@
             overflow: hidden;
             margin-top: var(--space-sm);
             box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column; /* ← Force vertical on mobile */
         }
 
         .user-image-card-img {
@@ -343,28 +345,6 @@
             font-size: var(--text-sm);
             color: var(--text-secondary);
             line-height: var(--leading-normal);
-        }
-
-        /* Desktop adjustments */
-        @media (min-width: 768px) {
-            .user-image-card {
-                display: flex;
-                flex-direction: row;
-                align-items: stretch;
-            }
-            
-            .user-image-card-img {
-                width: 200px;
-                height: 150px;
-                flex-shrink: 0;
-            }
-            
-            .user-image-card-content {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
         }
 
         .message-image {
@@ -1941,7 +1921,7 @@
             const img = document.createElement('img');
             img.src = selectedOptionData.thumbnail || selectedOptionData.image;
             img.alt = selectedOptionData.name;
-            img.className = 'user-image-card img';
+            img.className = 'user-image-card-img';
 
             const cardContent = document.createElement('div');
             cardContent.className = 'user-image-card-content';

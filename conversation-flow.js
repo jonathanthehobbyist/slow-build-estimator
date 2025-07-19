@@ -69,7 +69,7 @@ const CONVERSATION_FLOW = {
     question: "Kitchens remodels are great addition to any home. Let's start with the type of flooring you are thinking of.",
     inputType: "choice",
     options: ["Laminate", "Vinyl", "Hardwood", "Tile", "Natural Stone", "N/A"],
-    statement: "Because of the fluctuating price of materials, you'll see a '•••' to denote market prices.",
+    statement: "Also, because of the fluctuating price of materials, you'll see a '•••' to denote market prices.",
     statementTiming: "after",
     userResponseTemplate: "You chose <strong>{selection}</strong> to use for your kitchen remodel flooring.", // ← Add this
     lineItems: [
