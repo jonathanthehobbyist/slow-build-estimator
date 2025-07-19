@@ -3214,12 +3214,13 @@
 
         // Add cost item to display
         function addCostItem(name, price, showPrice = false) {
-            
+            const costItems = document.getElementById('costItems');
+            const costItemDiv = document.createElement('div');
+            costItemDiv.className = 'cost-item';
+
             console.log(`🔍 addCostItem called: "${name}", price: ${price}, showPrice: ${showPrice}`);
             console.log(`🔍 shouldShowPrices(): ${shouldShowPrices()}`);
             console.log(`🔍 Condition check: ${shouldShowPrices() || showPrice}`);
-
-            costItemDiv.className = 'cost-item';
             
             let displayPrice;
             
@@ -3233,12 +3234,12 @@
                 displayPrice = 'TBD';
             }
 
+            console.log(`🔍 Final displayPrice: ${displayPrice}`);
+
             costItemDiv.innerHTML = `
                 <span class="cost-item-name">${name}</span>
                 <span class="cost-item-price">${displayPrice}</span>
             `;
-
-            console.log(`🔍 Final displayPrice: ${displayPrice}`);
             
             costItems.appendChild(costItemDiv);
         }
