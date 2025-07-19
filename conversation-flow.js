@@ -495,8 +495,6 @@ const CONVERSATION_FLOW = {
 
   email_capture: {
     question: "To continue refining your estimate, please enter your email:",
-    statement: "You're making great progress! Next we'll help you choose appliances, countertops, and premium features.",
-    statementTiming: "before",
     inputType: "email",
     validation: { required: true, format: "email" },
     emailConfig: {
@@ -507,7 +505,7 @@ const CONVERSATION_FLOW = {
       designerSubject: "New Lead: Kitchen Renovation Estimate Request"
     },
     responseLogic: (userEmail, sessionData) => {
-      return `Great! Now let's explore more options for your ${sessionData.square_footage} sq ft ${sessionData.room_type}.`;
+      return `Thanks! We'll send you details for your ${sessionData.square_footage} sq ft ${sessionData.room_type} remodel. We'll also work on refining the quote and contact you via the email provided once we're ready to discuss.`;
     },
      // Add bypass check
     // Add this to browserURL: ?bypass=testing123
