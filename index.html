@@ -2939,7 +2939,7 @@
             // Add dyanmic items for ADMIN
             conversationState.costItems.forEach(item => {
                 const price = calculateLineItemPrice(item);
-                const priceStr = typeof price === 'number' ? `$${price.toLocaleString()}` : TBD;
+                const priceStr = typeof price === 'number' ? `$${price.toLocaleString()}` : '•••';
                 adminLineItems.push(`${item.name} - ${priceStr}`);
                 if (typeof price === 'number') {
                     adminRunningTotal += price;
