@@ -316,10 +316,10 @@ const CONVERSATION_FLOW = {
     statementTiming: "after",
     options: [
       { 
-        name: "Under cabinet lighting", 
+        name: "Inset cabinet lighting", 
         image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Lumaz_modern_kitchen_with_warm_under_cabinet_lights02_fab61c3f-5aa8-492b-9e1b-250259854746.jpg",
         thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Lumaz_modern_kitchen_with_warm_under_cabinet_lights02_fab61c3f-5aa8-492b-9e1b-250259854746.jpg",
-        description: "Under cabinet lighting"
+        description: "Inset cabinet lighting"
       },
       { 
         name: "Under countertop lighting", 
@@ -332,9 +332,9 @@ const CONVERSATION_FLOW = {
     lineItems: [
       // Only if 'Under cabinet lighting' was selected
       {
-      condition: "Under cabinet lighting", // Special condition for multiselect
+      condition: "Inset cabinet lighting", // Special condition for multiselect
         items: [
-          { name: "Under cabinet lighting", calculation: "flat", category: "materials" }
+          { name: "Inset cabinet lighting", calculation: "flat", category: "materials" }
           //{ name: "Under countertop lighting", calculation: "flat", category: "materials" } 
         ]
       },

@@ -64,9 +64,9 @@ const PRICING = {
     "Living Room": { flat: 5000 }
   },
   "Kitchen Lighting" : {
-    "Standard kitchen lighting": { "deafult": { flat: 5000 } },
-    "Under cabinet lighting": { "deafult": { flat: 2000 } },
-    "Under countertop lighting": { "deafult": { flat: 2000 } }
+    "Standard kitchen lighting": { flat: 5000 },
+    "Inset cabinet lighting": { flat: 2000 },
+    "Under countertop lighting": { flat: 2000 }
   },
   
   "Countertop Installation": {
