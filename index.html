@@ -3214,19 +3214,23 @@
 
         // Add cost item to display
         function addCostItem(name, price, showPrice = false) {
-            const costItems = document.getElementById('costItems');
-            const costItemDiv = document.createElement('div');
-            costItemDiv.className = 'cost-item';
+            console.log(`🔍 addCostItem called: "${name}", price: ${price}, showPrice: ${showPrice}`);
+            console.log(`🔍 shouldShowPrices(): ${shouldShowPrices()}`);
+            console.log(`🔍 Condition check: ${shouldShowPrices() || showPrice}`);
             
             let displayPrice;
             
             if (shouldShowPrices() || showPrice){
                 //show actual prices with bypass parameter
+                console.log(`🔍 Showing price for ${name}`);
                 displayPrice = typeof price === 'number' ? '$' + price.toLocaleString() : price;
             } else {
                 // Hide prices for regular users
+                console.log(`🔍 Hiding price for ${name}`);
                 displayPrice = 'TBD';
             }
+
+            console.log(`🔍 Final displayPrice: ${displayPrice}`);
 
             costItemDiv.innerHTML = `
                 <span class="cost-item-name">${name}</span>
