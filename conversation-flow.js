@@ -66,7 +66,7 @@ const CONVERSATION_FLOW = {
 
   // ==================== KITCHEN FLOW ====================
   kitchen_flooring: {
-    question: "Kitchens remodels are great addition to any home. Let's start with the type of flooring you are thinking of.",
+    question: "Select a type of flooring for your kitchen remodel",
     inputType: "choice",
     options: ["Laminate", "Vinyl", "Hardwood", "Tile", "Natural Stone", "N/A"],
     statement: "Also, because of the fluctuating price of materials, you'll see a '•••' to denote market prices.",
@@ -295,8 +295,19 @@ const CONVERSATION_FLOW = {
       { name: "Countertops", calculation: "flat", category: "materials" },
       { name: "Countertop Installation", calculation: "flat", category: "labor", autoInclude: true }
     ],
-    next: "kitchen_lighting"
+    next: "kitchen_lighting_intro"
   },
+  kitchen_lighting_intro: {
+    question: "Great! We'll include standard overhead lighting in your estimate.",
+    inputType: "continue",  // Shows continue button only
+    statement: "Now let's see if you'd like any special lighting upgrades.",
+    statementTiming: "after",
+    lineItems: [
+      // Standard lighting gets added here
+      { name: "Standard kitchen lighting", calculation: "flat", category: "materials" }
+    ],
+    next: "kitchen_lighting"
+},
 
   kitchen_lighting: {
     question: "For lighting, we'll add a standard budget for overhead fixtures.",
@@ -319,8 +330,6 @@ const CONVERSATION_FLOW = {
     ],
     userResponseTemplate: "You chose <strong>{selection}</strong> to use for your kitchen lighting.", // ← Add this
     lineItems: [
-      // Always included 
-      { name: "Standard kitchen lighting", calculation: "flat", category: "materials" },
       // Only if 'Under cabinet lighting' was selected
       {
       condition: "Under cabinet lighting", // Special condition for multiselect
