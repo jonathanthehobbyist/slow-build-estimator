@@ -1859,7 +1859,7 @@
             const stepConfig = window.CONVERSATION_FLOW[conversationState.currentStep];
             let displayMessage = selectedOptionData.name;
             if (stepConfig && stepConfig.userResponseTemplate) {
-                displayMessage = stepConfig.userResponseTemplate.replace('{selection}', selectOptionData.name);
+                displayMessage = stepConfig.userResponseTemplate.replace('{selection}', selectedOptionData.name);
             }
 
             // custom message
