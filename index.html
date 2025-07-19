@@ -2983,7 +2983,7 @@
                 admin_estimate_max: `$${adminMaxTotal.toLocaleString()}`,
                 admin_estimate_range: `$${adminMinTotal.toLocaleString()} - $${adminMaxTotal.toLocaleString()}`,
                 
-                follow_up_priority: emailMaxTotal > 50000 ? 'High' : 'Medium'
+                follow_up_priority: adminMaxTotal > 50000 ? 'High' : 'Medium'
             };
         }
 
