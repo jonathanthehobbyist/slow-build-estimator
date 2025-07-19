@@ -3214,28 +3214,31 @@
 
         // Add cost item to display
         function addCostItem(name, price, showPrice = false) {
+            
             console.log(`🔍 addCostItem called: "${name}", price: ${price}, showPrice: ${showPrice}`);
             console.log(`🔍 shouldShowPrices(): ${shouldShowPrices()}`);
             console.log(`🔍 Condition check: ${shouldShowPrices() || showPrice}`);
+
+            costItemDiv.className = 'cost-item';
             
             let displayPrice;
             
             if (shouldShowPrices() || showPrice){
-                //show actual prices with bypass parameter
                 console.log(`🔍 Showing price for ${name}`);
+                //show actual prices with bypass parameter
                 displayPrice = typeof price === 'number' ? '$' + price.toLocaleString() : price;
             } else {
-                // Hide prices for regular users
                 console.log(`🔍 Hiding price for ${name}`);
+                // Hide prices for regular users
                 displayPrice = 'TBD';
             }
-
-            console.log(`🔍 Final displayPrice: ${displayPrice}`);
 
             costItemDiv.innerHTML = `
                 <span class="cost-item-name">${name}</span>
                 <span class="cost-item-price">${displayPrice}</span>
             `;
+
+            console.log(`🔍 Final displayPrice: ${displayPrice}`);
             
             costItems.appendChild(costItemDiv);
         }
