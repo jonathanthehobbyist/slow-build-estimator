@@ -1855,9 +1855,60 @@
             const inputOptions = document.getElementById('inputOptions');
             inputOptions.style.display = 'flex';
 
+            // Get current step config for user response template
+            const stepConfig = window.CONVERSATION_FLOW[conversationState.currentStep];
+            let displayMessage = selectedOptionData.name;
+            if (stepConfig && stepConfig.userResponseTemplate) {
+                displayMessage = stepConfig.userResponseTemplate.replace('{selection}', selectOptionData.name);
+            }
+
+            // custom message
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user';
+
+            // create message bubble w/text only
+            const messageBubble = document.createElement('div');
+            messageBubble.className = 'message-bubble';
+            messageBubble.innerHTML = displayMessage;
+
+            // 
+            const imageCard = document.createElement('div');
+            imageCard.className = 'user-image-card';
+
+            const img = document.createElement('img');
+            img.src = selectedOptionData.thumbnail || selectedOptionData.image;
+            img.alt = selectedOptionData.name;
+            img.className = 'user-image-card img';
+
+            const cardContent = document.createElement('div');
+            cardContent.className = 'user-image-card-content';
+
+            const cardTitle = document.createElement('div');
+            cardTitle.className = 'user-image-card-title';
+            cardTitle.textContent = selectedOptionData.name;
+
+            if(selectedOptionData.description) {
+                const cardDescription = document.createElement('div');
+                cardDescription.className = 'user-image-card-description';
+                cardDescription.textContent = selectedOptionData.description;
+                cardContent.appendChild(cardTitle);
+                cardContent.appendChild(cardDescription)
+            } else {
+                cardContent.appendChild(cardTitle);
+            }
+
+            imageCard.appendChild(img);
+            imageCard.appendChild(cardContent);
+
+
+            // Assemble the message
+            messageDiv.appendChild(messageBubble);
+            messageDiv.appendChild(imageCard);
+            conversationFlow.appendChild(messageDiv;
+
             // Add user message with image from stored data
-            const imageUrl = selectedOptionData.thumbnail || selectOptionData.image;
-            addMessage(selectedOptionData.name, 'user', imageUrl);
+            /*const imageUrl = selectedOptionData.thumbnail || selectOptionData.image;
+            addMessage(selectedOptionData.name, 'user', imageUrl);*/
 
             // Store selection in session data (just the name for flow logic)
             conversationState.sessionData[conversationState.currentStep] = selectedOptionData.name;
