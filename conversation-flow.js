@@ -65,19 +65,31 @@ const CONVERSATION_FLOW = {
   },
 
   // ==================== KITCHEN FLOW ====================
-  kitchen_flooring: {
+kitchen_flooring: {
     question: "Select a type of flooring for your kitchen remodel",
     inputType: "choice",
     options: ["Laminate", "Vinyl", "Hardwood", "Tile", "Natural Stone", "N/A"],
     statement: "Also, because of the fluctuating price of materials, you'll see a '•••' to denote market prices.",
     statementTiming: "after",
-    userResponseTemplate: "You chose <strong>{selection}</strong> to use for your kitchen remodel flooring.", // ← Add this
+    userResponseTemplate: "You chose <strong>{selection}</strong> to use for your kitchen remodel flooring.",
     lineItems: [
-      { name: "Flooring Materials", calculation: "perSqFt", category: "materials" },
-      { name: "Flooring Installation", calculation: "perSqFt", category: "labor" }
+      {
+        condition: "N/A",
+        items: [
+          { name: "Flooring Materials", calculation: "perSqFt", category: "materials", showPrice: true },
+          { name: "Flooring Installation", calculation: "perSqFt", category: "labor", showPrice: true }
+        ]
+      },
+      {
+        condition: "not N/A", // All other choices
+        items: [
+          { name: "Flooring Materials", calculation: "perSqFt", category: "materials" },
+          { name: "Flooring Installation", calculation: "perSqFt", category: "labor" }
+        ]
+      }
     ],
     next: "kitchen_cabinets"
-  },
+},
 
 
 
