@@ -2804,12 +2804,31 @@
 
                 console.log('Estimate data prepared', estimateData);
 
+                // Prepare customer email data
+                const customerEmailData = {
+                    ...estimateData,
+                    // Use customer
+                    line_items: estimateData.customer_line_items,
+                    estimate_min: estimateData.customer_estimate_min,
+                    estimate_max: estimateData.customer_estimate_max,
+                    estimate_range: estimateData.customer_estimate_range
+                };
+
+                // Prepare admin email data (admin_ prefixed fields)
+                const adminEmailData = {
+                    ...estimateData,
+                    line_items: estimateData.admin_line_items,
+                    estimate_min: estimateData.admin_estimate_min,
+                    estimate_max: estimateData.admin_estimate_max,
+                    estimate_range: estimateData.admin_estimate_range
+                };
+
                 // Send email to customer
                 console.log('Sending email to customer');
                 await emailjs.send(
                     'service_ienqmwk', // EmailJS service ID
                     'template_0mza96t', // replace with your customer template ID
-                    estimateData
+                    customerEmailData
                 );
                 console.log('Customer email sent successfully');
 
@@ -2818,7 +2837,7 @@
                 await emailjs.send(
                     'service_ienqmwk',
                     'template_t3gpybn',
-                    estimateData
+                    adminEmailData
                 );
 
                 console.log('📧 Service ID:', 'YOUR_SERVICE_ID');
@@ -2832,16 +2851,18 @@
                 console.log('📋 Data that failed:', estimateData);  // ← Add this too
                 throw new Error('Failed to send estimate emails');
             }
+        }
 
-            // Collect all the user's choices
-           /* const estimateData = {
-                customer_email: customerEmail,
-                room: conversationState.sessionData.initial,
-                square_footage: conversationState.sessionData.square_footage,
-                project_type: conversationState.sessionData.project_type,
-                flooring: conversationState.sessionData.kitchen_flooring,
-                // ... etc.
-            };*/
+        function debugEmailData() {
+            const data = generateEstimateData(customerEmail);
+
+            console.log('=== CUSTOMER EMAIL (REDACTED) ===');
+            console.log(data.customer_line_items);
+            console.log('Range:', data.customer_estimate_range);
+            
+            console.log('=== ADMIN EMAIL (FULL PRICING) ===');
+            console.log(data.admin_line_items);
+            console.log('Range:', data.admin_estimate_range);
         }
 
         function generateEstimateData(customerEmail) {
@@ -2862,60 +2883,106 @@
                 }
             });
 
-            // Detailed line items with actual prices for email
-            const detailedLineItems = [];
-            let emailRunningTotal = 0;
+            // Detailed line items with redacted prices for email
+            const customerLineItems = [];
+            let customerRunningTotal = 0;
 
             // Add always included items to email
             if (window.ALWAYS_INCLUDED) {
                 window.ALWAYS_INCLUDED.forEach(item => {
-                    detailedLineItems.push(`${item.name} - $${(item.price || 0).toLocaleString()}`);
-                    emailRunningTotal += item.price || 0;
+                    const shouldShowPrice = item.showPrice || false;
+                    let displayPrice;
+
+                    if (shouldShowPrice) {
+                        displayPrice = `$${(item.price || 0).toLocaleString()}`;
+                        customerRunningTotal += item.price || 0;
+                    } else {
+                        displayPrice = '•••';
+                    }
+
+                    customerLineItems.push(`${item.name} - ${displayPrice}`);
+
+                    /*detailedLineItems.push(`${item.name} - $${(item.price || 0).toLocaleString()}`);
+                    emailRunningTotal += item.price || 0;*/
                 })
             }
 
-            // Add dynamic items to email with actual prices
+            // Add dynamic items for customer
             conversationState.costItems.forEach(item => {
                 const price = calculateLineItemPrice(item);
-                const priceStr = typeof price === 'number' ? `$${price.toLocaleString()}` : '•••';
-                detailedLineItems.push(`${item.name} - ${priceStr}`);
-                if (typeof pirce === 'number') {
-                    emailRunningTotal += price;
+                const shouldShowPrice = item.showPrice || false;
+                let displayPrice;
+
+                if (shouldShowPrice && typeof price === 'number'){
+                    displayPrice = `$${price.toLocaleString()}`;
+                    customerRunningTotal += price;
+                } else {
+                    displayPrice = '•••';
+                }
+
+                customerLineItems.push(`${item.name} - ${displayPrice}`)
+
+            });
+
+            // Generate ADMIN line items (full pricing)
+            const adminLineItems = [];
+            let adminRunningTotal = 0;
+
+            if (window.ALWAYS_INCLUDED) {
+                window.ALWAYS_INCLUDED.forEach(item => {
+                    const price = item.price || 0;
+                    adminLineItems.push(`${item.name} - $${price.toLocaleString()}`);
+                    adminRunningTotal += price;
+                });
+            }
+
+            // Add dyanmic items for ADMIN
+            conversationState.costItems.forEach(item => {
+                const price = calculateLineItemPrice(item);
+                const priceStr = typeof price === 'number' ? `$${price.toLocaleString()}` : TBD;
+                adminLineItems.push(`${item.name} - ${priceStr}`);
+                if (typeof price === 'number') {
+                    adminRunningTotal += price;
                 }
             });
 
-            // Current line items summary
-            /*const lineItemsSummary = conversationState.costItems.map(item => {
-                const price = calculateLineItemPrice(item);
-                const priceStr = typeof price === 'number' ? `$${price.toLocaleString()}` : price;
-                return `${item.name} - ${priceStr}`;
-            }).join('\n');*/
+            // Calculate customer estimates
+            const customerMinTotal = Math.round(customerRunningTotal * 0.8);
+            const customerMaxTotal = Math.round(customerRunningTotal * 1.2);
 
-            const emailMinTotal = Math.round(emailRunningTotal * 0.95);
-            const emailMaxTotal = Math.round(emailRunningTotal * 1.05);
+            // Calculate admin estimates (tighter range since they see all details)
+            const adminMinTotal = Math.round(adminRunningTotal * 0.95);
+            const adminMaxTotal = Math.round(adminRunningTotal * 1.05);
+
+            // return both versions
 
             return {
+                // Common data
                 customer_email: customerEmail,
                 customer_name: customerEmail.split('@')[0],
                 room_type: conversationState.sessionData.initial,
                 square_footage: conversationState.sessionData.square_footage,
                 project_type: conversationState.sessionData.project_type,
-                flooring: conversationState.sessionData.kitchen_flooring,
-
-                selections_list: selections.join('\n'),  // ← Add this
-                line_items: detailedLineItems.join('\n'), // Detailed breakdown for
-
-                // Tighter pricing for email
-                estimate_min: `$${emailMinTotal.toLocaleString()}`,
-                estimate_max: `$${emailMaxTotal.toLocaleString()}`,
-                estimate_range: `$${emailMinTotal.toLocaleString()} - $${emailMaxTotal.toLocaleString()}`,
-                
-                // Timestamp
+                // flooring: conversationState.sessionData.kitchen_flooring,
                 date_submitted: new Date().toLocaleDateString(),
                 time_submitted: new Date().toLocaleTimeString(),
+                lead_source: 'Studio 74 Estimator Tool',
+
+                selections_list: selections.join('\n'),  // ← Add this
+                //line_items: detailedLineItems.join('\n'), // Detailed breakdown for
+
+                // Customer data - Redacted data
+                customer_line_items: customerLineItems.join('\n'),
+                customer_estimate_min: `$${customerMinTotal.toLocaleString()}`,
+                customer_estimate_max: `$${customerMaxTotal.toLocaleString()}`,
+                customer_estimate_range: `$${customerMinTotal.toLocaleString()} - $${customerMaxTotal.toLocaleString()}`,
+
+                // Admin version
+                admin_line_items: adminLineItems.join('\n'),
+                admin_estimate_min: `$${adminMinTotal.toLocaleString()}`,
+                admin_estimate_max: `$${adminMaxTotal.toLocaleString()}`,
+                admin_estimate_range: `$${adminMinTotal.toLocaleString()} - $${adminMaxTotal.toLocaleString()}`,
                 
-                // For designer email
-                lead_source: 'Kitchen Estimator Tool',
                 follow_up_priority: emailMaxTotal > 50000 ? 'High' : 'Medium'
             };
         }

@@ -516,7 +516,7 @@ const CONVERSATION_FLOW = {
       designerSubject: "New Lead: Kitchen Renovation Estimate Request"
     },
     responseLogic: (userEmail, sessionData) => {
-      return `Thanks! We'll send you details for your ${sessionData.square_footage} sq ft ${sessionData.room_type} remodel. We'll also work on refining the quote and contact you via the email provided once we're ready to discuss.`;
+      return `You will receive an email with details for your ${sessionData.square_footage} sq ft ${sessionData.room_type} remodel. We'll refine the quote and contact you via email once we're ready to discuss.`;
     },
      // Add bypass check
     // Add this to browserURL: ?bypass=testing123
@@ -526,7 +526,8 @@ const CONVERSATION_FLOW = {
     },
     lineItems: [], // No cost impact
     next: "complete"
-  }
+  } // END email capture
+
 }; // END
 
 
