@@ -573,6 +573,7 @@ class ConversationFlowHelper {
     console.log('userInput is array:', Array.isArray(userInput));
     
     const stepConfig = CONVERSATION_FLOW[stepName];
+
     console.log('stepConfig found:', !!stepConfig);
     console.log('stepConfig.lineItems:', stepConfig?.lineItems);
     const lineItems = [];
@@ -602,7 +603,8 @@ class ConversationFlowHelper {
                   calculation: matchingItem.calculation,
                   category: matchingItem.category,
                   userChoice: selectedItem,
-                  stepName: stepName
+                  stepName: stepName,
+                  showPrice: matchingItem.showPrice || false
                 });
               }
             });
@@ -615,7 +617,8 @@ class ConversationFlowHelper {
                 calculation: item.calculation,
                 category: item.category,
                 userChoice: lineItemDef.condition,
-                stepName: stepName
+                stepName: stepName,
+                showPrice: item.showPrice || false
               });
             });
           }
@@ -627,7 +630,8 @@ class ConversationFlowHelper {
             category: lineItemDef.category,
             userChoice: userInput,
             stepName: stepName,
-            autoInclude: lineItemDef.autoInclude || false
+            autoInclude: lineItemDef.autoInclude || false,
+            showPrice: lineItemDef.showPrice || false
           });
         }
       }
