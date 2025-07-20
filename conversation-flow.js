@@ -538,7 +538,7 @@ kitchen_flooring: {
     },
     lineItems: [], // No cost impact
     next: "booking"
-  } // END email capture
+  },
 
   booking: {
     question: "Choose a time that works best for you:",
