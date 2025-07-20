@@ -2952,6 +2952,10 @@
                     const shouldShowPrice = item.showPrice || false;
                     let displayPrice;
 
+                    // ALWAYS add to running total
+                    customerRunningTotal += item.price || 0;
+
+                    // Only show price if shouldShowPrice is true
                     if (shouldShowPrice) {
                         displayPrice = `$${(item.price || 0).toLocaleString()}`;
                         customerRunningTotal += item.price || 0;
@@ -2972,6 +2976,12 @@
                 const shouldShowPrice = item.showPrice || false;
                 let displayPrice;
 
+                // ALWAYS add to running total for estimate calc
+                if (typeof price === 'number') {
+                    customerRunningTotal += price;
+                }
+
+                // But only show price if shouldShowPrice is true
                 if (shouldShowPrice && typeof price === 'number'){
                     displayPrice = `$${price.toLocaleString()}`;
                     customerRunningTotal += price;
