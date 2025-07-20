@@ -340,8 +340,6 @@ kitchen_flooring: {
   kitchen_lighting_intro: {
     question: "Great! We'll include standard overhead lighting in your estimate.",
     inputType: "continue",  // Shows continue button only
-    statement: "Now let's see if you'd like any special lighting upgrades.",
-    statementTiming: "after",
     lineItems: [
       // Standard lighting gets added here
       { name: "Standard kitchen lighting", calculation: "flat", category: "materials" }
