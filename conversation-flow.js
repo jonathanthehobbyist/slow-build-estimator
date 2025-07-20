@@ -350,10 +350,8 @@ kitchen_flooring: {
 },
 
   kitchen_lighting: {
-    question: "For lighting, we'll add a standard budget for overhead fixtures.",
+    question: "Would you like any specialty lighting?",
     inputType: "multiSelectGallery",
-    statement: "Would you like any special touches?",
-    statementTiming: "after",
     options: [
       { 
         name: "Inset cabinet lighting", 

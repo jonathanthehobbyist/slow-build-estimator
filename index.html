@@ -577,6 +577,13 @@
             border-color: var(--accent-rusty);
         }
 
+        .option-button .text-link {
+            color: var(--accent-rusty)!important;
+            border: none!important;
+            background: transparent;
+            font-weight: var(--text-base);
+        }
+
         /* ============== GALLERY CARDS ETC ============== */
 
         /* Multi-select gallery card base styles */
@@ -3182,7 +3189,7 @@
                 z-index: 10;
             `;
 
-            // Instructions
+            // Instructions container
             const instructions = document.createElement('div');
             instructions.style.cssText = `
                 padding: var(--space-sm) var(--space-md);
@@ -3194,7 +3201,7 @@
                 color: var(--text-primary);
                 flex-shrink: 0;
             `;
-            instructions.textContent = 'Choose a time that works before you';
+            instructions.textContent = 'Choose a time that works for you';
 
             // Calendly iframe
             const embedContainer = document.createElement('div');
