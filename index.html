@@ -3156,6 +3156,99 @@
                 })
         }
 
+        function updateBookingInput() {
+            const inputOptions = document.getElementById('inputOptions');
+            inputOptions.innerHTML = '';
+            inputOptions.style.display = 'none';
+
+            const conversationFlow = document.getElementById('conversationFlow');
+
+            // create booking overlay
+            const bookingOverlay = document.createElement('div');
+            bookingOverlay.id = 'bookingOverlay';
+            bookingOverlay.style.cssText = `
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                background var(--white);
+            `;
+
+            // Instructions
+            const instructions = document.createElement('div');
+            instructions.style.cssText = `
+                padding: var(--space-md);
+                text-align: center;
+                background: var(--surface);
+                border-bottom: 1px solid var(--border-light);
+                font-family: var(--font-sans);
+                font-weight: var(--font-medium);
+                color: var(--text-primary);
+            `;
+            instructions.textContent = 'Choose a time that works before you';
+
+            // Calendly iframe
+            const embedContainer = document.createElement('div');
+            embedContainer.style.cssText = `
+                flex: 1;
+                min-height: 600px;
+                width: 100%;
+            `;
+
+            const iframe = document.createElement('iframe');
+            iframe.src = `${calendlyUrl}?embed_domain=${window.location.hostname}&embed_type=Inline&hide_landing_page_details=1&hide_gdpr_banner=1`;
+            iframe.style.cssText = `
+                width: 100%;
+                height: 100%;
+                border: none;
+            `;
+
+            // Skip button
+            const buttonContainer = document.createElement('div');
+            buttonContainer.style.cssText = `
+                padding: var(--space-md);
+                text-align: center;
+                background: var(--surface);
+                border-top: 1px solid var(--border-light);
+            `;
+
+            const skipButton = document.createElement('button');
+            skipButton.className = 'option-button skip';
+            skipButton.textContent = 'Skip for Now';
+            skipButton.onclick = () => {
+                removeBookingOverlay();
+                selectOption('skipped-booking');
+            }
+
+            // Assemble
+            embedContainer.appendChild(iframe);
+            buttonContainer.appendChild(skipButton);
+            bookingOverlay.appendChild(instructions);
+            bookingOverlay.appendChild(embedContainer);
+            bookingOverlay.appendChild(buttonContainer);
+            conversationFlow.appendChild(bookingOverlay);
+
+            conversationFlow.classList.add('gallery-mode');
+            setTimeout(() => flashInputOptions(), 50);
+
+        }
+
+        function removeBookingOverlay() {
+            const bookingOverlay = document.getElementById('bookingOverlay');
+            if (bookingOverlay) {
+                bookingOverlay.remove();
+            }
+
+            const conversationFlow = document.getElementById('conversationFlow');
+            conversationFlow.classList.remove('gallery-mode');
+
+            const inputOptions = document.getElementById('inputOptions');
+            inputOptions.style.display = 'flex';
+        }
+
+
         function autoAdvanceToBooking(userEmail) {
             addMessage(`Perfect! Your estimate has been sent to ${userEmail}.`, 'system');
 
@@ -3177,7 +3270,7 @@
 
                         // Show booking interface after brief delay
                         setTimeout(() => {
-                            updaterBookingInput(bookingStep.calendlyUrl);
+                            updateBookingInput(bookingStep.calendlyUrl);
                         }, 1000);
                     }
                 }, 1500);
