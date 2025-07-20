@@ -338,7 +338,7 @@ kitchen_flooring: {
       { name: "Countertops", calculation: "flat", category: "materials" },
       { name: "Countertop Installation", calculation: "flat", category: "labor", autoInclude: true }
     ],
-    next: "kitchen_lighting_intro"
+    next: "kitchen_lighting"
   },
   kitchen_lighting: {
     question: "Would you like any specialty lighting?",
