@@ -866,10 +866,11 @@
         }
 
         .multi-select-image-card {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: var(--space-sm);
             justify-content: center;
+            width: 100%;
         }
 
         /* 4-column image grid for multi-select responses */
