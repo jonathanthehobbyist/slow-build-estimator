@@ -3044,6 +3044,13 @@
                 
                 follow_up_priority: adminMaxTotal > 50000 ? 'High' : 'Medium'
             };
+
+            // DEBUG: Check what's actually being sent
+            console.log('📧 DEBUG - Customer email data:');
+            console.log('estimate_range:', customerEmailData.estimate_range);
+            console.log('customer_estimate_range:', customerEmailData.customer_estimate_range);
+            console.log('customer_estimate_min:', customerEmailData.customer_estimate_min);
+            console.log('customer_estimate_max:', customerEmailData.customer_estimate_max);
         }
 
         function calculateCurrentEstimate() {
