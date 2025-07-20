@@ -2463,6 +2463,17 @@
             conversationState.sessionData[conversationState.currentStep] = selectionNames;
             conversationState.sessionData[conversationState.currentStep + '_fullData'] = window.tempMultiSelections;
 
+            // Logging for email object debuggin
+            console.log('📊 Storing fullData for', conversationState.currentStep, ':');
+            console.log('📊 Array length:', window.tempMultiSelections.length);
+            window.tempMultiSelections.forEach((item, index) => {
+                console.log(`📊 Item ${index + 1}:`, {
+                    name: item.name,
+                    image: item.image,
+                    description: item.description
+                });
+            });
+
 
             // Add user message for each selection with images
            /* window.tempMultiSelections.forEach(selection => {
