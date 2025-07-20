@@ -2825,6 +2825,8 @@
                 // Gather the estimate data
                 const estimateData = generateEstimateData(customerEmail);
 
+
+
                 console.log('📋 Full estimate data being sent:');
                 console.log(JSON.stringify(estimateData, null, 2));  // ← Add this debug
 
@@ -2882,6 +2884,7 @@
         function debugEmailData() {
             const data = generateEstimateData(customerEmail);
 
+
             console.log('=== CUSTOMER EMAIL (REDACTED) ===');
             console.log(data.customer_line_items);
             console.log('Range:', data.customer_estimate_range);
@@ -2895,19 +2898,42 @@
             // Calculate current total estimate
             const { minTotal, maxTotal } = calculateCurrentEstimate();
 
+            // Format fullData for email display
+            let formattedSelections = '';
+
             // Gather all user selections
             const selections = [];
             Object.keys(conversationState.sessionData).forEach(step => {
                 const value = conversationState.sessionData[step];
-                if (value && step !== 'initial') {
+                if (value && step !== 'initial' && !step.endsWith('_fullData')) {
                     // Format step names nicely
                     const stepName = step
                         .replace(/_/g, ' ')                         // Underscores -> spaces
                         .replace(/\b\w/g, l => l.toUpperCase());    // capitalize each word
 
+                    // Check if this step has fullData (images/descriptions
+                        const fullDataKey = step + '_fullData';
+                        const fullData = conversationState.sessionData[fullDataKey];
+
+                        if (fullData && Array.isArray(fullData)) {
+                            // Format with descriptions for multi-select items
+                            const itemDetails = fullData.map(item => {
+                                let detail = item.name;
+                                if (item.description) {
+                                    detail += ` (${item.description})`;
+                                }
+                                return detail;
+                            }).join(', ');
+
+                            formattedSelections += `${stepName}: ${itemDetails}\n`;
+                        } else {
+                            // Regular text selection
+                            formattedSelections += `${stepName}: ${value}\n`;
+                        }
+
                     selections.push(`${stepName}: ${value}`);
                 }
-            });
+            }); // END object.keys forEach()
 
             // Detailed line items with redacted prices for email
             const customerLineItems = [];
