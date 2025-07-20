@@ -64,7 +64,7 @@ const PRICING = {
     "Living Room": { flat: 5000 }
   },
 
-  "Standard kitchen lighting": { 
+  "Kitchen lighting": { 
       "default": { flat: 5000 }
   },
   "Inset cabinet lighting": { 

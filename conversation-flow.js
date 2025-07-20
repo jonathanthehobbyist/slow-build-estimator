@@ -124,12 +124,14 @@ kitchen_flooring: {
   kitchen_cabinets: {
     question: "Fantastic! Next up: cabinets – what level of customization do you want in your kitchen cabinets?",
     inputType: "choice",
+    statement: "We'll also add a standard kitchen lighting package.",
+    statementTiming: "after",
     options: ["Stock cabinets", "Refaced cabinets", "Full custom cabinets"],
     userResponseTemplate: "The kitchen remodel will use <strong>{selection}</strong>", // ← Add this
     lineItems: [
       { name: "Cabinets", calculation: "flat", category: "materials" },
       { name: "Cabinet Hardware", calculation: "flat", category: "materials", showPrice: true },
-      { name: "Standard kitchen lighting", calculation: "flat", category: "materials", showPrice: true }
+      { name: "Kitchen Lighting", calculation: "flat", category: "materials", showPrice: true }
     ],
     next: "kitchen_cabinet_organizers"
   },
