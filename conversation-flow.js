@@ -131,7 +131,7 @@ kitchen_flooring: {
     lineItems: [
       { name: "Cabinets", calculation: "flat", category: "materials" },
       { name: "Cabinet Hardware", calculation: "flat", category: "materials", showPrice: true },
-      { name: "Kitchen Lighting", calculation: "flat", category: "materials", showPrice: true }
+      { name: "Kitchen Lighting", calculation: "flat", category: "materials", showPrice: true, fixedName: true }
     ],
     next: "kitchen_cabinet_organizers"
   },
@@ -697,15 +697,32 @@ class ConversationFlowHelper {
           }
         } else {
           // Handle single item (no items array)
-          lineItems.push({
-            name: `${lineItemDef.name}: ${userInput}`,
-            calculation: lineItemDef.calculation,
-            category: lineItemDef.category,
-            userChoice: userInput,
-            stepName: stepName,
-            autoInclude: lineItemDef.autoInclude || false,
-            showPrice: lineItemDef.showPrice || false
-          });
+
+          // Check for FIXED NAME HERE
+          if (lineItemDef.fixedName) {
+            // Don't add userChoioce to name, use "default" for pricing
+            lineItems.push({
+              name: lineItemDef.calculation,
+              calculation: lineItemDef.calculation,
+              category: lineItemDef.category,
+              userChoice: "default", // use "default" for pricing lookup
+              stepName: stepName,
+              autoInclude: lineItemDef.autoInclude || false,
+              showPrice: lineItemDef.showPrice || false
+            });
+            
+          } else {
+            // Original logic
+            lineItems.push({
+              name: `${lineItemDef.name}: ${userInput}`,
+              calculation: lineItemDef.calculation,
+              category: lineItemDef.category,
+              userChoice: userInput,
+              stepName: stepName,
+              autoInclude: lineItemDef.autoInclude || false,
+              showPrice: lineItemDef.showPrice || false
+            });
+          }
         }
       }
     });
