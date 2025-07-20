@@ -962,6 +962,11 @@
             }
         }
 
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         .cost-items {
             flex: 1;
             padding: 1rem;
@@ -3100,12 +3105,13 @@
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('bypass') === 'testing123') {
                 console.log('🧪 Email bypass activated - skipping email send');
-                
+
+                // Skip straight to booking
                 // Skip straight to conversation progression
                 addMessage('test@example.com', 'user');
                 conversationState.sessionData[conversationState.currentStep] = 'test@example.com';
                 setTimeout(() => {
-                    progressConversation('test@example.com');
+                    autoAdvanceToBooking('test@example.com');
                 }, 500);
                 return; // Exit early, no email sending
             }
@@ -3140,7 +3146,7 @@
                     addMessage(email, 'user');
                     conversationState.sessionData[conversationState.currentStep] = email;
                     setTimeout(() => {
-                        progressConversation(email);
+                        autoAdvanceToBooking(email);
                     }, 500);
                 })
                 .catch((error) => {
@@ -3148,6 +3154,34 @@
                     showEmailError('Failed to send email. Please try again.');
                     resetEmailButton(submitButton);
                 })
+        }
+
+        function autoAdvanceToBooking(userEmail) {
+            addMessage(`Perfect! Your estimate has been sent to ${userEmail}.`, 'system');
+
+            // Short delay, then show booking transition message
+            setTimeout(() => {
+                addMessage("Ready o discuss your projects? Let's schedule a free consultation call.", 'system');
+
+                // Another short delay, then show booking interface
+                setTimeout(() => {
+                    // Move to booking step
+                    conversationState.currentStep = 'booking';
+                    updateProgress();
+
+                    // Get booking step config
+                    const bookingStep = window.CONVERSATION_FLOW['booking'];
+                    if (bookingStep) {
+                        // Show booking question
+                        addMessage(bookingStep.question, 'system');
+
+                        // Show booking interface after brief delay
+                        setTimeout(() => {
+                            updaterBookingInput(bookingStep.calendlyUrl);
+                        }, 1000);
+                    }
+                }, 1500);
+            }, 1000);
         }
 
         function isValidEmail(email) {

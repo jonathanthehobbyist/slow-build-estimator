@@ -213,7 +213,7 @@ kitchen_flooring: {
   // Kitchen Cabinet Accessories has a special function in index.html > calculateLineItemPrice()
 
   kitchen_cabinet_accessories: {
-    question: "Before we get the main appliances, what appliances would like integrated with cabinets?",
+    question: "Select any accessories you would like integrated with your cabinets.",
     inputType: "multiSelectGallery", // Multi Select Image selection
     userResponseTemplate: "You selected the following: <strong>{selection}</strong>", // ← Add this
     options: [
@@ -537,8 +537,23 @@ kitchen_flooring: {
       return urlParams.get('bypass') === 'testing123';
     },
     lineItems: [], // No cost impact
-    next: "complete"
+    next: "booking"
   } // END email capture
+
+  booking: {
+    question: "Choose a time that works best for you:",
+    inputType: "booking",
+    calendlyUrl: "https://calendly.com/jon_simmons/60-minute-1-1?month=2025-07", // Replace with your URL
+    lineItems: [],
+    next: "final"
+  },
+
+  final: {
+    question: "Thank you! We look forward to speaking with you soon.",
+    inputType: "final",
+    lineItems: [],
+    next: null
+  }
 
 }; // END
 
