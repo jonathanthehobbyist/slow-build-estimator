@@ -2738,6 +2738,9 @@
                 const input = errorElement.parentElement.querySelector('input');
                 if (input) {
                     // input.style.borderColor = '#2196f3';
+                    input.style.cssText = `
+                        border-color: var(--neutral-500);
+                    `;
                 }
             }
         }
