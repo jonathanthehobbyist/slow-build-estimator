@@ -577,7 +577,7 @@
             border-color: var(--accent-rusty);
         }
 
-        .option-button .text-link {
+        .option-button.text-link {
             color: var(--accent-rusty)!important;
             border: none!important;
             background: transparent;
@@ -3193,6 +3193,7 @@
             const instructions = document.createElement('div');
             instructions.style.cssText = `
                 display: flex;
+                justify-content: space-between;
                 gap: var(--space-sm);
                 padding: var(--space-sm) var(--space-md);
                 text-align: center;
@@ -3208,6 +3209,7 @@
                 font-family: var(--font-sans);
                 font-weight: var(--font-medium);
                 color: var(--text-primary);
+                padding-top: var(--space-xs);
             `;
 
             // Calendly iframe
