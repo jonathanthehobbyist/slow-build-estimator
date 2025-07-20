@@ -3192,16 +3192,22 @@
             // Instructions container
             const instructions = document.createElement('div');
             instructions.style.cssText = `
+                display: flex;
+                gap: var(--space-sm);
                 padding: var(--space-sm) var(--space-md);
                 text-align: center;
                 background: var(--surface);
                 border-bottom: 1px solid var(--border-light);
+                flex-shrink: 0;
+            `;
+            // instructions.textContent = 'Choose a time that works for you';
+
+            const instructionsText = document.createElement('span');
+            instructionsText.style.cssText = `
                 font-family: var(--font-sans);
                 font-weight: var(--font-medium);
                 color: var(--text-primary);
-                flex-shrink: 0;
             `;
-            instructions.textContent = 'Choose a time that works for you';
 
             // Calendly iframe
             const embedContainer = document.createElement('div');
@@ -3234,7 +3240,7 @@
             `;
 
             const skipButton = document.createElement('button');
-            skipButton.className = 'option-button skip';
+            skipButton.className = 'option-button text-link skip';
             skipButton.textContent = 'Skip for Now';
             skipButton.onclick = () => {
                 removeBookingOverlay();
@@ -3243,7 +3249,9 @@
 
             // Assemble
             embedContainer.appendChild(iframe);
-            buttonContainer.appendChild(skipButton);
+            // buttonContainer.appendChild(skipButton); // experiment moving skip link into the header
+            instructions.appendChild(instructionsText);
+            instructions.appendChild(skipButton);
             bookingOverlay.appendChild(instructions);
             bookingOverlay.appendChild(embedContainer);
             bookingOverlay.appendChild(buttonContainer);
