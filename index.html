@@ -3203,6 +3203,7 @@
             // instructions.textContent = 'Choose a time that works for you';
 
             const instructionsText = document.createElement('span');
+            instructionsText.textContent = 'Choose a time that works for you';
             instructionsText.style.cssText = `
                 font-family: var(--font-sans);
                 font-weight: var(--font-medium);
@@ -3240,7 +3241,7 @@
             `;
 
             const skipButton = document.createElement('button');
-            skipButton.className = 'option-button text-link skip';
+            skipButton.className = 'option-button text-link';
             skipButton.textContent = 'Skip for Now';
             skipButton.onclick = () => {
                 removeBookingOverlay();
