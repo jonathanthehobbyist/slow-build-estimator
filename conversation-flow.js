@@ -424,27 +424,44 @@ kitchen_flooring: {
     ],
     next: "kitchen_features"
   },
-
-
-  
-
-    // Example configuration for multi-select
-/*kitchen_features: {
-  question: "Select all features you'd like to include:",
-  inputType: "multiSelect", // New input type
-  options: ["Kitchen island", "Pantry upgrade", "Wine storage", "Built-in appliances"],
-  lineItems: [
-    {
-      condition: "selected", // Special condition for multi-select
-      items: [
-        { name: "Additional Features", calculation: "flat", category: "materials" }
-      ]
-    }
-  ],
-  next: "complete"
-},*/
-
   kitchen_features: {
+    question: "Select any additional kitchen features you would like.",
+    inputType: "multiSelectGallery", // Multi Select Image selection
+    userResponseTemplate: "You selected the following: <strong>{selection}</strong>", // ← Add this
+    options: [
+      { 
+        name: "Kitchen Island", 
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Heritage-Oaks-Dr_02_Web-Res.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Heritage-Oaks-Dr_02_Web-Res.jpg",
+        description: "Example of a kitchen island"
+      },
+      { 
+        name: "Wine Refrigerator", 
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Mitra-House-Web-Res-13.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/Mitra-House-Web-Res-13.jpg",
+        description: "Wine chiller and storage"
+      }
+    ],
+    lineItems: [
+      {
+        condition: "Kitchen Island",
+          items: [
+            { name: "Kitchen Island", calculation: "flat", category: "materials" },
+            { name: "Kitchen Island - Labor", calculation: "flat", category: "labor" }
+          ]
+      },
+      {
+        condition: "Wine Refrigerator",
+          items: [
+            { name: "Wine Regrigerator", showPrice: true, calculation: "flat", category: "materials" },
+            { name: "Wine Refrigerator - Labor", calculation: "flat", category: "labor" }
+          ]
+      }
+    ],
+    next: "email_capture"
+  },
+ // REMOVE....
+ /* kitchen_features: {
     question: "Any additional features?",
     inputType: "choice",
     options: ["Standard kitchen", "Kitchen island", "Pantry upgrade", "Wine storage"],
@@ -455,7 +472,7 @@ kitchen_flooring: {
       }
     ],
     next: "email_capture"
-  },
+  },*/
 
   // ==================== BATHROOM FLOW ====================
   bathroom_flooring: {
