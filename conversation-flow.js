@@ -81,7 +81,35 @@ kitchen_flooring: {
         ]
       },
       {
-        condition: "not N/A", // All other choices
+        condition: "Laminate",
+        items: [
+          { name: "Flooring Materials", calculation: "perSqFt", category: "materials" },
+          { name: "Flooring Installation", calculation: "perSqFt", category: "labor" }
+        ]
+      },
+      {
+        condition: "Vinyl",
+        items: [
+          { name: "Flooring Materials", calculation: "perSqFt", category: "materials" },
+          { name: "Flooring Installation", calculation: "perSqFt", category: "labor" }
+        ]
+      },
+      {
+        condition: "Hardwood",
+        items: [
+          { name: "Flooring Materials", calculation: "perSqFt", category: "materials" },
+          { name: "Flooring Installation", calculation: "perSqFt", category: "labor" }
+        ]
+      },
+      {
+        condition: "Tile",
+        items: [
+          { name: "Flooring Materials", calculation: "perSqFt", category: "materials" },
+          { name: "Flooring Installation", calculation: "perSqFt", category: "labor" }
+        ]
+      },
+      {
+        condition: "Natural Stone",
         items: [
           { name: "Flooring Materials", calculation: "perSqFt", category: "materials" },
           { name: "Flooring Installation", calculation: "perSqFt", category: "labor" }
