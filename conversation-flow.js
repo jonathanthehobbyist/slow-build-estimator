@@ -128,7 +128,8 @@ kitchen_flooring: {
     userResponseTemplate: "The kitchen remodel will use <strong>{selection}</strong>", // ← Add this
     lineItems: [
       { name: "Cabinets", calculation: "flat", category: "materials" },
-      { name: "Cabinet Hardware", calculation: "flat", category: "materials" }
+      { name: "Cabinet Hardware", calculation: "flat", category: "materials", showPrice: true }
+      { name: "Standard kitchen lighting", calculation: "flat", category: "materials", showPrice: true }
     ],
     next: "kitchen_cabinet_organizers"
   },
@@ -337,16 +338,6 @@ kitchen_flooring: {
     ],
     next: "kitchen_lighting_intro"
   },
-  kitchen_lighting_intro: {
-    question: "Great! We'll include standard overhead lighting in your estimate.",
-    inputType: "continue",  // Shows continue button only
-    lineItems: [
-      // Standard lighting gets added here
-      { name: "Standard kitchen lighting", calculation: "flat", category: "materials" }
-    ],
-    next: "kitchen_lighting"
-},
-
   kitchen_lighting: {
     question: "Would you like any specialty lighting?",
     inputType: "multiSelectGallery",
