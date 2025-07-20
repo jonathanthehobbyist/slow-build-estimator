@@ -128,7 +128,7 @@ kitchen_flooring: {
     userResponseTemplate: "The kitchen remodel will use <strong>{selection}</strong>", // ← Add this
     lineItems: [
       { name: "Cabinets", calculation: "flat", category: "materials" },
-      { name: "Cabinet Hardware", calculation: "flat", category: "materials", showPrice: true }
+      { name: "Cabinet Hardware", calculation: "flat", category: "materials", showPrice: true },
       { name: "Standard kitchen lighting", calculation: "flat", category: "materials", showPrice: true }
     ],
     next: "kitchen_cabinet_organizers"
