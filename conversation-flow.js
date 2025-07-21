@@ -697,9 +697,14 @@ class ConversationFlowHelper {
           }
         } else {
           // Handle single item (no items array)
+            // Handle single item (no items array)
+          console.log('🔍 Single item - lineItemDef.name:', lineItemDef.name);
+          console.log('🔍 Single item - lineItemDef.fixedName:', lineItemDef.fixedName);
+          console.log('🔍 Single item - lineItemDef:', lineItemDef);
 
           // Check for FIXED NAME HERE
           if (lineItemDef.fixedName) {
+            console.log('🔍 Using fixedName logic');
             // Don't add userChoioce to name, use "default" for pricing
             lineItems.push({
               name: lineItemDef.calculation,
@@ -713,6 +718,7 @@ class ConversationFlowHelper {
             
           } else {
             // Original logic
+            console.log('🔍 Using regular logic with userInput');
             lineItems.push({
               name: `${lineItemDef.name}: ${userInput}`,
               calculation: lineItemDef.calculation,
