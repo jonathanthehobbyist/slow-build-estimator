@@ -707,7 +707,7 @@ class ConversationFlowHelper {
             console.log('🔍 Using fixedName logic');
             // Don't add userChoioce to name, use "default" for pricing
             lineItems.push({
-              name: lineItemDef.calculation,
+              name: lineItemDef.name,
               calculation: lineItemDef.calculation,
               category: lineItemDef.category,
               userChoice: "default", // use "default" for pricing lookup
