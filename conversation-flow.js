@@ -336,7 +336,7 @@ kitchen_flooring: {
     statement: "Interesting fact: on average, appliances make up 30% of the cost of a full kitchen remodel", // also a property
     statementTiming: "before", // also a property
     inputType: "gallery",
-    layout: "single-column",  // ← Add this property
+    layout: "single-column", 
     userResponseTemplate: "We'll install <strong>{selection}</strong> appliances.", 
     options: [
       { 
