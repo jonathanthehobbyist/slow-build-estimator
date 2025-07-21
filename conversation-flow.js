@@ -341,15 +341,15 @@ kitchen_flooring: {
     options: [
       { 
         name: "LG and GE", 
-        image: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
-        thumbnail: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/LG-appliances.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/LG-appliances.jpg",
         description: "High-quality appliances from trusted brands"
       },
       { 
         name: "Thermador and Subzero", 
-        image: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
-        thumbnail: "https://media3.bsh-group.com/Product_Shots/2000x/16805551_SGSXP365TS-Thermador-Cooktops-Illuminated-Control-Panel_def.webp",
-        description: "High-quality appliances from trusted brands"
+        image: "https://www.jonsimmons.co/wp-content/uploads/2025/07/thermador-fridge.jpg",
+        thumbnail: "https://www.jonsimmons.co/wp-content/uploads/2025/07/thermador-fridge.jpg",
+        description: "The best of the best"
       }
     ],
     responseLogic: (userChoice, sessionData) => {
