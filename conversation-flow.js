@@ -357,9 +357,9 @@ kitchen_flooring: {
     const projectType = sessionData.project_type;
     
     if (userChoice.includes("Thermador")) {
-      return `Excellent! Thermador and Sub-Zero are the gold standard for professional kitchens. For your ${sqft} sq ft ${projectType.toLowerCase()}, these appliances will create a truly chef-worthy space.`;
+      return `Excellent! Thermador and Sub-Zero are the gold standard for professional kitchens.`;
     } else if (userChoice.includes("LG")) {
-      return `Great choice! LG and GE offer excellent reliability and modern features at a more affordable price point. Perfect for your ${sqft} sq ft kitchen - you'll get professional performance at a great value.`;
+      return `Great choice! LG and GE offer excellent reliability and modern features at a more affordable price point.`;
     } else if (userChoice.includes("GE")) {
       return `Smart decision! Keeping your existing appliances is a great way to control costs in your ${projectType.toLowerCase()}. You can always upgrade them later.`;
     }
