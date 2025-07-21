@@ -3453,7 +3453,7 @@
             const baseName = lineItem.name.split(':')[0].trim();
 
             console.log('baseName extracted:', baseName);
-            console.log('Pricing found for baseName:', pricing);
+            
             console.log('Available PRICING keys:', Object.keys(window.PRICING));
 
             
@@ -3477,6 +3477,7 @@
             }
 
             const pricing = window.PRICING[baseName];
+            console.log('Pricing found for baseName:', pricing);
 
             if (!pricing) {
                 console.log('No pricing found for baseName:', baseName);
@@ -3515,11 +3516,6 @@
                 console.log('No item pricing found for choice:', userChoice);
                 return '•••';
             }
-
-            if (lineItem.calculation === 'flat') {
-                console.log('Returning flat price:', itemPricing.flat);
-                return itemPricing.flat;
-            }
             
             const sqft = parseInt(conversationState.sessionData.square_footage || 0);
             console.log('Square footage:', sqft);
@@ -3531,7 +3527,7 @@
                 //console.log('Calculated perSqFt price:', price);
                 // return price;
             } else if (lineItem.calculation === 'flat') {
-                //console.log('Returning flat price:', itemPricing.flat);
+                console.log('Returning flat price:', itemPricing.flat);
                 return itemPricing.flat;
             }
             
