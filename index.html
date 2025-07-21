@@ -3440,6 +3440,8 @@
             // Enhanced debugging for flooring pricing issues
             console.log('=== calculateLineItemPrice DEBUG ===');
             console.log('Full lineItem:', lineItem);
+            console.log('lineItem.name:', lineItem.name);
+            console.log('lineItem.userChoice:', lineItem.userChoice);
         
 
             if (!window.PRICING || !lineItem) {
@@ -3449,8 +3451,12 @@
 
             // Get the base item name (before the colon)
             const baseName = lineItem.name.split(':')[0].trim();
+
             console.log('baseName extracted:', baseName);
+            console.log('Pricing found for baseName:', pricing);
             console.log('Available PRICING keys:', Object.keys(window.PRICING));
+
+            
 
             // Special case for cabinet organizers
             if (lineItem.stepName === 'kitchen_cabinet_organizers') {
@@ -3505,9 +3511,14 @@
             console.log('Item pricing found:', itemPricing);
             
 
-                if (!itemPricing) {
+            if (!itemPricing) {
                 console.log('No item pricing found for choice:', userChoice);
                 return '•••';
+            }
+
+            if (lineItem.calculation === 'flat') {
+                console.log('Returning flat price:', itemPricing.flat);
+                return itemPricing.flat;
             }
             
             const sqft = parseInt(conversationState.sessionData.square_footage || 0);
