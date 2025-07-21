@@ -136,53 +136,6 @@ kitchen_flooring: {
     next: "kitchen_cabinet_organizers"
   },
 
-  // Example configuration for multi-select
-/*kitchen_features: {
-  question: "Select all features you'd like to include:",
-  inputType: "multiSelect", // New input type
-  options: ["Kitchen island", "Pantry upgrade", "Wine storage", "Built-in appliances"],
-  lineItems: [
-    {
-      condition: "selected", // Special condition for multi-select
-      items: [
-        { name: "Additional Features", calculation: "flat", category: "materials" }
-      ]
-    }
-  ],
-  next: "complete"
-},*/
-
-// Example for multi-select gallery
-/*kitchen_cabinet_fixtures: {
-  question: "Select all fixtures you need:",
-  inputType: "multiSelectGallery", // New input type
-  options: [
-    { 
-      name: "Vanity", 
-      image: "https://images.unsplash.com/photo-1...",
-      thumbnail: "https://images.unsplash.com/photo-1...",
-      description: "Modern bathroom vanity"
-    },
-    { 
-      name: "Mirror", 
-      image: "https://images.unsplash.com/photo-2...",
-      thumbnail: "https://images.unsplash.com/photo-2...",
-      description: "LED-lit mirror"
-    }
-  ],
-  lineItems: [
-    {
-      condition: "selected",
-      items: [
-        { name: "Fixtures", calculation: "flat", category: "materials" }
-      ]
-    }
-  ],
-  next: "kitchen_cabinet_hardware"
-},*/
-
-  // Kitchen Cabinet Accessories has a special function in index.html > calculateLineItemPrice()
-
   kitchen_cabinet_organizers: {
     question: "Select any desired cabinet organizers",
     inputType: "multiSelectGallery", // Multi Select Image selection
@@ -446,7 +399,7 @@ kitchen_flooring: {
       {
         condition: "Wine Refrigerator",
           items: [
-            { name: "Wine Regrigerator", showPrice: true, calculation: "flat", category: "materials" },
+            { name: "Wine Refrigerator", showPrice: true, calculation: "flat", category: "materials" },
             { name: "Wine Refrigerator - Labor", calculation: "flat", category: "labor" }
           ]
       }

@@ -109,9 +109,11 @@ const PRICING = {
 },
 
 "Additional Features": {
-  "Kitchen Island": { flat: 8000 },
+  "Kitchen Island": { flat: 3000 },
+  "Kitchen Island - Labor": { flat: 5000 },
   "Pantry upgrade": { flat: 3000 },
   "Wine Refrigerator": { flat: 2500 },
+  "Wine Refrigerator - Labor": { flat: 300 },
   "Built-in shelving": { flat: 2000 },
   "Fireplace upgrade": { flat: 5000 },
   "Entertainment center": { flat: 3000 },
